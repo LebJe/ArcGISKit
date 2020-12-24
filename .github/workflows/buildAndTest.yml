@@ -1,0 +1,77 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+	TestOnMacOS-10_15-x86_64:
+		runs-on: macos-10.15
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run tests
+				run: swift test
+
+	TestOnMacOS-11_0-x86_64:
+		runs-on: macos-11.0
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run tests
+				run: swift test
+
+	TestOnUbuntu-20_04-ARM:
+		runs-on: ubuntu-latest
+		steps:
+			- uses: actions/checkout@v2
+			- uses: uraimo/run-on-arch-action@v2.0.7
+				with:
+					arch: aarch64
+					distro: ubuntu20.04
+					githubToken: ${{ secrets.GITHUB_TOKEN }}
+					run: |
+						export DEBIAN_FRONTEND=noninteractive
+						apt update -q
+						apt install -yq curl sudo
+						curl -s https://packagecloud.io/install/repositories/swift-arm/release/script.deb.sh | sudo bash
+						apt install -yq swiftlang
+						apt update -yq
+						swift test
+						
+	TestOnUbuntu-18_04-ARM:
+		runs-on: ubuntu-latest
+		steps:
+			- uses: actions/checkout@v2
+			- uses: uraimo/run-on-arch-action@v2.0.7
+				with:
+					arch: aarch64
+					distro: ubuntu18.04
+					githubToken: ${{ secrets.GITHUB_TOKEN }}
+					run: |
+						export DEBIAN_FRONTEND=noninteractive
+						apt update -q
+						apt install -yq curl sudo
+						curl -s https://packagecloud.io/install/repositories/swift-arm/release/script.deb.sh | sudo bash
+						apt install -yq swiftlang
+						apt update -yq
+						swift test
+
+	TestOnUbuntu-20_04-x86_64:
+		runs-on: ubuntu-latest
+		container: swift:latest
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run tests
+				run: swift test
+				
+	TestOnUbuntu-18_04-x86_64:
+		runs-on: ubuntu-latest
+		container: swift:bionic
+		steps:
+			- uses: actions/checkout@v2
+			- name: Run tests
+				run: swift test
+	# Uncomment and update as needed when an Apple Silicon VM is available.
+	#TestOnMacOS-ARM:
+	# runs-on: macos-silicon-latest
+	# steps:
+	#   - uses: actions/checkout@v2
+	#   - name: Run tests
+	#     run: swift test
