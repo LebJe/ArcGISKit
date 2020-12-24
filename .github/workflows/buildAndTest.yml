@@ -8,6 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         run: swift test
 
   TestOnMacOS-11_0-x86_64:
@@ -15,6 +19,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         run: swift test
 
   TestOnUbuntu-20_04-ARM:
@@ -22,6 +30,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: uraimo/run-on-arch-action@v2.0.7
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         with:
           arch: aarch64
           distro: ubuntu20.04
@@ -40,6 +52,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: uraimo/run-on-arch-action@v2.0.7
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         with:
           arch: aarch64
           distro: ubuntu18.04
@@ -59,6 +75,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         run: swift test
         
   TestOnUbuntu-18_04-x86_64:
@@ -67,6 +87,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run tests
+        env:
+          AGOL_URL: ${{ secrets.AGOL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
         run: swift test
   # Uncomment and update as needed when an Apple Silicon VM is available.
   #TestOnMacOS-ARM:
@@ -74,4 +98,8 @@ jobs:
   # steps:
   #   - uses: actions/checkout@v2
   #   - name: Run tests
+  #      env:
+  #        AGOL_URL: ${{ secrets.AGOL_URL }}
+  #        AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+  #        AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
   #     run: swift test
