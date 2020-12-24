@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGISKit - Privilege</title>
+    <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="https://lebje.github.io/ArcGISKit/">
+            <strong>
+                ArcGISKit
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#privilege.marketplaceadminmanage">marketplace​Admin​Manage</a></li><li class="case"><a href="#privilege.marketplaceadminpurchase">marketplace​Admin​Purchase</a></li><li class="case"><a href="#privilege.marketplaceadminstarttrial">marketplace​Admin​Start​Trial</a></li><li class="case"><a href="#privilege.opendatauserdesignategroup">opendata​User​Designate​Group</a></li><li class="case"><a href="#privilege.opendatauseropendataadmin">opendata​User​Open​Data​Admin</a></li><li class="case"><a href="#privilege.portaladminassigntogroups">portal​Admin​Assign​ToGroups</a></li><li class="case"><a href="#privilege.portaladmincategorizeitems">portal​Admin​Categorize​Items</a></li><li class="case"><a href="#privilege.portaladminchangeuserroles">portal​Admin​Change​User​Roles</a></li><li class="case"><a href="#privilege.portaladmincreatecollaborationcapablegroup">portal​Admin​Create​Collaboration​Capable​Group</a></li><li class="case"><a href="#privilege.portaladmincreateupdatecapablegroup">portal​Admin​Create​Update​Capable​Group</a></li><li class="case"><a href="#privilege.portaladmindeletegroups">portal​Admin​Delete​Groups</a></li><li class="case"><a href="#privilege.portaladmindeleteitems">portal​Admin​Delete​Items</a></li><li class="case"><a href="#privilege.portaladmindeleteusers">portal​Admin​Delete​Users</a></li><li class="case"><a href="#privilege.portaladmindisableusers">portal​Admin​Disable​Users</a></li><li class="case"><a href="#privilege.portaladmininviteusers">portal​Admin​Invite​Users</a></li><li class="case"><a href="#privilege.portaladminmanagecollaborations">portal​Admin​Manage​Collaborations</a></li><li class="case"><a href="#privilege.portaladminmanagecredits">portal​Admin​Manage​Credits</a></li><li class="case"><a href="#privilege.portaladminmanageenterprisegroups">portal​Admin​Manage​Enterprise​Groups</a></li><li class="case"><a href="#privilege.portaladminmanagelicenses">portal​Admin​Manage​Licenses</a></li><li class="case"><a href="#privilege.portaladminmanageroles">portal​Admin​Manage​Roles</a></li><li class="case"><a href="#privilege.portaladminmanagesecurity">portal​Admin​Manage​Security</a></li><li class="case"><a href="#privilege.portaladminmanageservers">portal​Admin​Manage​Servers</a></li><li class="case"><a href="#privilege.portaladminmanageutilityservices">portal​Admin​Manage​Utility​Services</a></li><li class="case"><a href="#privilege.portaladminmanagewebsite">portal​Admin​Manage​Website</a></li><li class="case"><a href="#privilege.portaladminreassigngroups">portal​Admin​Reassign​Groups</a></li><li class="case"><a href="#privilege.portaladminreassignitems">portal​Admin​Reassign​Items</a></li><li class="case"><a href="#privilege.portaladminreassignusers">portal​Admin​Reassign​Users</a></li><li class="case"><a href="#privilege.portaladminsharetogroup">portal​Admin​Share​ToGroup</a></li><li class="case"><a href="#privilege.portaladminsharetoorg">portal​Admin​Share​ToOrg</a></li><li class="case"><a href="#privilege.portaladminsharetopublic">portal​Admin​Share​ToPublic</a></li><li class="case"><a href="#privilege.portaladminupdategroups">portal​Admin​Update​Groups</a></li><li class="case"><a href="#privilege.portaladminupdateitemcategoryschema">portal​Admin​Update​Item​Category​Schema</a></li><li class="case"><a href="#privilege.portaladminupdateitems">portal​Admin​Update​Items</a></li><li class="case"><a href="#privilege.portaladminupdateusers">portal​Admin​Update​Users</a></li><li class="case"><a href="#privilege.portaladminviewgroups">portal​Admin​View​Groups</a></li><li class="case"><a href="#privilege.portaladminviewitems">portal​Admin​View​Items</a></li><li class="case"><a href="#privilege.portaladminviewusers">portal​Admin​View​Users</a></li><li class="case"><a href="#privilege.portalpublisherbulkpublishfromdatastores">portal​Publisher​Bulk​Publish​From​Data​Stores</a></li><li class="case"><a href="#privilege.portalpublisherpublishbigdataanalytics">portal​Publisher​Publish​Big​Data​Analytics</a></li><li class="case"><a href="#privilege.portalpublisherpublishdynamicimagery">portal​Publisher​Publish​Dynamic​Imagery</a></li><li class="case"><a href="#privilege.portalpublisherpublishfeatures">portal​Publisher​Publish​Features</a></li><li class="case"><a href="#privilege.portalpublisherpublishfeeds">portal​Publisher​Publish​Feeds</a></li><li class="case"><a href="#privilege.portalpublisherpublishrealtimeanalytics">portal​Publisher​Publish​Real​Time​Analytics</a></li><li class="case"><a href="#privilege.portalpublisherpublishscenes">portal​Publisher​Publish​Scenes</a></li><li class="case"><a href="#privilege.portalpublisherpublishservergpservices">portal​Publisher​Publish​Server​GPServices</a></li><li class="case"><a href="#privilege.portalpublisherpublishserverservices">portal​Publisher​Publish​Server​Services</a></li><li class="case"><a href="#privilege.portalpublisherpublishtiledimagery">portal​Publisher​Publish​Tiled​Imagery</a></li><li class="case"><a href="#privilege.portalpublisherpublishtiles">portal​Publisher​Publish​Tiles</a></li><li class="case"><a href="#privilege.portalpublisherregisterdatastores">portal​Publisher​Register​Data​Stores</a></li><li class="case"><a href="#privilege.premiumpublishercreateadvancednotebooks">premium​Publisher​Create​Advanced​Notebooks</a></li><li class="case"><a href="#privilege.premiumpublishercreatenotebooks">premium​Publisher​Create​Notebooks</a></li><li class="case"><a href="#privilege.portalusercategorizeitems">portal​User​Categorize​Items</a></li><li class="case"><a href="#privilege.portalusercreateitem">portal​User​Create​Item</a></li><li class="case"><a href="#privilege.portalusersharegrouptoorg">portal​User​Share​Group​ToOrg</a></li><li class="case"><a href="#privilege.portalusersharegrouptopublic">portal​User​Share​Group​ToPublic</a></li><li class="case"><a href="#privilege.portalusersharetogroup">portal​User​Share​ToGroup</a></li><li class="case"><a href="#privilege.portalusersharetoorg">portal​User​Share​ToOrg</a></li><li class="case"><a href="#privilege.portalusersharetopublic">portal​User​Share​ToPublic</a></li><li class="case"><a href="#privilege.portaluservieworgitems">portal​User​View​Org​Items</a></li><li class="case"><a href="#privilege.portaluservieworgusers">portal​User​View​Org​Users</a></li><li class="case"><a href="#privilege.portalusercreategroup">portal​User​Create​Group</a></li><li class="case"><a href="#privilege.portaluserjoingroup">portal​User​Join​Group</a></li><li class="case"><a href="#privilege.portaluserjoinnonorggroup">portal​User​Join​Non​Org​Group</a></li><li class="case"><a href="#privilege.portaluservieworggroups">portal​User​View​Org​Groups</a></li><li class="case"><a href="#privilege.portaluserviewtracks">portal​User​View​Tracks</a></li><li class="case"><a href="#privilege.featuresuseredit">features​User​Edit</a></li><li class="case"><a href="#privilege.featuresuserfulledit">features​User​Full​Edit</a></li><li class="case"><a href="#privilege.featuresusermanageversions">features​User​Manage​Versions</a></li><li class="case"><a href="#privilege.premiumpublishergeoanalytics">premium​Publisher​Geoanalytics</a></li><li class="case"><a href="#privilege.premiumpublisherrasteranalysis">premium​Publisher​Rasteranalysis</a></li><li class="case"><a href="#privilege.premiumpublisherschedulenotebooks">premium​Publisher​Schedule​Notebooks</a></li><li class="case"><a href="#privilege.premiumuserdemographics">premium​User​Demographics</a></li><li class="case"><a href="#privilege.premiumuserelevation">premium​User​Elevation</a></li><li class="case"><a href="#privilege.premiumuserfeaturereport">premium​User​Featurereport</a></li><li class="case"><a href="#privilege.premiumusergeocode">premium​User​Geocode</a></li><li class="case"><a href="#privilege.premiumusergeocodestored">premium​User​Geocode​Stored</a></li><li class="case"><a href="#privilege.premiumusergeocodetemporary">premium​User​Geocode​Temporary</a></li><li class="case"><a href="#privilege.premiumusergeoenrichment">premium​User​Geoenrichment</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysis">premium​User​Networkanalysis</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisclosestfacility">premium​User​Networkanalysis​Closestfacility</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysislocationallocation">premium​User​Networkanalysis​Locationallocation</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisoptimizedrouting">premium​User​Networkanalysis​Optimizedrouting</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisorigindestinationcostmatrix">premium​User​Networkanalysis​Origindestinationcostmatrix</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisrouting">premium​User​Networkanalysis​Routing</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisservicearea">premium​User​Networkanalysis​Servicearea</a></li><li class="case"><a href="#privilege.premiumusernetworkanalysisvehiclerouting">premium​User​Networkanalysis​Vehiclerouting</a></li><li class="case"><a href="#privilege.premiumuserspatialanalysis">premium​User​Spatialanalysis</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Enumeration</small>
+    <code class="name">Privilege</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">Privilege</span></code></pre></body></html>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        <figure>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %3 Pages: 1 -->
+<svg width="1088pt" height="242pt"
+ viewBox="0.00 0.00 1087.98 241.73" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 237.7326)">
+<title>%3</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-237.7326 1083.9813,-237.7326 1083.9813,4 -4,4"/>
+<!-- Privilege -->
+<g id="node1" class="node enumeration current">
+<title>Privilege</title>
+<g id="a_node1"><a xlink:href="https://lebje.github.io/ArcGISKit/Privilege" xlink:title="Privilege">
+<path fill="none" stroke="#000000" stroke-width="3" d="M537.993,-143.6386C537.993,-143.6386 345.993,-143.6386 345.993,-143.6386 339.993,-143.6386 333.993,-137.6386 333.993,-131.6386 333.993,-131.6386 333.993,-119.6386 333.993,-119.6386 333.993,-113.6386 339.993,-107.6386 345.993,-107.6386 345.993,-107.6386 537.993,-107.6386 537.993,-107.6386 543.993,-107.6386 549.993,-113.6386 549.993,-119.6386 549.993,-119.6386 549.993,-131.6386 549.993,-131.6386 549.993,-137.6386 543.993,-143.6386 537.993,-143.6386"/>
+<text text-anchor="middle" x="441.993" y="-121.9386" font-family="Menlo" font-size="14.00" fill="#000000">Privilege</text>
+</a>
+</g>
+</g>
+<!-- CaseIterable -->
+<g id="node2" class="node unknown">
+<title>CaseIterable</title>
+<path fill="none" stroke="#000000" d="M1067.9813,-161.3055C1067.9813,-161.3055 875.9813,-161.3055 875.9813,-161.3055 869.9813,-161.3055 863.9813,-155.3055 863.9813,-149.3055 863.9813,-149.3055 863.9813,-137.3055 863.9813,-137.3055 863.9813,-131.3055 869.9813,-125.3055 875.9813,-125.3055 875.9813,-125.3055 1067.9813,-125.3055 1067.9813,-125.3055 1073.9813,-125.3055 1079.9813,-131.3055 1079.9813,-137.3055 1079.9813,-137.3055 1079.9813,-149.3055 1079.9813,-149.3055 1079.9813,-155.3055 1073.9813,-161.3055 1067.9813,-161.3055"/>
+<text text-anchor="middle" x="971.9813" y="-139.6055" font-family="Menlo" font-size="14.00" fill="#000000">CaseIterable</text>
+</g>
+<!-- Privilege&#45;&gt;CaseIterable -->
+<g id="edge3" class="edge conformsTo">
+<title>Privilege&#45;&gt;CaseIterable</title>
+<path fill="none" stroke="#000000" d="M550.2028,-129.2457C638.4756,-132.1882 762.9928,-136.339 853.8473,-139.3675"/>
+<polygon fill="#000000" stroke="#000000" points="853.8083,-142.8681 863.9194,-139.7033 854.0415,-135.872 853.8083,-142.8681"/>
+</g>
+<!-- Codable -->
+<g id="node3" class="node unknown">
+<title>Codable</title>
+<path fill="none" stroke="#000000" d="M347.5678,-36C347.5678,-36 155.5678,-36 155.5678,-36 149.5678,-36 143.5678,-30 143.5678,-24 143.5678,-24 143.5678,-12 143.5678,-12 143.5678,-6 149.5678,0 155.5678,0 155.5678,0 347.5678,0 347.5678,0 353.5678,0 359.5678,-6 359.5678,-12 359.5678,-12 359.5678,-24 359.5678,-24 359.5678,-30 353.5678,-36 347.5678,-36"/>
+<text text-anchor="middle" x="251.5678" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Codable</text>
+</g>
+<!-- Privilege&#45;&gt;Codable -->
+<g id="edge1" class="edge conformsTo">
+<title>Privilege&#45;&gt;Codable</title>
+<path fill="none" stroke="#000000" d="M410.1201,-107.6223C377.8522,-89.3828 327.8211,-61.1025 292.6069,-41.1975"/>
+<polygon fill="#000000" stroke="#000000" points="293.9725,-37.949 283.5447,-36.0751 290.5279,-44.0428 293.9725,-37.949"/>
+</g>
+<!-- String -->
+<g id="node4" class="node unknown">
+<title>String</title>
+<path fill="none" stroke="#000000" d="M204,-233.7326C204,-233.7326 12,-233.7326 12,-233.7326 6,-233.7326 0,-227.7326 0,-221.7326 0,-221.7326 0,-209.7326 0,-209.7326 0,-203.7326 6,-197.7326 12,-197.7326 12,-197.7326 204,-197.7326 204,-197.7326 210,-197.7326 216,-203.7326 216,-209.7326 216,-209.7326 216,-221.7326 216,-221.7326 216,-227.7326 210,-233.7326 204,-233.7326"/>
+<text text-anchor="middle" x="108" y="-212.0326" font-family="Menlo" font-size="14.00" fill="#000000">String</text>
+</g>
+<!-- Privilege&#45;&gt;String -->
+<g id="edge2" class="edge conformsTo">
+<title>Privilege&#45;&gt;String</title>
+<path fill="none" stroke="#000000" d="M375.2073,-143.6539C320.2308,-158.4837 242.2608,-179.516 184.7272,-195.0356"/>
+<polygon fill="#000000" stroke="#000000" points="183.6989,-191.6878 174.9556,-197.6715 185.5221,-198.4462 183.6989,-191.6878"/>
+</g>
+</g>
+</svg>
+
+
+    <figcaption hidden>Inheritance graph for Privilege.</figcaption>
+</figure>
+        <h3>Conforms To</h3>
+<dl>
+    <dt class="unknown"><code>CaseIterable</code></dt>
+<dt class="unknown"><code>Codable</code></dt>
+<dt class="unknown"><code>String</code></dt>
+</dl>
+</section>
+    <section id="enumeration cases">
+        <h2>Enumeration Cases</h2>
+
+        <div role="article" class="case" id="privilege.marketplaceadminmanage">
+    <h3>
+        <code>marketplace​Admin​Manage</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">marketplaceAdminManage</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.marketplaceadminpurchase">
+    <h3>
+        <code>marketplace​Admin​Purchase</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">marketplaceAdminPurchase</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.marketplaceadminstarttrial">
+    <h3>
+        <code>marketplace​Admin​Start​Trial</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">marketplaceAdminStartTrial</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.opendatauserdesignategroup">
+    <h3>
+        <code>opendata​User​Designate​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">opendataUserDesignateGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.opendatauseropendataadmin">
+    <h3>
+        <code>opendata​User​Open​Data​Admin</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">opendataUserOpenDataAdmin</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminassigntogroups">
+    <h3>
+        <code>portal​Admin​Assign​ToGroups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminAssignToGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmincategorizeitems">
+    <h3>
+        <code>portal​Admin​Categorize​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminCategorizeItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminchangeuserroles">
+    <h3>
+        <code>portal​Admin​Change​User​Roles</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminChangeUserRoles</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmincreatecollaborationcapablegroup">
+    <h3>
+        <code>portal​Admin​Create​Collaboration​Capable​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminCreateCollaborationCapableGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmincreateupdatecapablegroup">
+    <h3>
+        <code>portal​Admin​Create​Update​Capable​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminCreateUpdateCapableGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmindeletegroups">
+    <h3>
+        <code>portal​Admin​Delete​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminDeleteGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmindeleteitems">
+    <h3>
+        <code>portal​Admin​Delete​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminDeleteItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmindeleteusers">
+    <h3>
+        <code>portal​Admin​Delete​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminDeleteUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmindisableusers">
+    <h3>
+        <code>portal​Admin​Disable​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminDisableUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladmininviteusers">
+    <h3>
+        <code>portal​Admin​Invite​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminInviteUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanagecollaborations">
+    <h3>
+        <code>portal​Admin​Manage​Collaborations</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageCollaborations</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanagecredits">
+    <h3>
+        <code>portal​Admin​Manage​Credits</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageCredits</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanageenterprisegroups">
+    <h3>
+        <code>portal​Admin​Manage​Enterprise​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageEnterpriseGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanagelicenses">
+    <h3>
+        <code>portal​Admin​Manage​Licenses</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageLicenses</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanageroles">
+    <h3>
+        <code>portal​Admin​Manage​Roles</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageRoles</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanagesecurity">
+    <h3>
+        <code>portal​Admin​Manage​Security</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageSecurity</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanageservers">
+    <h3>
+        <code>portal​Admin​Manage​Servers</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageServers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanageutilityservices">
+    <h3>
+        <code>portal​Admin​Manage​Utility​Services</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageUtilityServices</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminmanagewebsite">
+    <h3>
+        <code>portal​Admin​Manage​Website</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminManageWebsite</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminreassigngroups">
+    <h3>
+        <code>portal​Admin​Reassign​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminReassignGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminreassignitems">
+    <h3>
+        <code>portal​Admin​Reassign​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminReassignItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminreassignusers">
+    <h3>
+        <code>portal​Admin​Reassign​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminReassignUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminsharetogroup">
+    <h3>
+        <code>portal​Admin​Share​ToGroup</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminShareToGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminsharetoorg">
+    <h3>
+        <code>portal​Admin​Share​ToOrg</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminShareToOrg</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminsharetopublic">
+    <h3>
+        <code>portal​Admin​Share​ToPublic</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminShareToPublic</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminupdategroups">
+    <h3>
+        <code>portal​Admin​Update​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminUpdateGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminupdateitemcategoryschema">
+    <h3>
+        <code>portal​Admin​Update​Item​Category​Schema</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminUpdateItemCategorySchema</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminupdateitems">
+    <h3>
+        <code>portal​Admin​Update​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminUpdateItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminupdateusers">
+    <h3>
+        <code>portal​Admin​Update​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminUpdateUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminviewgroups">
+    <h3>
+        <code>portal​Admin​View​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminViewGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminviewitems">
+    <h3>
+        <code>portal​Admin​View​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminViewItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaladminviewusers">
+    <h3>
+        <code>portal​Admin​View​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalAdminViewUsers</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Grants the ability to view full member account information within organization</p>
+
+</div>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherbulkpublishfromdatastores">
+    <h3>
+        <code>portal​Publisher​Bulk​Publish​From​Data​Stores</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherBulkPublishFromDataStores</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishbigdataanalytics">
+    <h3>
+        <code>portal​Publisher​Publish​Big​Data​Analytics</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishBigDataAnalytics</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishdynamicimagery">
+    <h3>
+        <code>portal​Publisher​Publish​Dynamic​Imagery</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishDynamicImagery</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishfeatures">
+    <h3>
+        <code>portal​Publisher​Publish​Features</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishFeatures</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishfeeds">
+    <h3>
+        <code>portal​Publisher​Publish​Feeds</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishFeeds</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishrealtimeanalytics">
+    <h3>
+        <code>portal​Publisher​Publish​Real​Time​Analytics</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishRealTimeAnalytics</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishscenes">
+    <h3>
+        <code>portal​Publisher​Publish​Scenes</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishScenes</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishservergpservices">
+    <h3>
+        <code>portal​Publisher​Publish​Server​GPServices</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishServerGPServices</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishserverservices">
+    <h3>
+        <code>portal​Publisher​Publish​Server​Services</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishServerServices</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishtiledimagery">
+    <h3>
+        <code>portal​Publisher​Publish​Tiled​Imagery</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishTiledImagery</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherpublishtiles">
+    <h3>
+        <code>portal​Publisher​Publish​Tiles</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherPublishTiles</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalpublisherregisterdatastores">
+    <h3>
+        <code>portal​Publisher​Register​Data​Stores</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalPublisherRegisterDataStores</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumpublishercreateadvancednotebooks">
+    <h3>
+        <code>premium​Publisher​Create​Advanced​Notebooks</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumPublisherCreateAdvancedNotebooks</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumpublishercreatenotebooks">
+    <h3>
+        <code>premium​Publisher​Create​Notebooks</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumPublisherCreateNotebooks</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusercategorizeitems">
+    <h3>
+        <code>portal​User​Categorize​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserCategorizeItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusercreateitem">
+    <h3>
+        <code>portal​User​Create​Item</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserCreateItem</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusersharegrouptoorg">
+    <h3>
+        <code>portal​User​Share​Group​ToOrg</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserShareGroupToOrg</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusersharegrouptopublic">
+    <h3>
+        <code>portal​User​Share​Group​ToPublic</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserShareGroupToPublic</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusersharetogroup">
+    <h3>
+        <code>portal​User​Share​ToGroup</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserShareToGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusersharetoorg">
+    <h3>
+        <code>portal​User​Share​ToOrg</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserShareToOrg</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusersharetopublic">
+    <h3>
+        <code>portal​User​Share​ToPublic</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserShareToPublic</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluservieworgitems">
+    <h3>
+        <code>portal​User​View​Org​Items</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserViewOrgItems</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluservieworgusers">
+    <h3>
+        <code>portal​User​View​Org​Users</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserViewOrgUsers</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portalusercreategroup">
+    <h3>
+        <code>portal​User​Create​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserCreateGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluserjoingroup">
+    <h3>
+        <code>portal​User​Join​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserJoinGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluserjoinnonorggroup">
+    <h3>
+        <code>portal​User​Join​Non​Org​Group</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserJoinNonOrgGroup</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluservieworggroups">
+    <h3>
+        <code>portal​User​View​Org​Groups</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserViewOrgGroups</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.portaluserviewtracks">
+    <h3>
+        <code>portal​User​View​Tracks</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">portalUserViewTracks</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.featuresuseredit">
+    <h3>
+        <code>features​User​Edit</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">featuresUserEdit</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.featuresuserfulledit">
+    <h3>
+        <code>features​User​Full​Edit</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">featuresUserFullEdit</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.featuresusermanageversions">
+    <h3>
+        <code>features​User​Manage​Versions</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">featuresUserManageVersions</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumpublishergeoanalytics">
+    <h3>
+        <code>premium​Publisher​Geoanalytics</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumPublisherGeoanalytics</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumpublisherrasteranalysis">
+    <h3>
+        <code>premium​Publisher​Rasteranalysis</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumPublisherRasteranalysis</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumpublisherschedulenotebooks">
+    <h3>
+        <code>premium​Publisher​Schedule​Notebooks</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumPublisherScheduleNotebooks</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumuserdemographics">
+    <h3>
+        <code>premium​User​Demographics</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserDemographics</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumuserelevation">
+    <h3>
+        <code>premium​User​Elevation</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserElevation</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumuserfeaturereport">
+    <h3>
+        <code>premium​User​Featurereport</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserFeaturereport</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusergeocode">
+    <h3>
+        <code>premium​User​Geocode</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserGeocode</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusergeocodestored">
+    <h3>
+        <code>premium​User​Geocode​Stored</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserGeocodeStored</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusergeocodetemporary">
+    <h3>
+        <code>premium​User​Geocode​Temporary</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserGeocodeTemporary</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusergeoenrichment">
+    <h3>
+        <code>premium​User​Geoenrichment</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserGeoenrichment</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysis">
+    <h3>
+        <code>premium​User​Networkanalysis</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysis</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisclosestfacility">
+    <h3>
+        <code>premium​User​Networkanalysis​Closestfacility</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisClosestfacility</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysislocationallocation">
+    <h3>
+        <code>premium​User​Networkanalysis​Locationallocation</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisLocationallocation</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisoptimizedrouting">
+    <h3>
+        <code>premium​User​Networkanalysis​Optimizedrouting</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisOptimizedrouting</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisorigindestinationcostmatrix">
+    <h3>
+        <code>premium​User​Networkanalysis​Origindestinationcostmatrix</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisOrigindestinationcostmatrix</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisrouting">
+    <h3>
+        <code>premium​User​Networkanalysis​Routing</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisRouting</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisservicearea">
+    <h3>
+        <code>premium​User​Networkanalysis​Servicearea</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisServicearea</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumusernetworkanalysisvehiclerouting">
+    <h3>
+        <code>premium​User​Networkanalysis​Vehiclerouting</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserNetworkanalysisVehiclerouting</span></code></pre></body></html>
+</div>
+<div role="article" class="case" id="privilege.premiumuserspatialanalysis">
+    <h3>
+        <code>premium​User​Spatialanalysis</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">premiumUserSpatialanalysis</span></code></pre></body></html>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-12-24T18:09:08+0000">December 24, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+</p>
+    </footer>
+</body>
+</html>
