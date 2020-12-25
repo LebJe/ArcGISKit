@@ -6,27 +6,52 @@
 //
 
 import Foundation
+import ArgumentParser
 import ArcGISKit
 import GetPass
 
-print("Username: ", terminator: "")
-let username = readLine()!
+struct AGOLCommand: ParsableCommand {
+	static let configuration = CommandConfiguration(
+		commandName: "agol",
+		abstract: "Command line tool to interact with ArcGIS Online.",
+		version: "0.0.0"
+	)
 
-print("Password: ", terminator: "")
+	func run() throws {
+		print("Username: ", terminator: "")
+		let username = readLine()!
 
-var buf = Array<CChar>(repeating: 0, count: 8192)
-var size = buf.count
+		print("Password: ", terminator: "")
 
-var pointerToPassword = Optional.init(UnsafeMutablePointer(&buf))
+		var buf = Array<CChar>(repeating: 0, count: 8192)
+		var size = buf.count
 
-my_getpass(&pointerToPassword, &size, stdin)
+		var pointerToPassword = Optional.init(UnsafeMutablePointer(&buf))
 
-let password = String(cString: pointerToPassword!)
+		my_getpass(&pointerToPassword, &size, stdin)
 
-print()
+		let password = String(cString: pointerToPassword!)
 
-print(password)
+		print("URL: ", terminator: "")
 
-let gis = try GIS(username: username, password: password, url: URL(string: "https://lebrunhs.maps.arcgis.com")!)
+		let url = readLine()!
 
-print(gis.user!.fullName)
+		do {
+			let gis = try GIS(username: username, password: password, url: URL(string: url)!)
+			
+			if let user = gis.user {
+				print(user.fullName!)
+				print(user.email!)
+			} else {
+				print("Unable to retrieve user.")
+				Foundation.exit(1)
+			}
+		} catch let error as GISError {
+			print("Invalid username or password.")
+			Foundation.exit(2)
+		}
+		
+	}
+}
+
+AGOLCommand.main()

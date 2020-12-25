@@ -38,6 +38,10 @@ jobs:
           arch: aarch64
           distro: ubuntu20.04
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          env: |
+            AGOL_URL: ${{ secrets.AGOL_URL }}
+            AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+            AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
           run: |
             export DEBIAN_FRONTEND=noninteractive
             apt update -q
@@ -60,6 +64,10 @@ jobs:
           arch: aarch64
           distro: ubuntu18.04
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          env: |
+            AGOL_URL: ${{ secrets.AGOL_URL }}
+            AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+            AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
           run: |
             export DEBIAN_FRONTEND=noninteractive
             apt update -q

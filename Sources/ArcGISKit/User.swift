@@ -12,7 +12,7 @@ import Foundation
 /// Personal details of the user, such as e-mail and groups, are returned only to the user or the administrator of the user's organization (the properties in the Response Properties table below).
 ///
 /// A user is not visible to any other user (except the organization's administrator) if their access setting is set to "private."
-public struct User: Codable {
+public struct User: Codable, Equatable {
 	/// The ID of the user.
 	public let id: String
 
@@ -98,12 +98,12 @@ public struct User: Codable {
 	/// The user preferred region, used to set the featured maps on the home page, content in the gallery, and the default extent of new maps in the Viewer.
 	public let region: String?
 
-	/// The file name of the thumbnail used for the user. .
+	/// The file name of the thumbnail used for the user.
 	public let thumbnail: String?
-	/// The date the user was created. Shown in UNIX time.
+	/// The date the user was created.
 	public let created: Date
 
-	/// The date the user was last modified. Shown in UNIX time.
+	/// The date the user was last modified.
 	public let modified: Date
 
 	/// An array of groups the user belongs to. See [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) for properties of a group.
@@ -113,11 +113,11 @@ public struct User: Codable {
 	public let provider: Provider?
 }
 
-public enum Provider: String, Codable, CaseIterable {
+public enum Provider: String, Codable, CaseIterable, Equatable {
 	case arcgis, enterprise, google, facebook, apple, github
 }
 
-public struct UserMembership: Codable {
+public struct UserMembership: Codable, Equatable {
 	public let username: String?
 	public let memberType: String?
 	public let applications: Int?

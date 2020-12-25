@@ -14,7 +14,7 @@ import Foundation
 /// Group members can leave the group. Authenticated users can apply to join a group unless the group is by invitation only.
 ///
 /// The visibility of the group by other users is determined by the `access` property. If the group is private, no one other than the administrators and members of the group will be able to see it. If the group is shared with an organization, all members of the organization will be able to find it.
-public struct Group: Codable {
+public struct Group: Codable, Equatable {
 	/// The given group ID.
 	public let id: String?
 
@@ -84,7 +84,7 @@ public struct Group: Codable {
 
 
 /// The order a `Group` is sorted by.
-public enum SortOrder: String, Codable, CaseIterable {
+public enum SortOrder: String, Codable, CaseIterable, Equatable {
 	case ascending = "asc"
 	case descending = "desc"
 }
