@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGISKit - FeatureServer</title>
+    <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="https://lebje.github.io/ArcGISKit/">
+            <strong>
+                ArcGISKit
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li><li class="variable"><a href="#featureserver.featureservice">feature​Service</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Structure</small>
+    <code class="name">Feature​Server</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">FeatureServer</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>A <code>FeatureServer</code> manages <code>FeatureService</code>s.</p>
+
+</div>
+
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="initializer" id="featureserver.init(url:gis:)">
+    <h3>
+        <code>init(url:​gis:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">url</span>: <span class="type">URL</span>, <span class="variable">gis</span>: <a href="https://lebje.github.io/ArcGISKit/GIS"><span class="type">GIS</span></a>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Feature Service</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>url</th>
+    <td><code class="type">URL</code></td>
+    <td><p>The URL to the Feature Server, e.g: &quot;https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer&quot;</p>
+</td>
+</tr>
+<tr>
+    <th>gis</th>
+    <td><code class="type">GIS</code></td>
+    <td><p>The <code>GIS</code> to use to authenticate.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="featureserver.url">
+    <h3>
+        <code>url</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">url</span>: <span class="type">URL</span></code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureserver.featureservice">
+    <h3>
+        <code>feature​Service</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">featureService</span>: <a href="https://lebje.github.io/ArcGISKit/FeatureService"><span class="type">FeatureService</span></a>?</code></pre></body></html>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-12-26T01:03:10+0000">December 26, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+</p>
+    </footer>
+</body>
+</html>
