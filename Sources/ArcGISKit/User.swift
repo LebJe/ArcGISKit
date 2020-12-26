@@ -9,7 +9,7 @@ import Foundation
 
 /// A `User` resource represents a registered user of the portal.
 ///
-/// Personal details of the user, such as e-mail and groups, are returned only to the user or the administrator of the user's organization (the properties in the Response Properties table below).
+/// Personal details of the user, such as e-mail and groups, are returned only to the user or the administrator of the user's organization.
 ///
 /// A user is not visible to any other user (except the organization's administrator) if their access setting is set to "private."
 public struct User: Codable, Equatable {
@@ -73,7 +73,7 @@ public struct User: Codable, Equatable {
 	/// Values: `org_admin` (organization administrator or custom role with administrative privileges) | `org_publisher` (organization publisher or custom role with publisher privileges) | `org_user` (organization user or custom role with user privileges)
 	public let role: String?
 
-	///  JSON array of strings with predefined permissions in each. For a complete listing, see [Privileges](https://developers.arcgis.com/rest/users-groups-and-items/privileges.htm#ESRI_SECTION2_3EAEA3BADD1446A68EA07F9F46F6690C).
+	/// An array of `Privilege`s for this `User`. For a complete listing, see [Privileges](https://developers.arcgis.com/rest/users-groups-and-items/privileges.htm#ESRI_SECTION2_3EAEA3BADD1446A68EA07F9F46F6690C).
 	public let privileges: [Privilege]?
 
 	/// (Optional) The ID of the user's role if it is a custom one.
