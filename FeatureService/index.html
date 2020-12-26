@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureservice.currentversion">current​Version</a></li><li class="variable"><a href="#featureservice.servicedescription">service​Description</a></li><li class="variable"><a href="#featureservice.hasversioneddata">has​Versioned​Data</a></li><li class="variable"><a href="#featureservice.supportsdisconnectedediting">supports​Disconnected​Editing</a></li><li class="variable"><a href="#featureservice.supportsdatumtransformation">supports​Datum​Transformation</a></li><li class="variable"><a href="#featureservice.supportsreturndeleteresults">supports​Return​Delete​Results</a></li><li class="variable"><a href="#featureservice.hasstaticdata">has​Static​Data</a></li><li class="variable"><a href="#featureservice.maxrecordcount">max​Record​Count</a></li><li class="variable"><a href="#featureservice.supportedqueryformats">supported​Query​Formats</a></li><li class="variable"><a href="#featureservice.supportsrelationshipsresource">supports​Relationships​Resource</a></li><li class="variable"><a href="#featureservice.capabilities">Capabilities</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureservice.currentversion">current​Version</a></li><li class="variable"><a href="#featureservice.servicedescription">service​Description</a></li><li class="variable"><a href="#featureservice.hasversioneddata">has​Versioned​Data</a></li><li class="variable"><a href="#featureservice.supportsdisconnectedediting">supports​Disconnected​Editing</a></li><li class="variable"><a href="#featureservice.supportsdatumtransformation">supports​Datum​Transformation</a></li><li class="variable"><a href="#featureservice.supportsreturndeleteresults">supports​Return​Delete​Results</a></li><li class="variable"><a href="#featureservice.hasstaticdata">has​Static​Data</a></li><li class="variable"><a href="#featureservice.maxrecordcount">max​Record​Count</a></li><li class="variable"><a href="#featureservice.supportedqueryformats">supported​Query​Formats</a></li><li class="variable"><a href="#featureservice.supportsrelationshipsresource">supports​Relationships​Resource</a></li><li class="variable"><a href="#featureservice.capabilities">Capabilities</a></li><li class="variable"><a href="#featureservice.description">description</a></li><li class="variable"><a href="#featureservice.copyrighttext">copyright​Text</a></li><li class="variable"><a href="#featureservice.usertypeextensions">user​Type​Extensions</a></li><li class="variable"><a href="#featureservice.advancededitingcapabilities">advanced​Editing​Capabilities</a></li><li class="variable"><a href="#featureservice.spatialreference">spatial​Reference</a></li><li class="variable"><a href="#featureservice.allowgeometryupdates">allow​Geometry​Updates</a></li><li class="variable"><a href="#featureservice.units">units</a></li><li class="variable"><a href="#featureservice.syncenabled">sync​Enabled</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -174,6 +174,54 @@
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">Capabilities</span>: [<a href="https://lebje.github.io/ArcGISKit/Capability"><span class="type">Capability</span></a>]</code></pre></body></html>
 </div>
+<div role="article" class="variable" id="featureservice.description">
+    <h3>
+        <code>description</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">description</span>: <span class="type">String</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.copyrighttext">
+    <h3>
+        <code>copyright​Text</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">copyrightText</span>: <span class="type">String</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.usertypeextensions">
+    <h3>
+        <code>user​Type​Extensions</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">userTypeExtensions</span>: [<span class="type">String</span>]?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.advancededitingcapabilities">
+    <h3>
+        <code>advanced​Editing​Capabilities</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">advancedEditingCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/AdvancedEditingCapabilities"><span class="type">AdvancedEditingCapabilities</span></a>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.spatialreference">
+    <h3>
+        <code>spatial​Reference</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">spatialReference</span>: <a href="https://lebje.github.io/ArcGISKit/SpatialReference"><span class="type">SpatialReference</span></a>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.allowgeometryupdates">
+    <h3>
+        <code>allow​Geometry​Updates</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">allowGeometryUpdates</span>: <span class="type">Bool</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.units">
+    <h3>
+        <code>units</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">units</span>: <span class="type">String</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="featureservice.syncenabled">
+    <h3>
+        <code>sync​Enabled</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">syncEnabled</span>: <span class="type">Bool</span></code></pre></body></html>
+</div>
     </section>
 
 
@@ -183,7 +231,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2020-12-26T20:00:09+0000">December 26, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2020-12-26T22:22:08+0000">December 26, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
