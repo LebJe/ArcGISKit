@@ -21,7 +21,15 @@ public struct FeatureService: Codable, Equatable {
 	public let maxRecordCount: Int?
 	public let supportedQueryFormats: String?
 	public let supportsRelationshipsResource: Bool?
-	public let capabilities: String?
+	let capabilities: String
+	public var Capabilities: [Capability] {
+		capabilities.components(separatedBy: ",").map({ Capability(rawValue: $0.lowercased())! })
+	}
+	
+}
+
+public enum Capability: String, CaseIterable, Codable {
+	case create, delete, query, update, editing, sync
 }
 
 // public let <#name#>: <#Data type#>

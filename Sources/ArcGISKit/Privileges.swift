@@ -8,10 +8,6 @@
 import Foundation
 
 public enum Privilege: String, Codable, CaseIterable {
-
-	// MARK: - Features
-
-
 	// MARK: - ArcGIS Marketplace subscriptions.
 	case marketplaceAdminManage = "marketplace:admin:manage"
 	case marketplaceAdminPurchase = "marketplace:admin:purchase"
@@ -28,9 +24,14 @@ public enum Privilege: String, Codable, CaseIterable {
 	case portalAdminCreateUpdateCapableGroup = "portal:admin:createUpdateCapableGroup"
 	case portalAdminDeleteGroups = "portal:admin:deleteGroups"
 	case portalAdminDeleteItems = "portal:admin:deleteItems"
+	/// Grants the ability to delete member accounts within organization
 	case portalAdminDeleteUsers = "portal:admin:deleteUsers"
+
 	case portalAdminDisableUsers = "portal:admin:disableUsers"
+
+	/// ArcGIS Online only. Grants the ability to invite members to organization.
 	case portalAdminInviteUsers = "portal:admin:inviteUsers"
+
 	case portalAdminManageCollaborations = "portal:admin:manageCollaborations"
 	case portalAdminManageCredits = "portal:admin:manageCredits"
 	case portalAdminManageEnterpriseGroups = "portal:admin:manageEnterpriseGroups"
@@ -49,9 +50,12 @@ public enum Privilege: String, Codable, CaseIterable {
 	case portalAdminUpdateGroups = "portal:admin:updateGroups"
 	case portalAdminUpdateItemCategorySchema = "portal:admin:updateItemCategorySchema"
 	case portalAdminUpdateItems = "portal:admin:updateItems"
+
+	/// Grants the ability to update member account information within organization
 	case portalAdminUpdateUsers = "portal:admin:updateUsers"
 	case portalAdminViewGroups = "portal:admin:viewGroups"
 	case portalAdminViewItems = "portal:admin:viewItems"
+
 	/// Grants the ability to view full member account information within organization
 	case portalAdminViewUsers = "portal:admin:viewUsers"
 

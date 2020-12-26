@@ -1,0 +1,5 @@
+include pypi_long_description.md
+prune arcgis/widgets/js/
+include arcgis/widgets/js/dist/arcgis-map-ipywidget.js
+include arcgis/widgets/js/dist/arcgis-map-ipywidget.js.map
+include arcgis/widgets/js/dist/extension.js
