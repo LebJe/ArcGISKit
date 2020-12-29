@@ -25,11 +25,34 @@ public struct FeatureService: Codable, Equatable {
 	public var Capabilities: [Capability] {
 		capabilities.components(separatedBy: ",").map({ Capability(rawValue: $0.lowercased())! })
 	}
-	
+
+	public let description: String?
+	public let copyrightText: String?
+	public let userTypeExtensions: [String]?
+	public let advancedEditingCapabilities: AdvancedEditingCapabilities?
+	public let spatialReference: SpatialReference?
+	// ...
+	public let allowGeometryUpdates: Bool?
+	public let units: String?
+	public let syncEnabled: Bool
+	let layers: [Layer]?
 }
 
 public enum Capability: String, CaseIterable, Codable {
-	case create, delete, query, update, editing, sync
+	case create, delete, query, update, editing, sync, uploads
 }
 
-// public let <#name#>: <#Data type#>
+public struct AdvancedEditingCapabilities: Codable, Equatable {
+	public let supportsSplit: Bool?
+	public let supportsReturnServiceEditsInSourceSR: Bool?
+}
+
+public struct SpatialReference: Codable, Equatable {
+	public let wkid: Int?
+	public let latestWkid: Int?
+}
+
+struct Layer: Codable, Equatable {
+	public let id: Int
+	public let name: String?
+}
