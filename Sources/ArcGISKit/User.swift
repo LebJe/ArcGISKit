@@ -38,7 +38,7 @@ public struct User: Codable, Equatable {
 	public let description: String?
 
 	/// User-defined tags that describe the user.
-	public let tags: [String]
+	public let tags: [String]?
 
 	/// The number of credits available to the user.
 	public let availableCredits: Double?
@@ -83,7 +83,7 @@ public struct User: Codable, Equatable {
 	public let userLicenseTypeId: String?
 
 	/// Disables access to the organization by the user.
-	public let disabled: Bool
+	public let disabled: Bool?
 
 	/// User-defined units for measurement.
 	public let units: String?

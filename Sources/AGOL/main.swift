@@ -15,7 +15,10 @@ struct AGOLCommand: ParsableCommand {
 		commandName: "agol",
 		abstract: "Command line tool to interact with ArcGIS Online.",
 		version: "0.0.0",
-		subcommands: [Auth.self]
+		subcommands: [
+			Auth.self,
+			User.self
+		]
 	)
 }
 

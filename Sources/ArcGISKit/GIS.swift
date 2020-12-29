@@ -7,7 +7,7 @@ public struct GIS {
 	public let username: String?
 	public let password: String?
 	public var user: User? = nil
-	public var isAnonymous: Bool
+	public var isAnonymous: Bool { user == nil }
 
 	// MARK: - Private properties.
 	var fullURL: URL { url.appendingPathComponent(site) }
@@ -58,12 +58,10 @@ public struct GIS {
 			}
 
 			self.token = token
-			self.isAnonymous = false
 			getUser()
 		}
 
 		self.token = nil
-		self.isAnonymous = true
 	}
 
 	/// Refresh the ArcGIS token.

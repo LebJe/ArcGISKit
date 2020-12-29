@@ -12,4 +12,6 @@ public enum GISError: Error {
 	case refreshTokenFailed
 	/// The username or password provided to `GIS.init` was invalid.
 	case invalidUsernameOrPassword
+
+	case fetchTokenFailed
 }

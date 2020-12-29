@@ -29,16 +29,9 @@ extension AGOLCommand.Auth {
 			print("Are you sure you want to logout? [Y(es)/N(o)] ", terminator: "")
 
 			switch (readLine() ?? "").lowercased() {
-				case "y":
+				case "y", "yes":
 					try configFile().delete()
-					print("Logged out.".green)
-				case "yes":
-					try configFile().delete()
-					print("Logged out.".green)
-				case "n":
-					Foundation.exit(0)
-				case "no":
-					Foundation.exit(0)
+					print("Logged out.")
 				default:
 					Foundation.exit(0)
 			}

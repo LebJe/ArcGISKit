@@ -19,6 +19,9 @@
 /// @param sz sz
 /// @param mask mask char
 /// @param fp fp
-ssize_t getpasswd(char **pw, size_t sz, int mask, FILE *fp);
+ssize_t getPasswordComplex(char **pw, size_t sz, int mask, FILE *fp);
 
+char * getPasswordSimple();
+void echoOn();
+void echoOff();
 #endif /* GetPass_h */
