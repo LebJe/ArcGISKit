@@ -8,7 +8,7 @@
 import ArcGISKit
 import ArgumentParser
 import Foundation
-import GetPass
+import Echo
 import Rainbow
 
 extension AGOLCommand {

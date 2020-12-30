@@ -9,7 +9,6 @@ import ArcGISKit
 import ArgumentParser
 import Files
 import Foundation
-import GetPass
 import Rainbow
 
 extension AGOLCommand.Auth {

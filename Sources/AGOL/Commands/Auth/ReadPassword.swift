@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GetPass
+import Echo
 
 func readPassword(prompt: String = "Password: ") -> String {
 	var password = ""

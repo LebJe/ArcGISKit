@@ -7,8 +7,6 @@
 
 import Foundation
 import ArgumentParser
-import ArcGISKit
-import GetPass
 
 struct AGOLCommand: ParsableCommand {
 	static let configuration = CommandConfiguration(

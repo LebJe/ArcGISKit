@@ -23,7 +23,7 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
-		.target(name: "GetPass", path: "Sources/GetPass"),
+		.target(name: "Echo", path: "Sources/Echo"),
         .target(
             name: "ArcGISKit",
             dependencies: [
@@ -34,7 +34,7 @@ let package = Package(
 			name: "AGOL",
 			dependencies: [
 				"ArcGISKit",
-				"GetPass",
+				"Echo",
 				"Rainbow",
 				"Files",
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
