@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#spatialreference.wkid">wkid</a></li><li class="variable"><a href="#spatialreference.latestwkid">latest​Wkid</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#spatialreference.wkid">wkid</a></li><li class="variable"><a href="#spatialreference.latestwkid">latest​Wkid</a></li><li class="variable"><a href="#spatialreference.vcswkid">vcs​Wkid</a></li><li class="variable"><a href="#spatialreference.latestvcswkid">latest​Vcs​Wkid</a></li><li class="variable"><a href="#spatialreference.xytolerance">xy​Tolerance</a></li><li class="variable"><a href="#spatialreference.ztolerance">zTolerance</a></li><li class="variable"><a href="#spatialreference.mtolerance">mTolerance</a></li><li class="variable"><a href="#spatialreference.falsex">false​X</a></li><li class="variable"><a href="#spatialreference.falsey">false​Y</a></li><li class="variable"><a href="#spatialreference.xyunits">xy​Units</a></li><li class="variable"><a href="#spatialreference.falsez">false​Z</a></li><li class="variable"><a href="#spatialreference.zunits">zUnits</a></li><li class="variable"><a href="#spatialreference.falsem">false​M</a></li><li class="variable"><a href="#spatialreference.munits">mUnits</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -68,7 +68,7 @@
 <text text-anchor="middle" x="207" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Codable</text>
 </g>
 <!-- SpatialReference&#45;&gt;Codable -->
-<g id="edge2" class="edge conformsTo">
+<g id="edge1" class="edge conformsTo">
 <title>SpatialReference&#45;&gt;Codable</title>
 <path fill="none" stroke="#000000" d="M375.5134,-71.9243C344.4871,-61.9959 305.8297,-49.6255 273.3694,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="274.1008,-35.7975 263.5098,-36.0831 271.9673,-42.4645 274.1008,-35.7975"/>
@@ -80,7 +80,7 @@
 <text text-anchor="middle" x="657" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Equatable</text>
 </g>
 <!-- SpatialReference&#45;&gt;Equatable -->
-<g id="edge1" class="edge conformsTo">
+<g id="edge2" class="edge conformsTo">
 <title>SpatialReference&#45;&gt;Equatable</title>
 <path fill="none" stroke="#000000" d="M488.4866,-71.9243C519.5129,-61.9959 558.1703,-49.6255 590.6306,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="592.0327,-42.4645 600.4902,-36.0831 589.8992,-35.7975 592.0327,-42.4645"/>
@@ -112,6 +112,78 @@
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">latestWkid</span>: <span class="type">Int</span>?</code></pre></body></html>
 </div>
+<div role="article" class="variable" id="spatialreference.vcswkid">
+    <h3>
+        <code>vcs​Wkid</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">vcsWkid</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.latestvcswkid">
+    <h3>
+        <code>latest​Vcs​Wkid</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">latestVcsWkid</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.xytolerance">
+    <h3>
+        <code>xy​Tolerance</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">xyTolerance</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.ztolerance">
+    <h3>
+        <code>zTolerance</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">zTolerance</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.mtolerance">
+    <h3>
+        <code>mTolerance</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">mTolerance</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.falsex">
+    <h3>
+        <code>false​X</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">falseX</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.falsey">
+    <h3>
+        <code>false​Y</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">falseY</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.xyunits">
+    <h3>
+        <code>xy​Units</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">xyUnits</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.falsez">
+    <h3>
+        <code>false​Z</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">falseZ</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.zunits">
+    <h3>
+        <code>zUnits</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">zUnits</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.falsem">
+    <h3>
+        <code>false​M</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">falseM</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
+<div role="article" class="variable" id="spatialreference.munits">
+    <h3>
+        <code>mUnits</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">mUnits</span>: <span class="type">Int</span>?</code></pre></body></html>
+</div>
     </section>
 
 
@@ -121,7 +193,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2020-12-31T16:01:35+0000">December 31, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2020-12-31T17:45:20+0000">December 31, 2020</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
