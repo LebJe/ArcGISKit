@@ -59,9 +59,9 @@ public struct GIS {
 
 			self.token = token
 			getUser()
+		} else {
+			self.token = nil
 		}
-
-		self.token = nil
 	}
 
 	/// Refresh the ArcGIS token.

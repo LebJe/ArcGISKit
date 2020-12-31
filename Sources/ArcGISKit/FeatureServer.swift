@@ -39,7 +39,7 @@ public struct FeatureServer {
 					fS = try JSONDecoder().decode(FeatureService.self, from: Data(buffer: res.body!))
 				} catch {
 					print(error)
-					//print(String(data: Data(buffer: res.body!), encoding: .utf8) ?? "")
+
 				}
 			}
 		} catch {
