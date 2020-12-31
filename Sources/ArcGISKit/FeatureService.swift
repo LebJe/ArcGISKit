@@ -35,7 +35,18 @@ public struct FeatureService: Codable, Equatable {
 	public let allowGeometryUpdates: Bool?
 	public let units: String?
 	public let syncEnabled: Bool
-	let layers: [Layer]?
+	public let datumTransformations: [DatumTransformation]?
+	public let layers: [Layer]?
+	public let tables: [Table]?
+	public let relationships: [Relationship]?
+	public let controllerDatasetLayers: ControllerDatasetLayer?
+	public let heightModelInfo: HeightModelInfo?
+	public let enableZDefaults: Bool?
+	public let supportsDynamicLayers: Bool?
+	public let allowUpdateWithoutMValues: Bool?
+	public let supportsVCSProjection: Bool?
+	public let referenceScale: Int?
+	public let serviceItemId: String?
 }
 
 public enum Capability: String, CaseIterable, Codable {
@@ -50,9 +61,60 @@ public struct AdvancedEditingCapabilities: Codable, Equatable {
 public struct SpatialReference: Codable, Equatable {
 	public let wkid: Int?
 	public let latestWkid: Int?
+	public let vcsWkid: Int?
+	public let latestVcsWkid: Int?
+	public let xyTolerance: Int?
+	public let zTolerance: Int?
+	public let mTolerance: Int?
+	public let falseX: Int?
+	public let falseY: Int?
+	public let xyUnits: Int?
+	public let falseZ: Int?
+	public let zUnits: Int?
+	public let falseM: Int?
+	public let mUnits: Int?
 }
 
-struct Layer: Codable, Equatable {
+public struct Layer: Codable, Equatable {
 	public let id: Int
+	public let name: String?
+	public let parentLayerId: Int?
+	public let defaultVisibility: Bool?
+	public let subLayerIds: [String]?
+	public let minScale: Int?
+	public let maxScale: Int?
+	public let geometryType: String?
+	public let type: String?
+}
+
+public struct Table: Codable, Equatable {
+	public let id: Int
+	public let name: String?
+}
+
+public struct Relationship: Codable, Equatable {
+	public let id: Int
+	public let name: String?
+}
+
+
+public struct ControllerDatasetLayer: Codable, Equatable {
+	public let topologyLayerIds: [Int]?
+}
+
+public struct HeightModelInfo: Codable, Equatable {
+	public let heightModel: String?
+	public let vertCRS: String?
+	public let heightUnit: String?
+}
+
+public struct DatumTransformation: Codable, Equatable {
+	public let geoTransforms: [GeoTransform]?
+}
+
+public struct GeoTransform: Codable, Equatable {
+	public let wkid: Int?
+	public let latestWkid: Int?
+	public let transformForward: Bool?
 	public let name: String?
 }
