@@ -22,16 +22,30 @@ extension AGOLCommand.User {
 					print("Anonymous User".bold)
 				}
 				if let user = gis.user {
+					let favoriteGroup: Group? = (user.groups ?? []).first(where: {$0.id == user.favGroupId ?? "" })
+
 					print("ID: ".bold + user.id)
 					print("Name: ".bold + (user.fullName ?? "No name"))
-					print("Description: ".bold + (user.description != nil ? user.description!.isEmpty ? "No description" : user.description! : "No description"))
 					print("Username: ".bold + user.username)
 					print("Email: ".bold + (user.email ?? "No email"))
+					print("Description: ".bold + (user.description != nil ? user.description!.isEmpty ? "No description" : user.description! : "No description"))
+					print("Available Credits: ".bold + (user.availableCredits != nil ? String(user.availableCredits!) : "None"))
+					print("Assigned Credits: ".bold + (user.assignedCredits != nil ? String(user.assignedCredits!) : "None"))
+					print("Favorite Group: ".bold + (favoriteGroup?.title ?? "None"))
+					print("Multi-factor Authentication: ".bold + (user.mfaEnabled ?? false ? "Enabled" : "Disabled"))
+
 					if let tags = user.tags, !tags.isEmpty {
-						print("Tags: ".bold, terminator: "")
+						print("Tags: ".bold)
 						tags.forEach({ print("  \($0)") })
 					} else {
 						print("Tags: ".bold + "No tags.")
+					}
+
+					if let groups = user.groups, !groups.isEmpty {
+						print("Groups I'm In: ".bold)
+						groups.forEach({ print("  \($0.title ?? "")") })
+					} else {
+						print("Groups I'm In: ".bold + "None.")
 					}
 				}
 			} catch ConfigError.noConfigFile {
