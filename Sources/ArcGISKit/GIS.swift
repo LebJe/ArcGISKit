@@ -21,7 +21,7 @@ public struct GIS {
 	///   - username: Your ArcGIS username.
 	///   - password: Your ArcGIS password.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	public init(username: String? = nil, password: String? = nil, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing", fetchGroupContent: Bool = false) throws {
+	public init(username: String? = nil, password: String? = nil, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
 		self.url = url
 		self.username = username
 		self.password = password
