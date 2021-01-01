@@ -12,7 +12,7 @@ import Foundation
 /// Personal details of the user, such as e-mail and groups, are returned only to the user or the administrator of the user's organization.
 ///
 /// A user is not visible to any other user (except the organization's administrator) if their access setting is set to "private."
-public struct User: Codable, Equatable {
+public struct User: Decodable, Equatable {
 	/// The ID of the user.
 	public let id: String
 
@@ -107,7 +107,7 @@ public struct User: Codable, Equatable {
 	public let modified: Date
 
 	/// An array of groups the user belongs to. See [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) for properties of a group.
-	public let groups: [Group]?
+	public var groups: [Group]?
 
 	/// The identity provider for the organization.
 	public let provider: Provider?

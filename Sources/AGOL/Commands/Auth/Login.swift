@@ -71,7 +71,7 @@ extension AGOLCommand.Auth {
 					print("You have logged in as an anonymous user. No credentials will be saved.".yellow)
 				}
 
-				let config = AGOLConfig(userType: .authenticated, username: username, password: password)
+				let config = AGOLConfig(userType: .authenticated, username: username, password: password, url: arcgisServerURL!)
 				let data = try JSONEncoder().encode(config)
 				let cf = try configFile()
 

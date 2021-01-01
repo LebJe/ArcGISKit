@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AsyncHTTPClient
 
 /// The Group resource represents a group (for example, San Bernardino Fires) within the portal.
 ///
@@ -14,7 +15,9 @@ import Foundation
 /// Group members can leave the group. Authenticated users can apply to join a group unless the group is by invitation only.
 ///
 /// The visibility of the group by other users is determined by the `access` property. If the group is private, no one other than the administrators and members of the group will be able to see it. If the group is shared with an organization, all members of the organization will be able to find it.
-public struct Group: Codable, Equatable {
+///
+/// To fetch the content owned by a `Group` call `Group.fetchContent()`.
+public struct Group: Decodable, Equatable {
 	/// The given group ID.
 	public let id: String?
 
@@ -80,8 +83,100 @@ public struct Group: Codable, Equatable {
 
 	/// If `true`, the group is designated as available for use in Open Data sites.
 	public let isOpenData: Bool?
-}
 
+	public var content: [ContentType] = []
+
+	public init(from decoder: Decoder) throws {
+		let values = try decoder.container(keyedBy: CodingKeys.self)
+		self.id = try values.decode(Optional<String>.self, forKey: .id)
+		self.title = try values.decode(Optional<String>.self, forKey: .title)
+		self.isInvitationOnly = try values.decode(Optional<Bool>.self, forKey: .isInvitationOnly)
+		self.owner = try values.decode(Optional<String>.self, forKey: .owner)
+		self.description = try values.decode(Optional<String>.self, forKey: .description)
+		self.typeKeywords = try values.decode(Optional<[String]>.self, forKey: .typeKeywords)
+		self.snippet = try values.decode(Optional<String>.self, forKey: .snippet)
+		self.tags = try values.decode(Optional<[String]>.self, forKey: .tags)
+		self.phone = try values.decode(Optional<String>.self, forKey: .phone)
+		self.sortField = try values.decode(Optional<String>.self, forKey: .sortField)
+		self.sortOrder = try values.decode(Optional<SortOrder>.self, forKey: .sortOrder)
+		self.isViewOnly = try values.decode(Bool.self, forKey: .isViewOnly)
+		self.isFav = try values.decode(Bool.self, forKey: .isFav)
+		self.thumbnail = try values.decode(Optional<String>.self, forKey: .thumbnail)
+		self.created = try values.decode(Date.self, forKey: .created)
+		self.modified = try values.decode(Date.self, forKey: .modified)
+		self.access = try values.decode(String.self, forKey: .access)
+		self.userMembership = try values.decode(Optional<UserMembership>.self, forKey: .userMembership)
+		self.protected = try values.decode(Bool.self, forKey: .protected)
+		self.autoJoin = try values.decode(Bool.self, forKey: .autoJoin)
+		self.hasCategorySchema = (try? values.decode(Optional<Bool>.self, forKey: .hasCategorySchema)) ?? nil
+		self.isOpenData = (try? values.decode(Optional<Bool>.self, forKey: .isOpenData)) ?? nil
+	}
+
+	enum CodingKeys: CodingKey {
+		case id,
+		title,
+		isInvitationOnly,
+		owner,
+		description,
+		typeKeywords,
+		snippet,
+		tags,
+		phone,
+		sortField,
+		sortOrder,
+		isViewOnly,
+		isFav,
+		thumbnail,
+		created,
+		modified,
+		access,
+		userMembership,
+		protected,
+		autoJoin,
+		hasCategorySchema,
+		isOpenData
+	}
+
+	/// Retrieves the content owned by this `Group`.
+	/// - Parameter gis: The `GIS` to use to authenticate.
+	public mutating func fetchContent(from gis: GIS) {
+		do {
+
+			let groupURL = gis.fullURL
+				.appendingPathComponent("content")
+				.appendingPathComponent("groups")
+				.appendingPathComponent(self.id!)
+				.absoluteString
+
+			let req = try HTTPClient.Request(
+				url: "\(groupURL)?token=\(gis.token!)&start=1&num=100&f=json",
+				method: .GET
+			)
+
+			let res = try gs.client.execute(request: req).wait()
+
+			if res.status == .ok && res.body != nil {
+				let decoder = JSONDecoder()
+				decoder.dateDecodingStrategy = .millisecondsSince1970
+				let groupContent = try decoder.decode(GroupContent.self, from: Data(buffer: res.body!))
+				//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
+				for item in groupContent.items {
+					if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
+						//print("Feature Service: \(item.item!)")
+						if let u = URL(string: item.item!) {
+							self.content.append(.featureServer(FeatureServer(url: u, gis: gis)))
+						}
+					}
+				}
+				//print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+			}
+
+
+		} catch {
+			print(error)
+		}
+	}
+}
 
 /// The order a `Group` is sorted by.
 public enum SortOrder: String, Codable, CaseIterable, Equatable {

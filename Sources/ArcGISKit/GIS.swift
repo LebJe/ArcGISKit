@@ -21,7 +21,7 @@ public struct GIS {
 	///   - username: Your ArcGIS username.
 	///   - password: Your ArcGIS password.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	public init(username: String? = nil, password: String? = nil, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
+	public init(username: String? = nil, password: String? = nil, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing", fetchGroupContent: Bool = false) throws {
 		self.url = url
 		self.username = username
 		self.password = password
@@ -110,4 +110,41 @@ public struct GIS {
 			}
 		}
 	}
+}
+struct GroupContent: Codable, Equatable {
+	let total: Int
+	let start: Int
+	let num: Int
+	let nextStart: Int
+	let items: [GroupContentItem]
+}
+
+struct GroupContentItem: Codable, Equatable {
+	let id: String?
+	let item: String?
+	let itemType: String?
+	let owner: String?
+	let uploaded: Date?
+	let modified: Date?
+	let isOrgItem: Bool?
+	let guid: String?
+	let name: String?
+	let title: String?
+	let type: String?
+}
+
+public enum ContentType: Equatable {
+	public static func == (lhs: ContentType, rhs: ContentType) -> Bool {
+		switch lhs {
+			case let .featureServer(f):
+				if case .featureServer(let f2) = rhs {
+					return f == f2
+				}
+				return false
+			default:
+				return false
+		}
+	}
+
+	case featureServer(FeatureServer)
 }
