@@ -158,24 +158,35 @@ public struct Group: Decodable, Equatable {
 			if res.status == .ok && res.body != nil {
 				let decoder = JSONDecoder()
 				decoder.dateDecodingStrategy = .millisecondsSince1970
-				let groupContent = try decoder.decode(GroupContent.self, from: Data(buffer: res.body!))
-				//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
+
+				let groupContent = try decoder.decode(Pagination<GroupContentItem>.self, from: Data(buffer: res.body!))
+
 				for item in groupContent.items {
 					if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
-						//print("Feature Service: \(item.item!)")
 						if let u = URL(string: item.item!) {
 							self.content.append(.featureServer(FeatureServer(url: u, gis: gis)))
 						}
 					}
 				}
-				//print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 			}
-
-
 		} catch {
 			print(error)
 		}
 	}
+}
+
+struct GroupContentItem: Codable, Equatable {
+	let id: String?
+	let item: String?
+	let itemType: String?
+	let owner: String?
+	let uploaded: Date?
+	let modified: Date?
+	let isOrgItem: Bool?
+	let guid: String?
+	let name: String?
+	let title: String?
+	let type: String?
 }
 
 /// The order a `Group` is sorted by.
