@@ -11,7 +11,7 @@ import AsyncHTTPClient
 /// A `FeatureServer` manages `FeatureService`s.
 public struct FeatureServer: Equatable {
 	public static func == (lhs: FeatureServer, rhs: FeatureServer) -> Bool {
-		lhs.url == rhs.url
+		lhs.url == rhs.url && lhs.featureService == rhs.featureService
 	}
 
 	public let url: URL
@@ -22,7 +22,8 @@ public struct FeatureServer: Equatable {
 	/// - Parameters:
 	///   - url: The URL to the Feature Server, e.g: "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
 	///   - gis: The `GIS` to use to authenticate.
-	public init(url: URL, gis: GIS) {
+	/// - Throws: `GISError`.
+	public init(url: URL, gis: GIS) throws {
 		self.url = url
 		self.gis = gis
 
@@ -42,8 +43,7 @@ public struct FeatureServer: Equatable {
 				do {
 					fS = try JSONDecoder().decode(FeatureService.self, from: Data(buffer: res.body!))
 				} catch {
-					print(error)
-
+					throw GISError.fetchFeatureServiceFailed
 				}
 			}
 		} catch {
@@ -85,6 +85,5 @@ public extension FeatureServer {
 	struct LayerQuery {
 		let whereClause: String
 		let layerID: String
-
 	}
 }

@@ -88,26 +88,23 @@ public struct Group: Equatable, Codable {
 
 	/// Retrieves the content owned by this `Group`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
-	public mutating func fetchContent(from gis: GIS) {
-		do {
-			let groupURL = gis.fullURL
-				.appendingPathComponent("content")
-				.appendingPathComponent("groups")
-				.appendingPathComponent(self.id!)
+	/// - Throws: `GISError`.
+	public mutating func fetchContent(from gis: GIS) throws {
+		let groupURL = gis.fullURL
+			.appendingPathComponent("content")
+			.appendingPathComponent("groups")
+			.appendingPathComponent(self.id!)
 
-			let items = try getContent(token: gis.token!, url: groupURL, decodeType: ContentItem.self)
+		let items = try getContent(token: gis.token!, url: groupURL, decodeType: ContentItem.self)
 
-			for item in items {
-				if item.itemType != nil && item.type != nil && item.item != nil {
-					if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
-						if let u = URL(string: item.item!) {
-							self.content.append(.featureServer(featureServer: FeatureServer(url: u, gis: gis), metadata: item))
-						}
+		for item in items {
+			if item.itemType != nil && item.type != nil && item.item != nil {
+				if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
+					if let u = URL(string: item.item!) {
+						self.content.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
 					}
 				}
 			}
-		} catch {
-			print(error)
 		}
 	}
 

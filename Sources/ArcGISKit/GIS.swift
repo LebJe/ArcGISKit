@@ -115,22 +115,26 @@ public struct GIS {
 
 
 func getContent<T: Codable>(token: String, url: URL, decodeType: T.Type) throws -> [T] {
-	let cReq = try HTTPClient.Request(url: "\(url.absoluteString)?token=\(token)&f=json&start=1&num=100", method: .GET)
+	do {
+		let cReq = try HTTPClient.Request(url: "\(url.absoluteString)?token=\(token)&f=json&start=1&num=100", method: .GET)
 
-	let res = try gs.client.execute(request: cReq).wait()
+		let res = try gs.client.execute(request: cReq).wait()
 
-	if res.body != nil {
-		if res.status == .ok {
-			//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
-			let decoder = JSONDecoder()
-			decoder.dateDecodingStrategy = .millisecondsSince1970
+		if res.body != nil {
+			if res.status == .ok {
+				//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
+				let decoder = JSONDecoder()
+				decoder.dateDecodingStrategy = .millisecondsSince1970
 
-			let pagination = try decoder.decode(Pagination<T>.self, from: Data(buffer: res.body!))
-			//print(pagination.items)
+				let pagination = try decoder.decode(Pagination<T>.self, from: Data(buffer: res.body!))
+				//print(pagination.items)
 
-			return pagination.items
+				return pagination.items
+			}
 		}
-	}
 
-	return []
+		return []
+	} catch {
+		throw GISError.fetchContentFailed
+	}
 }
