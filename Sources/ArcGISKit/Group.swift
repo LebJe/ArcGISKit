@@ -17,7 +17,7 @@ import AsyncHTTPClient
 /// The visibility of the group by other users is determined by the `access` property. If the group is private, no one other than the administrators and members of the group will be able to see it. If the group is shared with an organization, all members of the organization will be able to find it.
 ///
 /// To fetch the content owned by a `Group` call `Group.fetchContent()`.
-public struct Group: Decodable, Equatable {
+public struct Group: Equatable, Codable {
 	/// The given group ID.
 	public let id: String?
 
@@ -86,85 +86,22 @@ public struct Group: Decodable, Equatable {
 
 	public var content: [ContentType] = []
 
-	public init(from decoder: Decoder) throws {
-		let values = try decoder.container(keyedBy: CodingKeys.self)
-		self.id = try values.decode(Optional<String>.self, forKey: .id)
-		self.title = try values.decode(Optional<String>.self, forKey: .title)
-		self.isInvitationOnly = try values.decode(Optional<Bool>.self, forKey: .isInvitationOnly)
-		self.owner = try values.decode(Optional<String>.self, forKey: .owner)
-		self.description = try values.decode(Optional<String>.self, forKey: .description)
-		self.typeKeywords = try values.decode(Optional<[String]>.self, forKey: .typeKeywords)
-		self.snippet = try values.decode(Optional<String>.self, forKey: .snippet)
-		self.tags = try values.decode(Optional<[String]>.self, forKey: .tags)
-		self.phone = try values.decode(Optional<String>.self, forKey: .phone)
-		self.sortField = try values.decode(Optional<String>.self, forKey: .sortField)
-		self.sortOrder = try values.decode(Optional<SortOrder>.self, forKey: .sortOrder)
-		self.isViewOnly = try values.decode(Bool.self, forKey: .isViewOnly)
-		self.isFav = try values.decode(Bool.self, forKey: .isFav)
-		self.thumbnail = try values.decode(Optional<String>.self, forKey: .thumbnail)
-		self.created = try values.decode(Date.self, forKey: .created)
-		self.modified = try values.decode(Date.self, forKey: .modified)
-		self.access = try values.decode(String.self, forKey: .access)
-		self.userMembership = try values.decode(Optional<UserMembership>.self, forKey: .userMembership)
-		self.protected = try values.decode(Bool.self, forKey: .protected)
-		self.autoJoin = try values.decode(Bool.self, forKey: .autoJoin)
-		self.hasCategorySchema = (try? values.decode(Optional<Bool>.self, forKey: .hasCategorySchema)) ?? nil
-		self.isOpenData = (try? values.decode(Optional<Bool>.self, forKey: .isOpenData)) ?? nil
-	}
-
-	enum CodingKeys: CodingKey {
-		case id,
-		title,
-		isInvitationOnly,
-		owner,
-		description,
-		typeKeywords,
-		snippet,
-		tags,
-		phone,
-		sortField,
-		sortOrder,
-		isViewOnly,
-		isFav,
-		thumbnail,
-		created,
-		modified,
-		access,
-		userMembership,
-		protected,
-		autoJoin,
-		hasCategorySchema,
-		isOpenData
-	}
-
 	/// Retrieves the content owned by this `Group`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
 	public mutating func fetchContent(from gis: GIS) {
 		do {
-
 			let groupURL = gis.fullURL
 				.appendingPathComponent("content")
 				.appendingPathComponent("groups")
 				.appendingPathComponent(self.id!)
-				.absoluteString
 
-			let req = try HTTPClient.Request(
-				url: "\(groupURL)?token=\(gis.token!)&start=1&num=100&f=json",
-				method: .GET
-			)
+			let items = try getContent(token: gis.token!, url: groupURL, decodeType: ContentItem.self)
 
-			let res = try gs.client.execute(request: req).wait()
-
-			if res.status == .ok && res.body != nil {
-				let decoder = JSONDecoder()
-				decoder.dateDecodingStrategy = .millisecondsSince1970
-
-				let groupContent = try decoder.decode(Pagination<GroupContentItem>.self, from: Data(buffer: res.body!))
-
-				for item in groupContent.items {
+			for item in items {
+				if item.itemType != nil && item.type != nil && item.item != nil {
 					if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
 						if let u = URL(string: item.item!) {
-							self.content.append(.featureServer(FeatureServer(url: u, gis: gis)))
+							self.content.append(.featureServer(featureServer: FeatureServer(url: u, gis: gis), metadata: item))
 						}
 					}
 				}
@@ -173,20 +110,31 @@ public struct Group: Decodable, Equatable {
 			print(error)
 		}
 	}
-}
 
-struct GroupContentItem: Codable, Equatable {
-	let id: String?
-	let item: String?
-	let itemType: String?
-	let owner: String?
-	let uploaded: Date?
-	let modified: Date?
-	let isOrgItem: Bool?
-	let guid: String?
-	let name: String?
-	let title: String?
-	let type: String?
+	enum CodingKeys: CodingKey {
+		case id,
+			 title,
+			 isInvitationOnly,
+			 owner,
+			 description,
+			 typeKeywords,
+			 snippet,
+			 tags,
+			 phone,
+			 sortField,
+			 sortOrder,
+			 isViewOnly,
+			 isFav,
+			 thumbnail,
+			 created,
+			 modified,
+			 access,
+			 userMembership,
+			 protected,
+			 autoJoin,
+			 hasCategorySchema,
+			 isOpenData
+	}
 }
 
 /// The order a `Group` is sorted by.

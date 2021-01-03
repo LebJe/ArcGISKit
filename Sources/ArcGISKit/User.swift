@@ -111,6 +111,64 @@ public struct User: Decodable, Equatable {
 
 	/// The identity provider for the organization.
 	public let provider: Provider?
+
+	public var content: [ContentType] = []
+
+	public mutating func fetchContent(from gis: GIS) {
+		do {
+			let contentURL = gis.fullURL.appendingPathComponent("rest").appendingPathComponent("content").appendingPathComponent("users").appendingPathComponent(self.username)
+			
+			let items = try getContent(token: gis.token!, url: contentURL, decodeType: ContentItem.self)
+
+			for item in items {
+				if item.itemType != nil && item.type != nil && item.item != nil {
+					if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
+						if let u = URL(string: item.item!) {
+							self.content.append(.featureServer(featureServer: FeatureServer(url: u, gis: gis), metadata: item))
+						}
+					}
+				}
+			}
+		} catch {
+
+		}
+	}
+
+	enum CodingKeys: CodingKey {
+		case id,
+			 firstName,
+			 lastName,
+			 fullName,
+			 username,
+			 idpUsername,
+			 email,
+			 description,
+			 tags,
+			 availableCredits,
+			 assignedCredits,
+			 preferredView,
+			 access,
+			 mfaEnabled,
+			 favGroupId,
+			 lastLogin,
+			 storageUsage,
+			 storageQuota,
+			 orgId,
+			 role,
+			 privileges,
+			 roleId,
+			 userLicenseTypeId,
+			 disabled,
+			 units,
+			 culture,
+			 cultureFormat,
+			 region,
+			 thumbnail,
+			 created,
+			 modified,
+			 groups,
+			 provider
+	}
 }
 
 public enum Provider: String, Codable, CaseIterable, Equatable {

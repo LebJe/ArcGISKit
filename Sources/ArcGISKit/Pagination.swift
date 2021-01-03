@@ -13,4 +13,9 @@ struct Pagination<T: Codable>: Codable {
 	let num: Int
 	let nextStart: Int
 	let items: [T]
+	let folders: [Folder]?
+}
+
+struct Folder: Codable {
+
 }
