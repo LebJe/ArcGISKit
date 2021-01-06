@@ -24,6 +24,12 @@ extension AGOLCommand.Auth {
 		var arcgisServerURL: URL? = URL(string: "https://arcgis.com")!
 
 		@Option(
+			name: [.short, .long],
+			help: "ArcGIS Server site."
+		)
+		var site: String = "sharing"
+
+		@Option(
 			name: [.customShort("p"), .long],
 			help: "File to read password from.",
 			completion: .file(),
@@ -63,7 +69,7 @@ extension AGOLCommand.Auth {
 
 		func saveCredentials(username: String?, password: String?) {
 			do {
-				let gis = try GIS(username: username, password: password, url: arcgisServerURL!)
+				let gis = try GIS(authType: username == nil && password == nil ? .anonymous : .credentials(username: username!, password: password!), url: arcgisServerURL!, site: site)
 
 				print("Credentials are valid! Saving credentials...".blue)
 

@@ -21,47 +21,55 @@ public struct GIS {
 	///   - username: Your ArcGIS username.
 	///   - password: Your ArcGIS password.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	public init(username: String? = nil, password: String? = nil, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
+	public init(authType: AuthenticationType, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
 		self.url = url
-		self.username = username
-		self.password = password
 		self.site = site
 
-		let newURL = url.appendingPathComponent(site).appendingPathComponent("rest").appendingPathComponent("generateToken")
-		var token = ""
+		switch authType {
+			case let .credentials(username: username, password: password):
+				self.username = username
+				self.password = password
 
-		if username != nil || password != nil {
-			do {
-				let req = try HTTPClient.Request(
-					url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
-					method: .POST
-				)
+				let newURL = url.appendingPathComponent(site).appendingPathComponent("rest").appendingPathComponent("generateToken")
+				var token = ""
 
-				let res = try gs.client.execute(request: req).wait()
+				do {
+					let req = try HTTPClient.Request(
+						url: "\(newURL.absoluteString)?f=json&username=\(username.urlQueryEncoded)&password=\(password.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
+						method: .POST
+					)
 
-				if res.body != nil {
-					if res.status == .ok {
-						do {
-							let rtr = try JSONDecoder().decode(RequestTokenResponse.self, from: Data(buffer: res.body!))
-							token = rtr.token
-						} catch {
-							let resString = String(data: Data(buffer: res.body!), encoding: .utf8) ?? ""
+					let res = try gs.client.execute(request: req).wait()
 
-							if resString.contains("Invalid username or password.") {
-								throw GISError.invalidUsernameOrPassword
+					if res.body != nil {
+						if res.status == .ok {
+							do {
+								let rtr = try JSONDecoder().decode(RequestTokenResponse.self, from: Data(buffer: res.body!))
+								token = rtr.token
+							} catch {
+								let resString = String(data: Data(buffer: res.body!), encoding: .utf8) ?? ""
+
+								if resString.contains("Invalid username or password.") {
+									throw GISError.invalidUsernameOrPassword
+								}
 							}
 						}
 					}
+
+				} catch {
+					throw error
 				}
 
-			} catch {
-				throw error
-			}
+				self.token = token
+				self.getUser()
 
-			self.token = token
-			getUser()
-		} else {
-			self.token = nil
+			case .anonymous:
+				self.token = nil
+				self.username = nil
+				self.password = nil
+			default:
+				self.username = nil
+				self.password = nil
 		}
 	}
 

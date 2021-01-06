@@ -12,5 +12,9 @@ import NIO
 func getGIS() throws -> GIS {
 	let agolC = try getConfigFileData()
 
-	return try GIS(username: agolC.username, password: agolC.password, url: agolC.url, site: agolC.site)
+	return try GIS(
+		authType: agolC.username == nil && agolC.password == nil ? .anonymous : .credentials(username: agolC.username!, password: agolC.password!),
+		url: agolC.url,
+		site: agolC.site
+	)
 }
