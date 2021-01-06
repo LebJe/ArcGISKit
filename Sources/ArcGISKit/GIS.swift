@@ -14,8 +14,7 @@ public struct GIS {
 	let site: String
 	var token: String?
 
-	/// Creates an instance containing a `username` and `password`, then requests a token for authentication.
-	/// if `username` and `password` is `nil`, you will be logged in to ArcGIS Online anonymously.
+	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
 	/// - Parameters:
 	///   - url: Your ArcGIS Server hostname.
 	///   - username: Your ArcGIS username.
