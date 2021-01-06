@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGISKit - AuthenticationType</title>
+    <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="https://lebje.github.io/ArcGISKit/">
+            <strong>
+                ArcGISKit
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#authenticationtype.credentials">credentials</a></li><li class="case"><a href="#authenticationtype.anonymous">anonymous</a></li><li class="case"><a href="#authenticationtype.webbrowser">web​Browser</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Enumeration</small>
+    <code class="name">Authentication​Type</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">AuthenticationType</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>The methods to use to authenticate.</p>
+
+</div>
+
+    <section id="enumeration cases">
+        <h2>Enumeration Cases</h2>
+
+        <div role="article" class="case" id="authenticationtype.credentials">
+    <h3>
+        <code>credentials</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">credentials</span>(<span class="variable">username</span>: <span class="type">String</span>, <span class="variable">password</span>: <span class="type">String</span>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Authenticate using your username and password.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="authenticationtype.anonymous">
+    <h3>
+        <code>anonymous</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">anonymous</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Authenticate anonymously.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="authenticationtype.webbrowser">
+    <h3>
+        <code>web​Browser</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">case</span> <span class="variable">webBrowser</span>(<span class="variable">clientID</span>: <span class="type">String</span>, <span class="variable">clientSecret</span>: <span class="type">String</span>)</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Authenticate using a code obtained via a web browser.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-01-06T00:52:34+0000">January 6, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+</p>
+    </footer>
+</body>
+</html>

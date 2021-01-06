@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(username:password:url:site:)">init(username:​password:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.user">user</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li></ol>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(authtype:url:site:)">init(auth​Type:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.user">user</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -42,11 +42,11 @@
     <section id="initializers">
         <h2>Initializers</h2>
 
-        <div role="article" class="initializer" id="gis.init(username:password:url:site:)">
+        <div role="article" class="initializer" id="gis.init(authtype:url:site:)">
     <h3>
-        <code>init(username:​password:​url:​site:​)</code>
+        <code>init(auth​Type:​url:​site:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">username</span>: <span class="type">String</span>? = <span class="keyword">nil</span>, <span class="variable">password</span>: <span class="type">String</span>? = <span class="keyword">nil</span>, <span class="variable">url</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>) <span class="keyword">throws</span></code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">authType</span>: <a href="https://lebje.github.io/ArcGISKit/AuthenticationType"><span class="type">AuthenticationType</span></a>, <span class="variable">url</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>) <span class="keyword">throws</span></code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Creates an instance containing a <code>username</code> and <code>password</code>, then requests a token for authentication.
 if <code>username</code> and <code>password</code> is <code>nil</code>, you will be logged in to ArcGIS Online anonymously.</p>
@@ -71,13 +71,13 @@ if <code>username</code> and <code>password</code> is <code>nil</code>, you will
 </tr>
 <tr>
     <th>username</th>
-    <td><code class="type">String?</code></td>
+    <td></td>
     <td><p>Your ArcGIS username.</p>
 </td>
 </tr>
 <tr>
     <th>password</th>
-    <td><code class="type">String?</code></td>
+    <td></td>
     <td><p>Your ArcGIS password.</p>
 </td>
 </tr>
@@ -133,7 +133,7 @@ if <code>username</code> and <code>password</code> is <code>nil</code>, you will
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-03T19:52:45+0000">January 3, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-06T00:52:34+0000">January 6, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
