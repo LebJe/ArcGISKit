@@ -107,9 +107,7 @@ public struct GIS {
 				let res = try gs.client.execute(request: req).wait()
 
 				if res.status == .ok && res.body != nil {
-					let decoder = JSONDecoder()
-					decoder.dateDecodingStrategy = .millisecondsSince1970
-					let user = try decoder.decode(User.self, from: Data(buffer: res.body!))
+					let user = try JSONDecoder().decode(User.self, from: Data(buffer: res.body!))
 					self.user = user
 				}
 
@@ -129,12 +127,7 @@ func getContent<T: Codable>(token: String, url: URL, decodeType: T.Type) throws 
 
 		if res.body != nil {
 			if res.status == .ok {
-				//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
-				let decoder = JSONDecoder()
-				decoder.dateDecodingStrategy = .millisecondsSince1970
-
-				let pagination = try decoder.decode(Pagination<T>.self, from: Data(buffer: res.body!))
-				//print(pagination.items)
+				let pagination = try JSONDecoder().decode(Pagination<T>.self, from: Data(buffer: res.body!))
 
 				return pagination.items
 			}

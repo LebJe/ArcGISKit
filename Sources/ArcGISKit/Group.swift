@@ -7,6 +7,7 @@
 
 import Foundation
 import AsyncHTTPClient
+import CodableWrappers
 
 /// The Group resource represents a group (for example, San Bernardino Fires) within the portal.
 ///
@@ -61,10 +62,12 @@ public struct Group: Equatable, Codable {
 	public let thumbnail: String?
 
 	/// THe date the group was created.
-	public let created: Date
+	@Immutable @MillisecondsSince1970DateCoding
+	public var created: Date
 
 	/// The date the group was last modified.
-	public let modified: Date
+	@Immutable @MillisecondsSince1970DateCoding
+	public var modified: Date
 
 	/// The access privileges of the group that determine who can see and access the group. This can be set to private, org, or public.
 	public let access: String

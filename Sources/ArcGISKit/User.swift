@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CodableWrappers
 
 /// A `User` resource represents a registered user of the portal.
 ///
@@ -59,7 +60,8 @@ public struct User: Decodable, Equatable {
 	public let favGroupId: String?
 
 	/// The last login date of the user.
-	public let lastLogin: Date?
+	@Immutable @MillisecondsSince1970DateCoding
+	public var lastLogin: Date
 
 	/// The total storage used by the user's organization or subscription in Byte.
 	public let storageUsage: Int?
@@ -100,11 +102,14 @@ public struct User: Decodable, Equatable {
 
 	/// The file name of the thumbnail used for the user.
 	public let thumbnail: String?
+
 	/// The date the user was created.
-	public let created: Date
+	@Immutable @MillisecondsSince1970DateCoding
+	public var created: Date
 
 	/// The date the user was last modified.
-	public let modified: Date
+	@Immutable @MillisecondsSince1970DateCoding
+	public var modified: Date
 
 	/// An array of groups the user belongs to. See [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) for properties of a group.
 	public var groups: [Group]?
