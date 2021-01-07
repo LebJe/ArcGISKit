@@ -17,9 +17,9 @@ public struct GIS {
 	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
 	/// - Parameters:
 	///   - url: Your ArcGIS Server hostname.
-	///   - username: Your ArcGIS username.
-	///   - password: Your ArcGIS password.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
+	///   - authType: The method of authentication you wish to use.
+	/// - Throws: `GISError`.
 	public init(authType: AuthenticationType, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
 		self.url = url
 		self.site = site
@@ -73,7 +73,7 @@ public struct GIS {
 		}
 	}
 
-	/// Generates a `URL` that users of your app should go to to authenticate. You should direct your users to copy-and-paste the authentication code back into your app; that code can the be passed to `GIS.init`.
+	/// Generates a `URL` that users of your app should go to to authenticate. Once they authenticate, you they should copy and paste the authentication code back into your app; that code can then be passed to `GIS.init`.
 	/// - Parameters:
 	///   - clientID:
 	///   - baseURL: Your ArcGIS Server hostname.
