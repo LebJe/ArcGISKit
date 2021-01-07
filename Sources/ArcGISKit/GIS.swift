@@ -15,10 +15,15 @@ public struct GIS {
 	var token: String?
 
 	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
+	///
+	/// If `authType` is `.webBrowser`, You must first call `GIS.url(clientID:, baseURL:, site:)` (without changing `redirectURI`)  to generate a `URL`.
+	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then to copy and paste the returned code back into your app.
+	/// Once you receive the code, you can then pass it to this initializer.
+	///
 	/// - Parameters:
+	///   - authType: The method of authentication you wish to use.
 	///   - url: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	///   - authType: The method of authentication you wish to use.
 	/// - Throws: `GISError`.
 	public init(authType: AuthenticationType, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
 		self.url = url
@@ -78,14 +83,15 @@ public struct GIS {
 	///   - clientID:
 	///   - baseURL: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
+	///   - redirectURI: The `URL` that will receive a code once the user has logged in. Use the default ("urn:ietf:wg:oauth:2.0:oob") to have ArcGIS Online present the code to the user instead of redirecting to a different `URL`.
 	/// - Returns: The generated `URL`.
-	public static func url(clientID: String, baseURL: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") -> URL {
+	public static func url(clientID: String, baseURL: URL = URL(string: "https://arcgis.com")!, site: String = "sharing", redirectURI: String = "urn:ietf:wg:oauth:2.0:oob") -> URL {
 		let u = baseURL
 			.appendingPathComponent(site)
 			.appendingPathComponent("rest")
 			.appendingPathComponent("oauth2")
 			.appendingPathComponent("authorize")
-		return URL(string: "\(u.absoluteString)?response_type=code&client_id=\(clientID)&redirect_uri=\("urn:ietf:wg:oauth:2.0:oob".urlQueryEncoded)")!
+		return URL(string: "\(u.absoluteString)?response_type=code&client_id=\(clientID)&redirect_uri=\(redirectURI.urlQueryEncoded)")!
 	}
 
 	/// Refresh the ArcGIS token.
