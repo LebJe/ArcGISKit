@@ -85,7 +85,7 @@ public struct GIS {
 			.appendingPathComponent("rest")
 			.appendingPathComponent("oauth2")
 			.appendingPathComponent("authorize")
-		return URL(string: "\(u.absoluteString)?response_type=code&client_id\(clientID)&redirect_uri=\("urn:ietf:wg:oauth:2.0:oob".urlQueryEncoded)")!
+		return URL(string: "\(u.absoluteString)?response_type=code&client_id=\(clientID)&redirect_uri=\("urn:ietf:wg:oauth:2.0:oob".urlQueryEncoded)")!
 	}
 
 	/// Refresh the ArcGIS token.
