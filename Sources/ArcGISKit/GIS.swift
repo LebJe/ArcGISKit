@@ -66,10 +66,26 @@ public struct GIS {
 				self.token = nil
 				self.username = nil
 				self.password = nil
-			default:
-				self.username = nil
-				self.password = nil
+			case .webBrowser:
+				fatalError("Web Browser authentication is not implemented yet.")
+//				self.username = nil
+//				self.password = nil
 		}
+	}
+
+	/// Generates a `URL` that users of your app should go to to authenticate. You should direct your users to copy-and-paste the authentication code back into your app; that code can the be passed to `GIS.init`.
+	/// - Parameters:
+	///   - clientID:
+	///   - baseURL: Your ArcGIS Server hostname.
+	///   - site: Your ArcGIS Server site name. The default is "sharing".
+	/// - Returns: The generated `URL`.
+	public static func url(clientID: String, baseURL: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") -> URL {
+		let u = baseURL
+			.appendingPathComponent(site)
+			.appendingPathComponent("rest")
+			.appendingPathComponent("oauth2")
+			.appendingPathComponent("authorize")
+		return URL(string: "\(u.absoluteString)?response_type=code&client_id\(clientID)&redirect_uri=\("urn:ietf:wg:oauth:2.0:oob".urlQueryEncoded)")!
 	}
 
 	/// Refresh the ArcGIS token.

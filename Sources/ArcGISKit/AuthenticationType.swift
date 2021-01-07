@@ -15,5 +15,5 @@ public enum AuthenticationType {
 	case anonymous
 
 	/// Authenticate using a code obtained via a web browser.
-	case webBrowser(clientID: String, clientSecret: String)
+	case webBrowser(code: String, clientID: String, clientSecret: String)
 }
