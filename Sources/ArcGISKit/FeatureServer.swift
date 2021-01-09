@@ -18,6 +18,16 @@ public struct FeatureServer: Equatable {
 	var gis: GIS
 	public let featureService: FeatureService?
 
+	public struct LayerQuery {
+		public let whereClause: String
+		public let layerID: String
+
+		public init(whereClause: String, layerID: String) {
+			self.whereClause = whereClause
+			self.layerID = layerID
+		}
+	}
+
 	/// Feature Service
 	/// - Parameters:
 	///   - url: The URL to the Feature Server, e.g: "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
@@ -53,7 +63,7 @@ public struct FeatureServer: Equatable {
 		self.featureService = fS
 	}
 
-	public mutating func query(layerQueries: [LayerQuery]) {
+	public mutating func query(layerQueries: [LayerQuery]) -> [FeatureLayer] {
 		do {
 			try self.gis.refreshToken()
 
@@ -69,21 +79,17 @@ public struct FeatureServer: Equatable {
 			if res.status == .ok && res.body != nil {
 				do {
 					//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
+					let qr = try JSONDecoder().decode(QueryResponse.self, from: Data(buffer: res.body!))
+
+					return qr.layers
 				} catch {
 					print(error)
 				}
-			} else {
-
 			}
 		} catch {
 			print(error)
 		}
-	}
-}
 
-public extension FeatureServer {
-	struct LayerQuery {
-		let whereClause: String
-		let layerID: String
+		return []
 	}
 }

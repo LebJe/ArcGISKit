@@ -19,7 +19,9 @@ let package = Package(
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.3.1"),
 		.package(url: "https://github.com/onevcat/Rainbow.git", from: "3.2.0"),
 		.package(url: "https://github.com/JohnSundell/Files.git", from: "4.2.0"),
-		.package(url: "https://github.com/GottaGetSwifty/CodableWrappers.git", .upToNextMajor(from: "2.0.0" )),
+		.package(url: "https://github.com/GottaGetSwifty/CodableWrappers.git", .upToNextMajor(from: "2.0.0")),
+		.package(url: "https://github.com/mlilback/SwiftyJSON.git", .branch("master")),
+		.package(name: "Table", url: "https://github.com/LebJe/Table.swift.git", .branch("master"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -28,6 +30,7 @@ let package = Package(
         .target(
             name: "ArcGISKit",
             dependencies: [
+				"SwiftyJSON",
 				.product(name: "AsyncHTTPClient", package: "async-http-client"),
 				.product(name: "CodableWrappers", package: "CodableWrappers")
 			]
@@ -39,6 +42,7 @@ let package = Package(
 				"Echo",
 				"Rainbow",
 				"Files",
+				"Table",
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
 			]
 		),

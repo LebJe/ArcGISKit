@@ -8,7 +8,7 @@
 import Foundation
 
 /// Field Types.
-public enum ESRIFieldType: String, CaseIterable, Codable {
+public enum ESRIFieldType: String, CaseIterable, Codable, Equatable {
 
 	/// Short Integer.
 	case esriFieldTypeSmallInteger
