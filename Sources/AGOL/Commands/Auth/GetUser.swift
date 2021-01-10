@@ -7,7 +7,6 @@
 
 import Foundation
 import ArcGISKit
-import NIO
 
 func getGIS() throws -> GIS {
 	let agolC = try getConfigFileData()

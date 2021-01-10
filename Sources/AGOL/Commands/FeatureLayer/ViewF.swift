@@ -7,7 +7,6 @@
 
 import ArcGISKit
 import ArgumentParser
-import Files
 import Foundation
 import Rainbow
 import Table

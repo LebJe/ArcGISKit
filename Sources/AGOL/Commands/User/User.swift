@@ -5,10 +5,8 @@
 //  Created by Jeff Lebrun on 12/28/20.
 //
 
-import ArcGISKit
 import ArgumentParser
 import Foundation
-import Rainbow
 
 extension AGOLCommand {
 	struct User: ParsableCommand {
