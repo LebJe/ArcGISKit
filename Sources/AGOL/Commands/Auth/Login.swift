@@ -81,7 +81,7 @@ extension AGOLCommand.Auth {
 				let data = try JSONEncoder().encode(config)
 				let cf = try configFile()
 
-				if try configFolder().containsFile(at: ".agolconfig") {
+				if try configFolder().containsFile(at: agolConfigFilename) {
 					do {
 						let oldConfigData = try JSONDecoder().decode(AGOLConfig.self, from: try cf.read())
 						print("Credentials already exist.".yellow)

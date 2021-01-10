@@ -30,11 +30,12 @@ func configFolder() throws -> Folder {
 	let xdgConfigHome = ProcessInfo.processInfo.environment["XDG_CONFIG_HOME"]
 
 	var configFolder: Folder = .home
-	if xdgConfigHome == nil {
-		configFolder = try Folder.home.createSubfolderIfNeeded(at: ".config/agol")
-	} else {
-		configFolder = try Folder.home.subfolder(at: xdgConfigHome!)
+	if let xdg = xdgConfigHome {
+		configFolder = try Folder.home.subfolder(at: xdg)
 		configFolder = try configFolder.createSubfolderIfNeeded(at: "agol")
+
+	} else {
+		configFolder = try Folder.home.createSubfolderIfNeeded(at: ".config/agol")
 	}
 
 	return configFolder
