@@ -121,7 +121,7 @@ public struct User: Codable, Equatable {
 
 	/// Retrieves the content owned by this `User`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
-	/// - Throws: `GISError`.
+	/// - Throws: `RequestError`.
 	public mutating func fetchContent(from gis: GIS) throws {
 		let contentURL = gis.fullURL.appendingPathComponent("rest").appendingPathComponent("content").appendingPathComponent("users").appendingPathComponent(self.username)
 

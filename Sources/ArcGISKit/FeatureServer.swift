@@ -32,7 +32,7 @@ public struct FeatureServer: Equatable {
 	/// - Parameters:
 	///   - url: The URL to the Feature Server, e.g: "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
 	///   - gis: The `GIS` to use to authenticate.
-	/// - Throws: `GISError`.
+	/// - Throws: `RequestError`.
 	public init(url: URL, gis: GIS) throws {
 		self.url = url
 		self.gis = gis

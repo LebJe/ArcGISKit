@@ -91,7 +91,7 @@ public struct Group: Equatable, Codable {
 
 	/// Retrieves the content owned by this `Group`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
-	/// - Throws: `GISError`.
+	/// - Throws: `RequestError`.
 	public mutating func fetchContent(from gis: GIS) throws {
 		let groupURL = gis.fullURL
 			.appendingPathComponent("content")
