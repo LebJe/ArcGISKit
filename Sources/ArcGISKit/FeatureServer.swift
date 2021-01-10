@@ -38,60 +38,36 @@ public struct FeatureServer: Equatable {
 		self.gis = gis
 
 		var fS: FeatureService? = nil
-		do {
-			try self.gis.refreshToken()
 
-			let req = try! HTTPClient.Request(
-				url: "\(url.absoluteString)?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")",
-				method: .GET
-			)
+		try self.gis.refreshToken()
 
-			let res = try gs.client.execute(request: req).wait()
+		let req = try! HTTPClient.Request(
+			url: "\(url.absoluteString)?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")",
+			method: .GET
+		)
 
-			if res.status == .ok && res.body != nil {
-				do {
-					fS = try JSONDecoder().decode(FeatureService.self, from: Data(buffer: res.body!))
-				} catch {
-					throw GISError.fetchFeatureServiceFailed
-				}
-			}
-		} catch {
+		let res = try gs.client.execute(request: req).wait()
 
-		}
-
-		self.featureService = fS
+		self.featureService = try handle(response: res, decodeType: FeatureService.self)
 	}
 
 	/// Query the `FeatureServer`.
 	/// - Parameter layerQueries: The queries you want to perform.
 	/// - Returns: An `Array` of `FeatureLayer`s.
-	public mutating func query(layerQueries: [LayerQuery]) -> [FeatureLayer] {
-		do {
-			try self.gis.refreshToken()
+	public mutating func query(layerQueries: [LayerQuery]) throws -> [FeatureLayer] {
+		try self.gis.refreshToken()
 
-			let dict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
+		let dict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
 
-			let req = try HTTPClient.Request(
-				url: "\(url.appendingPathComponent("query").absoluteString)?f=json&layerDefs=\(String(data: try JSONEncoder().encode(dict), encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")",
-				method: .GET
-			)
+		let req = try HTTPClient.Request(
+			url: "\(url.appendingPathComponent("query").absoluteString)?f=json&layerDefs=\(String(data: try JSONEncoder().encode(dict), encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")",
+			method: .GET
+		)
 
-			let res = try gs.client.execute(request: req).wait()
+		let res = try gs.client.execute(request: req).wait()
 
-			if res.status == .ok && res.body != nil {
-				do {
-					//print(String(data: Data(buffer: res.body!), encoding: .utf8)!)
-					let qr = try JSONDecoder().decode(QueryResponse.self, from: Data(buffer: res.body!))
+		let qr = try handle(response: res, decodeType: QueryResponse.self)
 
-					return qr.layers
-				} catch {
-					print(error)
-				}
-			}
-		} catch {
-			print(error)
-		}
-
-		return []
+		return qr.layers
 	}
 }

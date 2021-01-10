@@ -106,7 +106,7 @@ extension AGOLCommand.Auth {
 				try cf.write(data)
 
 				print("Credentials saved!".green)
-			} catch GISError.invalidUsernameOrPassword {
+			} catch RequestError.invalidUsernameOrPassword {
 				print("Invalid username or password.".red)
 				Foundation.exit(2)
 			}

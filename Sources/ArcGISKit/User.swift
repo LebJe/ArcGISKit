@@ -13,7 +13,7 @@ import CodableWrappers
 /// Personal details of the user, such as e-mail and groups, are returned only to the user or the administrator of the user's organization.
 ///
 /// A user is not visible to any other user (except the organization's administrator) if their access setting is set to "private."
-public struct User: Decodable, Equatable {
+public struct User: Codable, Equatable {
 	/// The ID of the user.
 	public let id: String
 

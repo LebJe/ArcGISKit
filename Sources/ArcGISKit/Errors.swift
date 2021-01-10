@@ -7,12 +7,25 @@
 
 import Foundation
 
-public enum GISError: Error {
-	/// `GIS.refreshToken` failed. All API requests will fail due to the token being invalid.
-	case refreshTokenFailed
+public enum RequestError: Error {
+
+	/// A token is required. Login using a username and password so `GIS.init` can generate a token.
+	case tokenRequired
+
 	/// The username or password provided to `GIS.init` was invalid.
 	case invalidUsernameOrPassword
-	case fetchTokenFailed
-	case fetchFeatureServiceFailed
-	case fetchContentFailed
+
+	/// An unknown error occurred.
+	case unknown(message: String)
+}
+
+struct ResponseError: Codable {
+	let error: E
+}
+
+struct E: Codable {
+	let code: Int
+	let message: String
+	let messageCode: String
+	let details: [String]
 }

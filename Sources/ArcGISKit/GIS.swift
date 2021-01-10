@@ -24,7 +24,7 @@ public struct GIS {
 	///   - authType: The method of authentication you wish to use.
 	///   - url: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	/// - Throws: `GISError`.
+	/// - Throws: `RequestError`.
 	public init(authType: AuthenticationType, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") throws {
 		self.url = url
 		self.site = site
@@ -35,38 +35,16 @@ public struct GIS {
 				self.password = password
 
 				let newURL = url.appendingPathComponent(site).appendingPathComponent("rest").appendingPathComponent("generateToken")
-				var token = ""
 
-				do {
-					let req = try HTTPClient.Request(
-						url: "\(newURL.absoluteString)?f=json&username=\(username.urlQueryEncoded)&password=\(password.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
-						method: .POST
-					)
+				let req = try HTTPClient.Request(
+					url: "\(newURL.absoluteString)?f=json&username=\(username.urlQueryEncoded)&password=\(password.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
+					method: .POST
+				)
 
-					let res = try gs.client.execute(request: req).wait()
+				let res = try gs.client.execute(request: req).wait()
 
-					if res.body != nil {
-						if res.status == .ok {
-							do {
-								let rtr = try JSONDecoder().decode(RequestTokenResponse.self, from: Data(buffer: res.body!))
-								token = rtr.token
-							} catch {
-								let resString = String(data: Data(buffer: res.body!), encoding: .utf8) ?? ""
-
-								if resString.contains("Invalid username or password.") {
-									throw GISError.invalidUsernameOrPassword
-								}
-							}
-						}
-					}
-
-				} catch {
-					throw error
-				}
-
-				self.token = token
-				self.getUser()
-
+				self.token = try handle(response: res, decodeType: RequestTokenResponse.self).token
+				try self.getUser()
 			case .anonymous:
 				self.token = nil
 				self.username = nil
@@ -98,65 +76,38 @@ public struct GIS {
 	/// - Throws: `GISError`.
 	mutating func refreshToken() throws {
 		if username != nil || password != nil {
-			do {
-				let newURL = fullURL.appendingPathComponent("rest").appendingPathComponent("generateToken")
-				let req = try! HTTPClient.Request(
-					url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
-					method: .POST
-				)
+			let newURL = fullURL.appendingPathComponent("rest").appendingPathComponent("generateToken")
+			let req = try! HTTPClient.Request(
+				url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
+				method: .POST
+			)
 
-				let res = try gs.client.execute(request: req).wait()
+			let res = try gs.client.execute(request: req).wait()
 
-				if res.status == .ok && res.body != nil {
-					let rtr = try JSONDecoder().decode(RequestTokenResponse.self, from: Data(buffer: res.body!))
-					self.token = rtr.token
-				}
-			} catch {
-				throw GISError.refreshTokenFailed
-			}
+			self.token = try handle(response: res, decodeType: RequestTokenResponse.self).token
 		}
 	}
 
-	mutating func getUser() {
+	mutating func getUser() throws {
 		if username != nil || password != nil || token != nil {
-			do {
-				let newURL = fullURL.appendingPathComponent("community").appendingPathComponent("users").appendingPathComponent(username!)
-				let req = try! HTTPClient.Request(
-					url: "\(newURL.absoluteString)?f=json&token=\(token!.urlQueryEncoded)",
-					method: .POST
-				)
+			let newURL = fullURL.appendingPathComponent("community").appendingPathComponent("users").appendingPathComponent(username!)
+			let req = try! HTTPClient.Request(
+				url: "\(newURL.absoluteString)?f=json&token=\(token!.urlQueryEncoded)",
+				method: .POST
+			)
 
-				let res = try gs.client.execute(request: req).wait()
+			let res = try gs.client.execute(request: req).wait()
 
-				if res.status == .ok && res.body != nil {
-					let user = try JSONDecoder().decode(User.self, from: Data(buffer: res.body!))
-					self.user = user
-				}
-
-			} catch {
-				print(error)
-			}
+			self.user = try handle(response: res, decodeType: User.self)
 		}
 	}
 }
 
 
 func getContent<T: Codable>(token: String, url: URL, decodeType: T.Type) throws -> [T] {
-	do {
-		let cReq = try HTTPClient.Request(url: "\(url.absoluteString)?token=\(token)&f=json&start=1&num=100", method: .GET)
+	let req = try HTTPClient.Request(url: "\(url.absoluteString)?token=\(token)&f=json&start=1&num=100", method: .GET)
 
-		let res = try gs.client.execute(request: cReq).wait()
+	let res = try gs.client.execute(request: req).wait()
 
-		if res.body != nil {
-			if res.status == .ok {
-				let pagination = try JSONDecoder().decode(Pagination<T>.self, from: Data(buffer: res.body!))
-
-				return pagination.items
-			}
-		}
-
-		return []
-	} catch {
-		throw GISError.fetchContentFailed
-	}
+	return try handle(response: res, decodeType: Pagination<T>.self).items
 }

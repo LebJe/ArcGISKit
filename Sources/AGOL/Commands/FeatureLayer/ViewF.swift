@@ -12,24 +12,15 @@ import Foundation
 import Rainbow
 import Table
 
-extension String {
-	///
-	/// Truncates the string to the specified length number of characters and appends an optional trailing string if longer.
-	/// - Parameter length: Desired maximum lengths of a string
-	/// - Parameter trailing: A `String` that will be appended after the truncation.
-
-	/// - Returns: `String` object.
-	func truncate(length: Int, trailing: String = "…") -> String {
-		return (self.count > length) ? self.prefix(length) + trailing : self
-	}
-}
-
 extension AGOLCommand.FeatureLayer {
 	struct View: ParsableCommand {
 		static var configuration: CommandConfiguration = CommandConfiguration(abstract: "View Feature Layer.")
 
 		@Option(name: [.short, .long], help: "The amount of layers to print.")
 		var numberOfLayers: Int?
+
+		@Option(name: [.short, .long], help: "The where clause to use when querying the Feature Server.")
+		var whereClause: String = "1=1"
 
 		@Argument(
 			help: "The URL of the Feature Server that contains the Feature Layer.",
@@ -54,9 +45,9 @@ extension AGOLCommand.FeatureLayer {
 
 					if let l = fS.featureService?.layers {
 						for layer in l {
-							layerQueries.append(.init(whereClause: "1=1", layerID: "\(layer.id)"))
+							layerQueries.append(.init(whereClause: whereClause, layerID: "\(layer.id)"))
 						}
-						let layers = fS.query(layerQueries: layerQueries)
+						let layers = try fS.query(layerQueries: layerQueries)
 
 						for layer in layers {
 
@@ -81,7 +72,7 @@ extension AGOLCommand.FeatureLayer {
 				} catch ConfigError.noConfigFile {
 					print("You are not logged in. Log in using \"agol auth login\".")
 				}
-				catch GISError.invalidUsernameOrPassword {
+				catch RequestError.invalidUsernameOrPassword {
 					print("You logged in with an invalid username or password.".red)
 				}
 

@@ -51,7 +51,7 @@ extension AGOLCommand.User {
 			} catch ConfigError.noConfigFile {
 				print("You are not logged in. Log in using \"agol auth login\".")
 			}
-			catch GISError.invalidUsernameOrPassword {
+			catch RequestError.invalidUsernameOrPassword {
 				print("You logged in with an invalid username or password.".red)
 			}
 			catch {
