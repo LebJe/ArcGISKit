@@ -73,7 +73,7 @@ public struct GIS {
 	}
 
 	/// Refresh the ArcGIS token.
-	/// - Throws: `GISError`.
+	/// - Throws: `RequestError`.
 	mutating func refreshToken() throws {
 		if username != nil || password != nil {
 			let newURL = fullURL.appendingPathComponent("rest").appendingPathComponent("generateToken")

@@ -87,6 +87,7 @@ public struct Group: Equatable, Codable {
 	/// If `true`, the group is designated as available for use in Open Data sites.
 	public let isOpenData: Bool?
 
+	/// The `Group`'s content.
 	public var content: [ContentType] = []
 
 	/// Retrieves the content owned by this `Group`.
