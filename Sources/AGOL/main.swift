@@ -16,6 +16,7 @@ struct AGOLCommand: ParsableCommand {
 		subcommands: [
 			Auth.self,
 			User.self,
+			Group.self,
 			FeatureLayer.self,
 		]
 	)

@@ -8,7 +8,6 @@
 import Foundation
 
 public enum RequestError: Error {
-
 	/// A token is required. Login using a username and password so `GIS.init` can generate a token.
 	case tokenRequired
 
@@ -26,6 +25,6 @@ struct ResponseError: Codable {
 struct E: Codable {
 	let code: Int
 	let message: String
-	let messageCode: String
+	let messageCode: String?
 	let details: [String]
 }

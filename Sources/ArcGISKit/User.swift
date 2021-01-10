@@ -117,7 +117,7 @@ public struct User: Codable, Equatable {
 	/// The identity provider for the organization.
 	public let provider: Provider?
 
-	/// The content for this `User`..
+	/// The content for this `User`.
 	public var content: [ContentType] = []
 
 	/// Retrieves the content owned by this `User`.
