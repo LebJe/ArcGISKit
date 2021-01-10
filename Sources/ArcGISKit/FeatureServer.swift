@@ -49,7 +49,6 @@ public struct FeatureServer: Equatable {
 			let res = try gs.client.execute(request: req).wait()
 
 			if res.status == .ok && res.body != nil {
-
 				do {
 					fS = try JSONDecoder().decode(FeatureService.self, from: Data(buffer: res.body!))
 				} catch {
@@ -63,6 +62,9 @@ public struct FeatureServer: Equatable {
 		self.featureService = fS
 	}
 
+	/// Query the `FeatureServer`.
+	/// - Parameter layerQueries: The queries you want to perform.
+	/// - Returns: An `Array` of `FeatureLayer`s.
 	public mutating func query(layerQueries: [LayerQuery]) -> [FeatureLayer] {
 		do {
 			try self.gis.refreshToken()
