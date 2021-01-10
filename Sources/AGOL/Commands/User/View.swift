@@ -31,6 +31,8 @@ extension AGOLCommand.User {
 					print("Available Credits: ".bold + (user.availableCredits != nil ? String(user.availableCredits!) : "None"))
 					print("Assigned Credits: ".bold + (user.assignedCredits != nil ? String(user.assignedCredits!) : "None"))
 					print("Favorite Group: ".bold + (favoriteGroup?.title ?? "None"))
+					print("Created: ".bold + user.created.formatted)
+					print("Modified: ".bold + user.modified.formatted)
 					print("Multi-factor Authentication: ".bold + (user.mfaEnabled ?? false ? "Enabled" : "Disabled"))
 
 					if let tags = user.tags, !tags.isEmpty {

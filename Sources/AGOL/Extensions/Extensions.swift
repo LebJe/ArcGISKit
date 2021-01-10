@@ -18,3 +18,13 @@ extension String {
 		return (self.count > length) ? self.prefix(length) + trailing : self
 	}
 }
+
+extension Date {
+	var formatted: String {
+		let f = DateFormatter()
+		f.timeZone = TimeZone(abbreviation: "EST")!
+		f.dateStyle = .medium
+		f.timeStyle = .short
+		return f.string(from: self)
+	}
+}

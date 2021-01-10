@@ -40,7 +40,30 @@ extension AGOLCommand.Group {
 
 				if let groups = gis.user?.groups {
 					if let group = groups.first(where: { $0.id == groupID }) {
+						print("ID: ".bold + (group.id ?? "No ID."))
 						print("Name: ".bold + (group.title ?? "No name."))
+						print("Owner: ".bold + (group.owner ?? "No owner."))
+						print("Description: ".bold + (group.description ?? "No description."))
+						print("Summary: ".bold + (group.snippet ?? "No summary."))
+						print("Contact Info: ".bold + (group.phone ?? "No Contact Info."))
+						print("Description: ".bold + (group.description ?? "No description."))
+						print("My Favorite: ".bold + (group.isFav ? "True" : "False"))
+						print("Created: ".bold + group.created.formatted)
+						print("Modified: ".bold + group.modified.formatted)
+
+						if let tags = group.typeKeywords, !tags.isEmpty {
+							print("Keywords: ".bold)
+							tags.forEach({ print("  \($0)") })
+						} else {
+							print("Keywords: ".bold + "No keywords.")
+						}
+
+						if let tags = group.tags, !tags.isEmpty {
+							print("Tags: ".bold)
+							tags.forEach({ print("  \($0)") })
+						} else {
+							print("Tags: ".bold + "No tags.")
+						}
 					} else {
 						print("A group with the ID of \"\(groupID)\" does not exist.".red)
 						Foundation.exit(2)
