@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li><li class="variable"><a href="#featureserver.featureservice">feature​Service</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.fetchfeatureservice()">fetch​Feature​Service()</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -131,7 +131,7 @@
   </tbody>
 </table>
   <h4>Throws</h4>
-  <p><code>RequestError</code>.</p>
+  <p><code>AGKRequestError</code>.</p>
 
 </div>
     </section>
@@ -144,12 +144,6 @@
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">url</span>: <span class="type">URL</span></code></pre></body></html>
 </div>
-<div role="article" class="variable" id="featureserver.featureservice">
-    <h3>
-        <code>feature​Service</code>
-    </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">featureService</span>: <a href="https://lebje.github.io/ArcGISKit/FeatureService"><span class="type">FeatureService</span></a>?</code></pre></body></html>
-</div>
     </section>
     <section id="methods">
         <h2>Methods</h2>
@@ -160,11 +154,17 @@
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> ==(<span class="variable">lhs</span>: <a href="https://lebje.github.io/ArcGISKit/FeatureServer"><span class="type">FeatureServer</span></a>, <span class="variable">rhs</span>: <a href="https://lebje.github.io/ArcGISKit/FeatureServer"><span class="type">FeatureServer</span></a>) -&gt; <span class="type">Bool</span></code></pre></body></html>
 </div>
+<div role="article" class="function" id="featureserver.fetchfeatureservice()">
+    <h3>
+        <code>fetch​Feature​Service()</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fetchFeatureService</span>() <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;<a href="https://lebje.github.io/ArcGISKit/FeatureService"><span class="type">FeatureService</span></a>&gt;</code></pre></body></html>
+</div>
 <div role="article" class="function" id="featureserver.query(layerqueries:)">
     <h3>
         <code>query(layer​Queries:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">query</span>(<span class="variable">layerQueries</span>: [<span class="type">LayerQuery</span>]) <span class="keyword">throws</span> -&gt; [<a href="https://lebje.github.io/ArcGISKit/FeatureLayer"><span class="type">FeatureLayer</span></a>]</code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">query</span>(<span class="variable">layerQueries</span>: [<span class="type">LayerQuery</span>]) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/FeatureLayer"><span class="type">FeatureLayer</span></a>]&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Query the <code>FeatureServer</code>.</p>
 
@@ -201,7 +201,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-11T11:09:24+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-11T14:47:40+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>

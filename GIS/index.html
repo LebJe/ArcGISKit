@@ -26,27 +26,27 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(authtype:url:site:)">init(auth​Type:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.user">user</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#gis.url(clientid:baseurl:site:redirecturi:)">url(client​ID:​base​URL:​site:​redirect​URI:​)</a></li></ul></li></ol>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(authtype:eventloopgroup:url:site:)">init(auth​Type:​event​Loop​Group:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#gis.fetchuser()">fetch​User()</a></li><li class="function"><a href="#gis.generateurl(clientid:baseurl:site:redirecturi:)">generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
     <main>
         <article>
             <h1>
-    <small>Structure</small>
+    <small>Class</small>
     <code class="name">GIS</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">GIS</span></code></pre></body></html>
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">GIS</span></code></pre></body></html>
 
     <section id="initializers">
         <h2>Initializers</h2>
 
-        <div role="article" class="initializer" id="gis.init(authtype:url:site:)">
+        <div role="article" class="initializer" id="gis.init(authtype:eventloopgroup:url:site:)">
     <h3>
-        <code>init(auth​Type:​url:​site:​)</code>
+        <code>init(auth​Type:​event​Loop​Group:​url:​site:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">authType</span>: <a href="https://lebje.github.io/ArcGISKit/AuthenticationType"><span class="type">AuthenticationType</span></a>, <span class="variable">url</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>) <span class="keyword">throws</span></code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">authType</span>: <a href="https://lebje.github.io/ArcGISKit/AuthenticationType"><span class="type">AuthenticationType</span></a>, <span class="variable">eventLoopGroup</span>: <span class="type">EventLoopGroup</span>, <span class="variable">url</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>)</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Creates an instance using <code>authType</code> to authenticate to ArcGIS Online.</p>
 
@@ -89,7 +89,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
   </tbody>
 </table>
   <h4>Throws</h4>
-  <p><code>RequestError</code>.</p>
+  <p><code>AGKRequestError</code>.</p>
 
 </div>
     </section>
@@ -114,12 +114,6 @@ Once you receive the code, you can then pass it to this initializer.</p>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">password</span>: <span class="type">String</span>?</code></pre></body></html>
 </div>
-<div role="article" class="variable" id="gis.user">
-    <h3>
-        <code>user</code>
-    </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">user</span>: <a href="https://lebje.github.io/ArcGISKit/User"><span class="type">User</span></a>? = <span class="keyword">nil</span></code></pre></body></html>
-</div>
 <div role="article" class="variable" id="gis.isanonymous">
     <h3>
         <code>is​Anonymous</code>
@@ -130,13 +124,29 @@ Once you receive the code, you can then pass it to this initializer.</p>
     <section id="methods">
         <h2>Methods</h2>
 
-        <div role="article" class="function" id="gis.url(clientid:baseurl:site:redirecturi:)">
+        <div role="article" class="function" id="gis.fetchuser()">
     <h3>
-        <code>url(client​ID:​base​URL:​site:​redirect​URI:​)</code>
+        <code>fetch​User()</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">url</span>(<span class="variable">clientID</span>: <span class="type">String</span>, <span class="variable">baseURL</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>, <span class="variable">redirectURI</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">urn:ietf:wg:oauth:2.0:oob</span><span class="string literal">"</span>) -&gt; <span class="type">URL</span></code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fetchUser</span>() <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;<a href="https://lebje.github.io/ArcGISKit/User"><span class="type">User</span></a>&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
-    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, you they should copy and paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
+    <p>Retrieves a <code>User</code>.</p>
+
+</div>
+  <h4>Throws</h4>
+  <p><code>AGKRequestError</code>.</p>
+
+  <h4>Returns</h4>
+  <p>The retrieved <code>User</code>.</p>
+
+</div>
+<div role="article" class="function" id="gis.generateurl(clientid:baseurl:site:redirecturi:)">
+    <h3>
+        <code>generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">generateURL</span>(<span class="variable">clientID</span>: <span class="type">String</span>, <span class="variable">baseURL</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!, <span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>, <span class="variable">redirectURI</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">urn:ietf:wg:oauth:2.0:oob</span><span class="string literal">"</span>) -&gt; <span class="type">URL</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
 
 </div>
 <h4>Parameters</h4>
@@ -188,7 +198,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-11T11:09:25+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-11T14:47:39+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>

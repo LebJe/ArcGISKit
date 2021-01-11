@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#group.id">id</a></li><li class="variable"><a href="#group.title">title</a></li><li class="variable"><a href="#group.isinvitationonly">is​Invitation​Only</a></li><li class="variable"><a href="#group.owner">owner</a></li><li class="variable"><a href="#group.description">description</a></li><li class="variable"><a href="#group.typekeywords">type​Keywords</a></li><li class="variable"><a href="#group.snippet">snippet</a></li><li class="variable"><a href="#group.tags">tags</a></li><li class="variable"><a href="#group.phone">phone</a></li><li class="variable"><a href="#group.sortfield">sort​Field</a></li><li class="variable"><a href="#group.sortorder">sort​Order</a></li><li class="variable"><a href="#group.isviewonly">is​View​Only</a></li><li class="variable"><a href="#group.isfav">is​Fav</a></li><li class="variable"><a href="#group.thumbnail">thumbnail</a></li><li class="variable"><a href="#group.created">created</a></li><li class="variable"><a href="#group.modified">modified</a></li><li class="variable"><a href="#group.access">access</a></li><li class="variable"><a href="#group.usermembership">user​Membership</a></li><li class="variable"><a href="#group.protected">protected</a></li><li class="variable"><a href="#group.autojoin">auto​Join</a></li><li class="variable"><a href="#group.hascategoryschema">has​Category​Schema</a></li><li class="variable"><a href="#group.isopendata">is​Open​Data</a></li><li class="variable"><a href="#group.content">content</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#group.fetchcontent(from:)">fetch​Content(from:​)</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#group.id">id</a></li><li class="variable"><a href="#group.title">title</a></li><li class="variable"><a href="#group.isinvitationonly">is​Invitation​Only</a></li><li class="variable"><a href="#group.owner">owner</a></li><li class="variable"><a href="#group.description">description</a></li><li class="variable"><a href="#group.typekeywords">type​Keywords</a></li><li class="variable"><a href="#group.snippet">snippet</a></li><li class="variable"><a href="#group.tags">tags</a></li><li class="variable"><a href="#group.phone">phone</a></li><li class="variable"><a href="#group.sortfield">sort​Field</a></li><li class="variable"><a href="#group.sortorder">sort​Order</a></li><li class="variable"><a href="#group.isviewonly">is​View​Only</a></li><li class="variable"><a href="#group.isfav">is​Fav</a></li><li class="variable"><a href="#group.thumbnail">thumbnail</a></li><li class="variable"><a href="#group.created">created</a></li><li class="variable"><a href="#group.modified">modified</a></li><li class="variable"><a href="#group.access">access</a></li><li class="variable"><a href="#group.usermembership">user​Membership</a></li><li class="variable"><a href="#group.protected">protected</a></li><li class="variable"><a href="#group.autojoin">auto​Join</a></li><li class="variable"><a href="#group.hascategoryschema">has​Category​Schema</a></li><li class="variable"><a href="#group.isopendata">is​Open​Data</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#group.fetchcontent(from:)">fetch​Content(from:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -334,16 +334,6 @@
 
 </div>
 </div>
-<div role="article" class="variable" id="group.content">
-    <h3>
-        <code>content</code>
-    </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">content</span>: [<a href="https://lebje.github.io/ArcGISKit/ContentType"><span class="type">ContentType</span></a>] = []</code></pre></body></html>
-<div class="summary" role="doc-abstract">
-    <p>The <code>Group</code>'s content.</p>
-
-</div>
-</div>
     </section>
     <section id="methods">
         <h2>Methods</h2>
@@ -352,7 +342,7 @@
     <h3>
         <code>fetch​Content(from:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">mutating</span> <span class="keyword">func</span> <span class="function">fetchContent</span>(<span class="variable">from</span> <span class="variable">gis</span>: <a href="https://lebje.github.io/ArcGISKit/GIS"><span class="type">GIS</span></a>) <span class="keyword">throws</span></code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fetchContent</span>(<span class="variable">from</span> <span class="variable">gis</span>: <a href="https://lebje.github.io/ArcGISKit/GIS"><span class="type">GIS</span></a>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/ContentType"><span class="type">ContentType</span></a>]&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Retrieves the content owned by this <code>Group</code>.</p>
 
@@ -377,7 +367,7 @@
   </tbody>
 </table>
   <h4>Throws</h4>
-  <p><code>RequestError</code>.</p>
+  <p><code>AGKRequestError</code>.</p>
 
 </div>
     </section>
@@ -389,7 +379,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-11T11:09:24+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-11T14:47:40+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
