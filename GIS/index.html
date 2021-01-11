@@ -75,6 +75,12 @@ Once you receive the code, you can then pass it to this initializer.</p>
 </td>
 </tr>
 <tr>
+    <th>event​Loop​Group</th>
+    <td><code class="type">Event​Loop​Group</code></td>
+    <td><p>The eventLoopGroup needed for the <code>HTTPClient</code>.</p>
+</td>
+</tr>
+<tr>
     <th>url</th>
     <td><code class="type">URL</code></td>
     <td><p>Your ArcGIS Server hostname.</p>
@@ -130,7 +136,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">fetchUser</span>() <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;<a href="https://lebje.github.io/ArcGISKit/User"><span class="type">User</span></a>&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
-    <p>Retrieves a <code>User</code>.</p>
+    <p>Retrieves the <code>User</code> that provided their credentials via <code>GIS.init</code>.</p>
 
 </div>
   <h4>Throws</h4>
@@ -198,7 +204,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-11T20:46:50+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-11T21:16:14+0000">January 11, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
