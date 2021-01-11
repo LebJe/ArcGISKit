@@ -15,11 +15,11 @@ public enum RequestError: Error {
 	case invalidUsernameOrPassword
 
 	/// An unknown error occurred.
-	case unknown(message: String)
+	case unknown(message: String?)
 }
 
 struct ResponseError: Codable {
-	let error: E
+	let error: E?
 }
 
 struct E: Codable {

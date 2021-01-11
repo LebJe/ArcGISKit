@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import CodableWrappers
 
 struct RequestTokenResponse: Codable {
 	let token: String
-	let expires: Int
+
+	@Immutable @MillisecondsSince1970DateCoding
+	var expires: Date
 	let ssl: Bool
 }

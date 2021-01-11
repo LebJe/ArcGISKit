@@ -17,13 +17,13 @@ func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throw
 			do {
 				let re = try JSONDecoder().decode(ResponseError.self, from: Data(buffer: response.body!))
 
-				switch re.error.message.lowercased() {
+				switch re.error?.message.lowercased() ?? "" {
 					case "Invalid username or password.".lowercased():
 						throw RequestError.invalidUsernameOrPassword
 					case "Token Required".lowercased():
 						throw RequestError.tokenRequired
 					default:
-						throw RequestError.unknown(message: re.error.message)
+						throw RequestError.unknown(message: re.error?.message)
 				}
 			} catch {
 				throw error

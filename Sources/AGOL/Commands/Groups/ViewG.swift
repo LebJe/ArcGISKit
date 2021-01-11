@@ -16,17 +16,7 @@ extension AGOLCommand.Group {
 
 		@Argument(
 			help: "The ID of the group that you want to view.",
-			completion: .custom(
-				{ currentlyTyped in
-					do {
-						let gis = try getGIS()
-						if let groups = gis.user?.groups {
-							return groups.map({ $0.id ?? "" })
-						}
-					} catch {}
-					return []
-				}
-			)
+			completion: .custom({ _ in groupCompletion() })
 		)
 		var groupID: String
 

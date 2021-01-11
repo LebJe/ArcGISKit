@@ -31,7 +31,7 @@ public struct GeometryProperties: Codable, Equatable {
 
 public struct CodedValues: Codable, Equatable {
 	public let name: String?
-	public let code: String?
+	public let code: JSON?
 }
 
 public struct Domain: Codable, Equatable {

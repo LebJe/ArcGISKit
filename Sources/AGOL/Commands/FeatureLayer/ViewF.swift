@@ -79,3 +79,35 @@ extension AGOLCommand.FeatureLayer {
 		}
 	}
 }
+
+func printFeatureLayer(fS: FeatureServer, whereClause: String = "1=1") throws {
+	var t = Table()
+	var fS = fS
+	var layerQueries: [FeatureServer.LayerQuery] = []
+
+	if let l = fS.featureService?.layers {
+		for layer in l {
+			layerQueries.append(.init(whereClause: whereClause, layerID: "\(layer.id)"))
+		}
+		let layers = try fS.query(layerQueries: layerQueries)
+
+		for layer in layers {
+
+			print("Layer \(layer.id):".bold)
+
+			var array = [layer.fields.map({ $0.alias ?? $0.name })]
+
+			layer.features.forEach({ l in
+				array.append(
+					layer.fields
+						.map({ f in f.name })
+						.map({ l.attributes![$0].stringValue.truncate(length: 15) })
+				)
+			})
+
+			t.put(array)
+		}
+	} else {
+		print("Unable to retrieve feature layers.".yellow)
+	}
+}
