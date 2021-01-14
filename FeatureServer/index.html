@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.fetchfeatureservice()">fetch​Feature​Service()</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.fetchfeatureservice()">fetch​Feature​Service()</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li><li class="function"><a href="#featureserver.edit(_:)">edit(_:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -198,9 +198,55 @@
 </tr>
   </tbody>
 </table>
+  <h4>Throws</h4>
+  <p><code>AGKRequestError</code>.</p>
+
   <h4>Returns</h4>
   <p>An <code>Array</code> of <code>FeatureLayer</code>s.</p>
 
+</div>
+<div role="article" class="function" id="featureserver.edit(_:)">
+    <h3>
+        <code>edit(_:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">edit</span>(<span class="keyword">_</span> <span class="variable">a</span>: [<a href="https://lebje.github.io/ArcGISKit/A"><span class="type">A</span></a>]) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Edit the attributes in the <code>FeatureLayer</code>s that are contained within this <code>FeatureServer</code>.</p>
+
+</div>
+<div class="discussion">
+    <p>To change <code>Greeting</code> to &quot;Hello&quot;, you could write:</p>
+
+<html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">layers</span> = <span class="keyword">try</span> <span class="variable">myFeatureServer</span>.<span class="type">query</span>(<span class="variable">layerQueries</span>: [.<span class="variable">init</span>(<span class="variable">whereClause</span>: <span class="string literal">"</span><span class="string literal">1=1</span><span class="string literal">"</span>, <span class="variable">layerID</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>)]).<span class="type">wait</span>()
+<span class="keyword">var</span> <span class="variable">feature</span> = <span class="variable">layers</span>[<span class="number literal">0</span>].<span class="type">features</span>[<span class="number literal">0</span>]
+<span class="variable">feature</span>.<span class="type">attributes</span>![<span class="string literal">"</span><span class="string literal">Greeting</span><span class="string literal">"</span>] = <span class="string literal">"</span><span class="string literal">Hello!</span><span class="string literal">"</span>
+<span class="keyword">let</span> <span class="variable">res</span> = <span class="variable">myFeatureServer</span>.<span class="type">edit</span>([<a href="https://lebje.github.io/ArcGISKit/A"><span class="type">A</span></a>(<span class="variable">id</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>, <span class="variable">updates</span>: [<span class="variable">feature</span>])]).<span class="type">wait</span>()
+</code></pre></body></html>
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>a</th>
+    <td><code class="type">[A]</code></td>
+    <td><p>The values you wish to edit, delete, or add.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+  <h4>Throws</h4>
+  <p><code>AGKRequestError</code>.</p>
+
+  <h4>Returns</h4>
+  
 </div>
     </section>
 
@@ -211,7 +257,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-14T11:58:57+0000">January 14, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-01-14T13:46:36+0000">January 14, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
