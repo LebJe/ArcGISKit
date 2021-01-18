@@ -6,3 +6,4 @@
 //
 
 @_exported import SwiftyJSON
+@_exported import NIO

@@ -19,17 +19,17 @@ func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throw
 
 				switch re.error?.message.lowercased() ?? "" {
 					case "Invalid username or password.".lowercased():
-						throw RequestError.invalidUsernameOrPassword
+						throw AGKRequestError.invalidUsernameOrPassword
 					case "Token Required".lowercased():
-						throw RequestError.tokenRequired
+						throw AGKRequestError.tokenRequired
 					default:
-						throw RequestError.unknown(message: re.error?.message)
+						throw AGKRequestError.unknown(message: re.error?.message, details: re.error?.details)
 				}
 			} catch {
 				throw error
 			}
 		}
 	} else {
-		throw RequestError.unknown(message: "No response")
+		throw AGKRequestError.unknown(message: "No response", details: nil)
 	}
 }

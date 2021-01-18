@@ -19,6 +19,7 @@ public struct FeatureService: Codable, Equatable {
 	public let supportsReturnDeleteResults: Bool?
 	public let hasStaticData: Bool?
 	public let maxRecordCount: Int?
+	public let hasAttachments: Bool?
 	public let supportedQueryFormats: String?
 	public let supportsRelationshipsResource: Bool?
 	let capabilities: String?

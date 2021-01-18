@@ -5,6 +5,7 @@
 //  Created by Jeff Lebrun on 1/1/21.
 //
 
+import CodableWrappers
 import Foundation
 
 struct Pagination<T: Codable>: Codable {
@@ -17,5 +18,10 @@ struct Pagination<T: Codable>: Codable {
 }
 
 struct Folder: Codable {
-
+	let id: String?
+	let title: String?
+	let username: String?
+	@Immutable @OptionalCoding<MillisecondsSince1970DateCoding>
+	var created: Date?
+	
 }

@@ -124,5 +124,4 @@ public enum Privilege: String, Codable, CaseIterable {
 	case premiumUserNetworkanalysisServicearea = "premium:user:networkanalysis:servicearea"
 	case premiumUserNetworkanalysisVehiclerouting = "premium:user:networkanalysis:vehiclerouting"
 	case premiumUserSpatialanalysis = "premium:user:spatialanalysis"
-	
 }

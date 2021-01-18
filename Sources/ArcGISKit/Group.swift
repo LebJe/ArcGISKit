@@ -87,29 +87,34 @@ public struct Group: Equatable, Codable {
 	/// If `true`, the group is designated as available for use in Open Data sites.
 	public let isOpenData: Bool?
 
-	/// The `Group`'s content.
-	public var content: [ContentType] = []
-
 	/// Retrieves the content owned by this `Group`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
-	/// - Throws: `RequestError`.
-	public mutating func fetchContent(from gis: GIS) throws {
+	/// - Throws: `AGKRequestError`.
+	/// - Returns: The fetched content.
+	public func fetchContent(from gis: GIS) throws -> EventLoopFuture<[ContentType]> {
 		let groupURL = gis.fullURL
 			.appendingPathComponent("content")
 			.appendingPathComponent("groups")
 			.appendingPathComponent(self.id!)
 
-		let items = try getContent(token: gis.token!, url: groupURL, decodeType: ContentItem.self)
+		return try getContent(client: gis.client, token: gis.token!, url: groupURL, decodeType: ContentItem.self)
+			.flatMapThrowing({ items in
+				var c: [ContentType] = []
 
-		for item in items {
-			if item.itemType != nil && item.type != nil && item.item != nil {
-				if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
-					if let u = URL(string: item.item!) {
-						self.content.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+				for item in items {
+					if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
+						if itemType.lowercased() == "url" && type.lowercased() == "feature service" {
+							if let u = URL(string: itemItem) {
+								c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+							}
+						}
+					} else {
+						c.append(.other(metadata: item))
 					}
 				}
-			}
-		}
+
+				return c
+			})
 	}
 
 	enum CodingKeys: CodingKey {

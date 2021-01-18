@@ -7,7 +7,12 @@
 
 import Foundation
 
-public enum RequestError: Error {
+public enum AGKAuthError: Error {
+	case isAnonymous
+}
+
+/// Errors encountered when making API requests.
+public enum AGKRequestError: Error {
 	/// A token is required. Login using a username and password so `GIS.init` can generate a token.
 	case tokenRequired
 
@@ -15,7 +20,7 @@ public enum RequestError: Error {
 	case invalidUsernameOrPassword
 
 	/// An unknown error occurred.
-	case unknown(message: String?)
+	case unknown(message: String?, details: [String]?)
 }
 
 struct ResponseError: Codable {

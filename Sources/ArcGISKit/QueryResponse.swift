@@ -20,7 +20,7 @@ public struct FeatureLayer: Codable, Equatable {
 	public let spatialReference: SpatialReference?
 	public let geometryProperties: GeometryProperties?
 	public let fields: [Field]
-	public let features: [Feature]
+	public var features: [Feature]
 }
 
 public struct GeometryProperties: Codable, Equatable {
@@ -49,14 +49,27 @@ public struct Field: Codable, Equatable {
 	public let sqlType: String
 	public let domain: Domain?
 	public let length: Int?
-	//public let defaultValue: String?
+	public let defaultValue: JSON?
 }
 
 public struct Feature: Codable, Equatable {
-	public let geometry: Geometry?
-	public let attributes: JSON?
+	public init(geometry: Geometry? = nil, attributes: JSON? = nil) {
+		self.geometry = geometry
+		self.attributes = attributes
+	}
+
+	public var geometry: Geometry?
+	public var attributes: JSON?
 }
 
 public struct Geometry: Codable, Equatable {
-	public let rings: [[[Double]]]?
+	public init(x: Double? = nil, y: Double? = nil, rings: [[[Double]]]? = nil) {
+		self.x = x
+		self.y = y
+		self.rings = rings
+	}
+
+	public var x: Double?
+	public var y: Double?
+	public var rings: [[[Double]]]?
 }

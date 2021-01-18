@@ -7,6 +7,7 @@
 
 import Foundation
 import CodableWrappers
+import NIO
 
 /// A `User` resource represents a registered user of the portal.
 ///
@@ -60,8 +61,8 @@ public struct User: Codable, Equatable {
 	public let favGroupId: String?
 
 	/// The last login date of the user.
-	@Immutable @MillisecondsSince1970DateCoding
-	public var lastLogin: Date
+	@Immutable @OptionalCoding<MillisecondsSince1970DateCoding>
+	public var lastLogin: Date?
 
 	/// The total storage used by the user's organization or subscription in Byte.
 	public let storageUsage: Int?
@@ -117,26 +118,34 @@ public struct User: Codable, Equatable {
 	/// The identity provider for the organization.
 	public let provider: Provider?
 
-	/// The content for this `User`.
-	public var content: [ContentType] = []
-
 	/// Retrieves the content owned by this `User`.
 	/// - Parameter gis: The `GIS` to use to authenticate.
-	/// - Throws: `RequestError`.
-	public mutating func fetchContent(from gis: GIS) throws {
-		let contentURL = gis.fullURL.appendingPathComponent("rest").appendingPathComponent("content").appendingPathComponent("users").appendingPathComponent(self.username)
+	/// - Throws: `AGKRequestError`.
+	/// - Returns: The fetched content.
+	public func fetchContent(from gis: GIS) throws -> EventLoopFuture<[ContentType]> {
+		let contentURL = gis.fullURL
+			.appendingPathComponent("rest")
+			.appendingPathComponent("content")
+			.appendingPathComponent("users")
+			.appendingPathComponent(self.username)
 
-		let items = try getContent(token: gis.token!, url: contentURL, decodeType: ContentItem.self)
-
-		for item in items {
-			if item.itemType != nil && item.type != nil && item.item != nil {
-				if item.itemType!.lowercased() == "url" && item.type!.lowercased() == "feature service" {
-					if let u = URL(string: item.item!) {
-						self.content.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+		return try getContent(client: gis.client, token: gis.token!, url: contentURL, decodeType: ContentItem.self)
+			.flatMapThrowing({ items in
+				var c: [ContentType] = []
+				for item in items {
+					if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
+						if itemType.lowercased() == "url" && type.lowercased() == "feature service" {
+							if let u = URL(string: itemItem) {
+								c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+							}
+						}
+					} else {
+						c.append(.other(metadata: item))
 					}
 				}
-			}
-		}
+
+				return c
+			})
 	}
 
 	enum CodingKeys: CodingKey {
