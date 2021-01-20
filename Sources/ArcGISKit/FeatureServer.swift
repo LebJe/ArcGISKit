@@ -5,8 +5,9 @@
 //  Created by Jeff Lebrun on 12/22/20.
 //
 
-import Foundation
 import AsyncHTTPClient
+import AsyncKit
+import Foundation
 import NIO
 
 /// A `FeatureServer` manages `FeatureService`s.
@@ -44,11 +45,11 @@ public struct FeatureServer: Equatable {
 	public func fetchFeatureService() throws -> EventLoopFuture<FeatureService> {
 		try self.gis.fetchToken().flatMap({
 			let req = try! HTTPClient.Request(
-				url: "\(url.absoluteString)?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")",
+				url: "\(self.url.absoluteString)?f=json\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
 				method: .GET
 			)
 
-			return gis.client.execute(request: req).flatMapThrowing({
+			return self.gis.client.execute(request: req).flatMapThrowing({
 				try handle(response: $0, decodeType: FeatureService.self)
 			})
 		})
@@ -58,20 +59,92 @@ public struct FeatureServer: Equatable {
 	/// - Parameter layerQueries: The queries you want to perform.
 	/// - Returns: An `Array` of `FeatureLayer`s.
 	/// - Throws: `AGKRequestError`.
-	public func query(layerQueries: [LayerQuery]) throws -> EventLoopFuture<[FeatureLayer]> {
+	public func query(layerQueries: [Self.LayerQuery]) throws -> EventLoopFuture<[FeatureLayer]> {
 		try self.gis.fetchToken().flatMap({
-			let dict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
+			let layerQueriesDict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
 
 			let req = try! HTTPClient.Request(
-				url: "\(url.appendingPathComponent("query").absoluteString)?f=json&layerDefs=\(String(data: try! JSONEncoder().encode(dict), encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")",
+				url: "\(self.url.appendingPathComponent("query").absoluteString)?f=json&layerDefs=\(String(data: try! JSONEncoder().encode(layerQueriesDict), encoding: .utf8)!.urlQueryEncoded)\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
 				method: .GET
 			)
 
 			return self.gis.client.execute(request: req)
-				.map({ res in
-					let qr = try! handle(response: res, decodeType: QueryResponse.self)
+				.flatMap({ res in
+					var qr = try! handle(response: res, decodeType: QueryResponse.self)
 
-					return qr.layers
+					var futures: [EventLoopFuture<(Int, Int, AttachmentInfo)>] = []
+
+					qr.layers.forEach({ l in
+						for i in 0..<l.features.count {
+							let attachmentsURL = self.url
+								.appendingPathComponent("\(l.id)")
+								.appendingPathComponent("\(i)")
+								.appendingPathComponent("attachments")
+
+							let r = try! HTTPClient.Request(
+								url: "\(attachmentsURL.absoluteString)?f=json\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
+								method: .GET
+							)
+							let future = self.gis.client.execute(request: r).map({
+								(l.id, i, try! handle(response: $0, decodeType: AttachmentInfo.self))
+							})
+
+							futures.append(future)
+						}
+					})
+
+
+					return futures.flatten(on: self.gis.client.eventLoopGroup.next())
+						.flatMap({ res in
+							var moreFutures: [EventLoopFuture<(Int, QueryAttachmentResponse)>] = []
+
+							for i in 0..<qr.layers.count {
+								for j in 0..<qr.layers[i].features.count {
+									for k in 0..<res.count {
+										if qr.layers[i].id == res[k].0 && j == res[k].1 {
+											qr.layers[i].features[j].attachments = []
+											for attachment in res[k].2.attachmentInfos {
+												qr.layers[i].features[j].attachments?.append(attachment)
+												
+												let attachmentURL = self.url
+													.appendingPathComponent("\(qr.layers[i].id)")
+													.appendingPathComponent("\(j)")
+													.appendingPathComponent("attachments")
+													.appendingPathComponent("\(attachment.id)")
+
+												let request = try! HTTPClient.Request(
+													url: "\(attachmentURL.absoluteString)?f=json\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
+													method: .GET
+												)
+
+												let future = self.gis.client.execute(request: request).map({
+													(attachment.id, try! handle(response: $0, decodeType: QueryAttachmentResponse.self))
+												})
+
+												moreFutures.append(future)
+											}
+										}
+									}
+								}
+							}
+
+							return moreFutures.flatten(on: self.gis.client.eventLoopGroup.next())
+								.map({ dataArray in
+									for i in 0..<qr.layers.count {
+										for j in 0..<qr.layers[i].features.count {
+											for k in 0..<(qr.layers[i].features[j].attachments ?? []).count {
+												for data in dataArray {
+													if (qr.layers[i].features[j].attachments ?? Array<Attachment>())[k].id == data.0 {
+														qr.layers[i].features[j].attachments![k].data = data.1.Attachment
+													}
+												}
+											}
+										}
+									}
+									
+									return qr.layers
+							})
+					})
 				})
 		})
 	}

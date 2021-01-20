@@ -24,7 +24,9 @@ public struct FeatureService: Codable, Equatable {
 	public let supportsRelationshipsResource: Bool?
 	let capabilities: String?
 	public var Capabilities: [Capability]? {
-		capabilities?.components(separatedBy: ",").map({ Capability(rawValue: $0.lowercased())! })
+		capabilities?
+			.components(separatedBy: ",")
+			.map({ Capability(rawValue: $0.lowercased())! })
 	}
 	public let description: String?
 	public let copyrightText: String?

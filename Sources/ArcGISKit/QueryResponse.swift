@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import CodableWrappers
 import SwiftyJSON
 
 public struct QueryResponse: Codable, Equatable {
-	public let layers: [FeatureLayer]
+	public var layers: [FeatureLayer]
 }
 
 public struct FeatureLayer: Codable, Equatable {
@@ -60,6 +61,49 @@ public struct Feature: Codable, Equatable {
 
 	public var geometry: Geometry?
 	public var attributes: JSON?
+
+	@OmitCoding
+	public var attachments: [Attachment]? = nil
+}
+
+public struct Attachment: Codable, Equatable {
+	public init(
+		keywords: String?,
+		size: Int,
+		contentType: String?,
+		globalId: String?,
+		parentGlobalId: String?,
+		exifInfo: JSON?,
+		name: String?,
+		id: Int,
+		data: Data? = nil
+	) {
+		self.keywords = keywords
+		self.size = size
+		self.contentType = contentType
+		self.globalId = globalId
+		self.parentGlobalId = parentGlobalId
+		self.exifInfo = exifInfo
+		self.name = name
+		self.id = id
+		self.data = data
+	}
+
+	public let keywords: String?
+	public let size: Int
+	public let contentType: String?
+	public let globalId: String?
+	public let parentGlobalId: String?
+	public let exifInfo: JSON?
+	public let name: String?
+	public let id: Int
+
+	@OmitCoding
+	public var data: Data? = nil
+}
+
+public struct AttachmentInfo: Codable, Equatable {
+	public let attachmentInfos: [Attachment]
 }
 
 public struct Geometry: Codable, Equatable {

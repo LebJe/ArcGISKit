@@ -34,3 +34,8 @@ struct RequestOAuthTokenResponse: Codable {
 		case ssl = "ssl"
 	}
 }
+
+struct QueryAttachmentResponse: Codable {
+	@Immutable @Base64Coding
+	var Attachment: Data
+}
