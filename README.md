@@ -4,7 +4,7 @@
 
 **A Swift library and CLI for the [ArcGIS REST API](https://developers.arcgis.com/rest/).**
 
-[![Swift 5.2](https://img.shields.io/badge/Swift-5.2-brightgreen.svg)](https://swift.org)
+[![Swift 5.3](https://img.shields.io/badge/Swift-5.3-brightgreen?logo=swift)](https://swift.org)
 [![SPM Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
 [![https://img.shields.io/badge/Platforms-MacOS%20%7C%20Linux-lightgrey](https://img.shields.io/badge/Platforms-MacOS%20%7C%20Linux-lightgrey)](https://img.shields.io/badge/Platforms-MacOS%20%7C%20Linux-lightgrey)
 [![](https://img.shields.io/github/v/tag/LebJe/ArcGISKit)](https://github.com/LebJe/ArcGISKit/releases)
@@ -13,7 +13,6 @@
 Documentation comments are taken from the [ArcGIS REST API](https://developers.arcgis.com/rest/).
 
 View the documentation on [Github Pages](https://lebje.github.io/ArcGISKit/).
-
 
 **Under Construction! DO NOT READ!**
 
@@ -49,8 +48,6 @@ eventLoopGroup: group,
 url: URL(string: "https://my-organization.maps.arcgis.com")!
 )
 
-let user = try authenticatedGIS.fetchUser().wait()
-
 // Login anonymously.
 // There is no user available since we logged in anonymously.
 let anonymousGIS = GIS(authType: .anonymous, eventLoopGroup: group)
@@ -67,18 +64,20 @@ Once you have a `GIS` you can fetch a `User`:
 ```swift
 var gis: GIS = ...
 
-// Fetch synchronously.
-let user = try gis.fetchUser().wait()
+if !gis.isAnonymous {
+	// Fetch synchronously.
+	let user = try gis.fetchUser().wait()
 
-// Fetch asynchronously.
-try gis.fetchUser().whenComplete({ res in
+	// Fetch asynchronously.
+	try gis.fetchUser().whenComplete({ res in
 	switch res {
-		case .failure(let error):
-		// something went wrong...
-		break
-		case .success(let user):
-		// Use `user` here.
-		print(user)
+	case .failure(let error):
+	// something went wrong...
+	break
+	case .success(let user):
+	// Use `user` here.
+	print(user)
 	}
-})
+	})	
+}
 ```

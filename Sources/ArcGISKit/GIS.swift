@@ -8,12 +8,12 @@ public class GIS {
 	public let username: String?
 	public let password: String?
 	public let authType: AuthenticationType
-	public var isAnonymous: Bool { authType == .anonymous && (username == nil && password == nil) }
+	public var isAnonymous: Bool { self.authType == .anonymous && (self.username == nil && self.password == nil) }
 
 	// MARK: - Private properties.
 	let client: HTTPClient
 	let eventLoopGroup: EventLoopGroup
-	var fullURL: URL { url.appendingPathComponent(site) }
+	var fullURL: URL { url.appendingPathComponent(self.site) }
 	let site: String
 	var token: String?
 	var refeshToken: String?
@@ -69,7 +69,7 @@ public class GIS {
 		}
 
 		if case let .idAndSecret(clientID: cI, clientSecret: cS, username: _) = self.authType {
-			let newURL = fullURL
+			let newURL = self.fullURL
 				.appendingPathComponent("rest")
 				.appendingPathComponent("oauth2")
 				.appendingPathComponent("token")
@@ -88,7 +88,7 @@ public class GIS {
 			})
 
 		} else {
-			let newURL = url.appendingPathComponent(site).appendingPathComponent("rest").appendingPathComponent("generateToken")
+			let newURL = self.url.appendingPathComponent(self.site).appendingPathComponent("rest").appendingPathComponent("generateToken")
 
 			let req = try HTTPClient.Request(
 				url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
@@ -116,9 +116,12 @@ public class GIS {
 			throw AGKAuthError.isAnonymous
 		}
 
-		return try fetchToken()
+		return try self.fetchToken()
 			.flatMap({ _ in
-				let newURL = self.fullURL.appendingPathComponent("community").appendingPathComponent("users").appendingPathComponent(self.username!)
+				let newURL = self.fullURL
+					.appendingPathComponent("community")
+					.appendingPathComponent("users")
+					.appendingPathComponent(self.username!)
 				let req = try! HTTPClient.Request(
 					url: "\(newURL.absoluteString)?f=json&token=\(self.token!.urlQueryEncoded)",
 					method: .POST
