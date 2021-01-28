@@ -69,82 +69,17 @@ public struct FeatureServer: Equatable {
 			)
 
 			return self.gis.client.execute(request: req)
-				.flatMap({ res in
+				.map({ res in
 					var qr = try! handle(response: res, decodeType: QueryResponse.self)
 
-					var futures: [EventLoopFuture<(Int, Int, AttachmentInfo)>] = []
-
-					qr.layers.forEach({ l in
-						for i in 0..<l.features.count {
-							let attachmentsURL = self.url
-								.appendingPathComponent("\(l.id)")
-								.appendingPathComponent("\(i)")
-								.appendingPathComponent("attachments")
-
-							let r = try! HTTPClient.Request(
-								url: "\(attachmentsURL.absoluteString)?f=json\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
-								method: .GET
-							)
-							let future = self.gis.client.execute(request: r).map({
-								(l.id, i, try! handle(response: $0, decodeType: AttachmentInfo.self))
-							})
-
-							futures.append(future)
+					for i in 0..<qr.layers.count {
+						for j in 0..<qr.layers[i].features.count {
+							qr.layers[i].featureServerURL = self.url
+							qr.layers[i].features[j].featureServerURL = self.url
+							qr.layers[i].features[j].featureLayerID = qr.layers[i].id
 						}
-					})
-
-
-					return futures.flatten(on: self.gis.client.eventLoopGroup.next())
-						.flatMap({ res in
-							var moreFutures: [EventLoopFuture<(Int, QueryAttachmentResponse)>] = []
-
-							for i in 0..<qr.layers.count {
-								for j in 0..<qr.layers[i].features.count {
-									for k in 0..<res.count {
-										if qr.layers[i].id == res[k].0 && j == res[k].1 {
-											qr.layers[i].features[j].attachments = []
-											for attachment in res[k].2.attachmentInfos {
-												qr.layers[i].features[j].attachments?.append(attachment)
-												
-												let attachmentURL = self.url
-													.appendingPathComponent("\(qr.layers[i].id)")
-													.appendingPathComponent("\(j)")
-													.appendingPathComponent("attachments")
-													.appendingPathComponent("\(attachment.id)")
-
-												let request = try! HTTPClient.Request(
-													url: "\(attachmentURL.absoluteString)?f=json\(self.gis.token != nil ? "&token=\(self.gis.token!)" : "")",
-													method: .GET
-												)
-
-												let future = self.gis.client.execute(request: request).map({
-													(attachment.id, try! handle(response: $0, decodeType: QueryAttachmentResponse.self))
-												})
-
-												moreFutures.append(future)
-											}
-										}
-									}
-								}
-							}
-
-							return moreFutures.flatten(on: self.gis.client.eventLoopGroup.next())
-								.map({ dataArray in
-									for i in 0..<qr.layers.count {
-										for j in 0..<qr.layers[i].features.count {
-											for k in 0..<(qr.layers[i].features[j].attachments ?? []).count {
-												for data in dataArray {
-													if (qr.layers[i].features[j].attachments ?? Array<Attachment>())[k].id == data.0 {
-														qr.layers[i].features[j].attachments![k].data = data.1.Attachment
-													}
-												}
-											}
-										}
-									}
-									
-									return qr.layers
-							})
-					})
+					}
+					return qr.layers
 				})
 		})
 	}

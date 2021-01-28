@@ -13,7 +13,7 @@ public class GIS {
 	// MARK: - Private properties.
 	let client: HTTPClient
 	let eventLoopGroup: EventLoopGroup
-	var fullURL: URL { url.appendingPathComponent(self.site) }
+	var fullURL: URL { self.url.appendingPathComponent(self.site) }
 	let site: String
 	var token: String?
 	var refeshToken: String?
@@ -112,7 +112,6 @@ public class GIS {
 	public func fetchUser() throws -> EventLoopFuture<User> {
 		
 		if self.isAnonymous {
-			// Fix.
 			throw AGKAuthError.isAnonymous
 		}
 

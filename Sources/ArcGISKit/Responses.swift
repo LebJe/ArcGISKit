@@ -39,3 +39,24 @@ struct QueryAttachmentResponse: Codable {
 	@Immutable @Base64Coding
 	var Attachment: Data
 }
+
+struct QueryAttachmentsResponse: Codable, Equatable {
+	let attachmentGroups: [AttachmentGroup]
+}
+
+public struct AttachmentGroup: Codable, Equatable {
+	public let parentObjectId: Int
+	public let parentGlobalId: String?
+	public let attachmentInfos: [Attachment]
+}
+
+public struct ExifInfo: Codable, Equatable {
+	public let name: String
+	public let tags: [ExifInfoTags]
+}
+
+public struct ExifInfoTags: Codable, Equatable {
+	public let name: String
+	public let description: String?
+	public let value: JSON?
+}

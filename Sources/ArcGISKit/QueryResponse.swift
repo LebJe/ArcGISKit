@@ -7,6 +7,7 @@
 
 import Foundation
 import CodableWrappers
+import AsyncHTTPClient
 import SwiftyJSON
 
 public struct QueryResponse: Codable, Equatable {
@@ -14,6 +15,9 @@ public struct QueryResponse: Codable, Equatable {
 }
 
 public struct FeatureLayer: Codable, Equatable {
+	@OmitCoding
+	var featureServerURL: URL? = nil
+
 	public let id: Int
 	public let objectIdFieldName: String?
 	public let globalIdFieldName: String?
@@ -59,21 +63,79 @@ public struct Feature: Codable, Equatable {
 		self.attributes = attributes
 	}
 
+	@OmitCoding
+	var featureServerURL: URL? = nil
+
+	@OmitCoding
+	var featureLayerID: Int? = 0
+
 	public var geometry: Geometry?
 	public var attributes: JSON?
 
 	@OmitCoding
 	public var attachments: [Attachment]? = nil
+
+	public func fetchAttachments(gis: GIS) -> EventLoopFuture<[Attachment]> {
+		let attachmentsURL = self.featureServerURL!
+			.appendingPathComponent(String(self.featureLayerID!))
+			.appendingPathComponent(String(self.attributes!["OBJECTID"].intValue))
+			.appendingPathComponent("attachments")
+
+		let attachmentsURLString = "\(attachmentsURL.absoluteString)?f=json&\(gis.token != nil ? "&token=\(gis.token!)" : "")"
+
+		var req = try! HTTPClient.Request(url: attachmentsURLString, method: .GET)
+
+		return gis.client.execute(request: req).flatMap({
+			var at = try! handle(response: $0, decodeType: AttachmentInfosResponse.self)
+			var futures: [EventLoopFuture<(Int, AttachmentResponse)>] = []
+			at.attachmentInfos.forEach({ ati in
+				let url = attachmentsURL.appendingPathComponent(String(ati.id))
+				let urlString = "\(url.absoluteString)?f=json&\(gis.token != nil ? "&token=\(gis.token!)" : "")"
+				req = try! HTTPClient.Request(url: urlString, method: .GET)
+
+				let future = gis.client.execute(request: req).flatMapThrowing({
+					(ati.id, try handle(response: $0, decodeType: AttachmentResponse.self))
+				})
+
+				futures.append(future)
+			})
+
+			return futures.flatten(on: gis.eventLoopGroup.next()).map({
+				for i in 0..<at.attachmentInfos.count {
+					for b in $0 {
+						if at.attachmentInfos[i].id == b.0 {
+							at.attachmentInfos[i].data = b.1.attachment
+						}
+					}
+				}
+
+				return at.attachmentInfos
+			})
+		})
+	}
+}
+
+public struct AttachmentResponse: Codable {
+	@Immutable @Base64Coding
+	var attachment: Data
+
+	enum CodingKeys: String, CodingKey {
+		case attachment = "Attachment"
+	}
+}
+
+public struct AttachmentInfosResponse: Codable {
+	var attachmentInfos: [Attachment]
 }
 
 public struct Attachment: Codable, Equatable {
-	public init(
+	init(
 		keywords: String?,
 		size: Int,
 		contentType: String?,
 		globalId: String?,
 		parentGlobalId: String?,
-		exifInfo: JSON?,
+		exifInfo: [ExifInfo]?,
 		name: String?,
 		id: Int,
 		data: Data? = nil
@@ -94,16 +156,12 @@ public struct Attachment: Codable, Equatable {
 	public let contentType: String?
 	public let globalId: String?
 	public let parentGlobalId: String?
-	public let exifInfo: JSON?
+	public let exifInfo: [ExifInfo]?
 	public let name: String?
 	public let id: Int
 
 	@OmitCoding
 	public var data: Data? = nil
-}
-
-public struct AttachmentInfo: Codable, Equatable {
-	public let attachmentInfos: [Attachment]
 }
 
 public struct Geometry: Codable, Equatable {
