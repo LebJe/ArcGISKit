@@ -56,7 +56,7 @@ public struct Field: Codable, Equatable {
 	public let defaultValue: JSON?
 }
 
-public struct AttachmentResponse: Codable {
+struct AttachmentResponse: Codable {
 	@Immutable @Base64Coding
 	var attachment: Data
 
@@ -65,7 +65,7 @@ public struct AttachmentResponse: Codable {
 	}
 }
 
-public struct AttachmentInfosResponse: Codable {
+struct AttachmentInfosResponse: Codable {
 	var attachmentInfos: [Attachment]
 }
 
