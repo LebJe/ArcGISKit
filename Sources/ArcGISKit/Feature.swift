@@ -26,8 +26,8 @@ public struct Feature: Codable, Equatable {
 	public var geometry: Geometry?
 	public var attributes: JSON?
 
-	@OmitCoding
 	/// The `Attachment`s contained in this `Feature`.
+	@OmitCoding
 	public var attachments: [Attachment]? = nil
 
 	/// Fetch all the `Attachment`s contained in this `Feature`.
