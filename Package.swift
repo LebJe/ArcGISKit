@@ -24,7 +24,7 @@ let package = Package(
 		.package(url: "https://github.com/vapor/async-kit.git", from: "1.3.0"),
 
 		// A simple multipart MIME encoder that supports form-data, files and nesting.
-		.package(url: "https://github.com/Fyrts/Multipart.git", from: "0.0.1"),
+		.package(url: "https://github.com/LebJe/Multipart.git", .branch("master")),
 
 		// 🗂 Swift MIME type checking based on magic bytes
 		.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7")
