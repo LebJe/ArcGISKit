@@ -2,7 +2,7 @@
 
 **Under Construction! DO NOT USE!**
 
-**A Swift library and CLI for the [ArcGIS REST API](https://developers.arcgis.com/rest/).**
+**A Swift library for the [ArcGIS REST API](https://developers.arcgis.com/rest/).**
 
 [![Swift 5.3](https://img.shields.io/badge/Swift-5.3-brightgreen?logo=swift)](https://swift.org)
 [![SPM Compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)

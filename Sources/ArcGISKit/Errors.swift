@@ -11,6 +11,11 @@ public enum AGKAuthError: Error {
 	case isAnonymous
 }
 
+public enum AGKDataError: Error {
+	/// The [mime type](https://en.wikipedia.org/wiki/Media_type) of the file provided isn't supported.
+	case unknownMimeType
+}
+
 /// Errors encountered when making API requests.
 public enum AGKRequestError: Error {
 	/// A token is required. Login using a username and password so `GIS.init` can generate a token.
