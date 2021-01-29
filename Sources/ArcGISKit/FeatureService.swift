@@ -24,7 +24,7 @@ public struct FeatureService: Codable, Equatable {
 	public let supportedQueryFormats: String?
 	public let supportsRelationshipsResource: Bool?
 
-	@CodingUses<CommaSeparatedCapabilityCoder>
+	@Immutable @CodingUses<CommaSeparatedCapabilityCoder>
 	var capabilities: [Capability]
 
 	public let description: String?
