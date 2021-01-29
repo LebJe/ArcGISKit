@@ -5,6 +5,7 @@
 //  Created by Jeff Lebrun on 12/25/20.
 //
 
+import CodableWrappers
 import Foundation
 
 /// A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets with a spatial column are considered layers; those without a spatial column are considered tables. A feature service allows clients to query and edit feature geometry and attributes.
@@ -22,12 +23,10 @@ public struct FeatureService: Codable, Equatable {
 	public let hasAttachments: Bool?
 	public let supportedQueryFormats: String?
 	public let supportsRelationshipsResource: Bool?
-	let capabilities: String?
-	public var Capabilities: [Capability]? {
-		capabilities?
-			.components(separatedBy: ",")
-			.map({ Capability(rawValue: $0.lowercased())! })
-	}
+
+	@CodingUses<CommaSeparatedCapabilityCoder>
+	var capabilities: [Capability]
+
 	public let description: String?
 	public let copyrightText: String?
 	public let userTypeExtensions: [String]?
@@ -57,7 +56,7 @@ public struct FeatureService: Codable, Equatable {
 }
 
 public enum Capability: String, CaseIterable, Codable {
-	case create, delete, query, update, editing, sync, uploads
+	case create, delete, query, update, editing, sync, uploads, extract, changetracking
 }
 
 public struct AdvancedEditingCapabilities: Codable, Equatable {

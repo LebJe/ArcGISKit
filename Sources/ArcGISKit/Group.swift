@@ -116,31 +116,6 @@ public struct Group: Equatable, Codable {
 				return c
 			})
 	}
-
-	enum CodingKeys: CodingKey {
-		case id,
-			 title,
-			 isInvitationOnly,
-			 owner,
-			 description,
-			 typeKeywords,
-			 snippet,
-			 tags,
-			 phone,
-			 sortField,
-			 sortOrder,
-			 isViewOnly,
-			 isFav,
-			 thumbnail,
-			 created,
-			 modified,
-			 access,
-			 userMembership,
-			 protected,
-			 autoJoin,
-			 hasCategorySchema,
-			 isOpenData
-	}
 }
 
 /// The order a `Group` is sorted by.

@@ -147,42 +147,6 @@ public struct User: Codable, Equatable {
 				return c
 			})
 	}
-
-	enum CodingKeys: CodingKey {
-		case id,
-			 firstName,
-			 lastName,
-			 fullName,
-			 username,
-			 idpUsername,
-			 email,
-			 description,
-			 tags,
-			 availableCredits,
-			 assignedCredits,
-			 preferredView,
-			 access,
-			 mfaEnabled,
-			 favGroupId,
-			 lastLogin,
-			 storageUsage,
-			 storageQuota,
-			 orgId,
-			 role,
-			 privileges,
-			 roleId,
-			 userLicenseTypeId,
-			 disabled,
-			 units,
-			 culture,
-			 cultureFormat,
-			 region,
-			 thumbnail,
-			 created,
-			 modified,
-			 groups,
-			 provider
-	}
 }
 
 public enum Provider: String, Codable, CaseIterable, Equatable {

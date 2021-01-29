@@ -123,7 +123,6 @@ public struct Feature: Codable, Equatable {
 	/// - Returns: EventLoopFuture<JSON>`.
 	public func deleteAttachments(ids: [Int], gis: GIS) -> EventLoopFuture<JSON> {
 		let stringIDs = ids.map(String.init(_:)).joined(separator: ",")
-		print(stringIDs)
 		let req = try! HTTPClient.Request(
 			url: fullURL.appendingPathComponent("deleteAttachments").absoluteString + "?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")&attachmentIds=\(stringIDs.urlQueryEncoded)",
 			method: .POST
@@ -132,6 +131,5 @@ public struct Feature: Codable, Equatable {
 		return gis.client.execute(request: req).flatMapThrowing({
 			try handle(response: $0, decodeType: JSON.self)
 		})
-
 	}
 }
