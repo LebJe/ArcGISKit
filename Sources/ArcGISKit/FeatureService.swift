@@ -25,7 +25,7 @@ public struct FeatureService: Codable, Equatable {
 	public let supportsRelationshipsResource: Bool?
 
 	@Immutable @CodingUses<CommaSeparatedCapabilityCoder>
-	var capabilities: [Capability]
+	public var capabilities: [Capability]
 
 	public let description: String?
 	public let copyrightText: String?
@@ -56,7 +56,16 @@ public struct FeatureService: Codable, Equatable {
 }
 
 public enum Capability: String, CaseIterable, Codable {
-	case create, delete, query, update, editing, sync, uploads, extract, changetracking
+	case
+		create,
+		delete,
+		query,
+		update,
+		editing,
+		sync,
+		uploads,
+		extract,
+		changetracking
 }
 
 public struct AdvancedEditingCapabilities: Codable, Equatable {
