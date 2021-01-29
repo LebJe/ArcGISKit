@@ -11,7 +11,7 @@ import Foundation
 import NIO
 
 /// A `FeatureServer` manages `FeatureService`s.
-public struct FeatureServer: Equatable {
+public struct FeatureServer {
 	public static func == (lhs: FeatureServer, rhs: FeatureServer) -> Bool {
 		lhs.url == rhs.url
 	}
