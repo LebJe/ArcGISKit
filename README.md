@@ -81,3 +81,14 @@ if !gis.isAnonymous {
 	})	
 }
 ```
+
+## Contributing
+Before committing, please install [pre-commit](https://pre-commit.com), and [swift-format](https://github.com/nicklockwood/SwiftFormat) and install the pre-commit hook:
+```bash
+$ brew bundle # install the packages specified in Brewfile
+$ pre-commit install
+
+# Commit your changes.
+```
+
+To install pre-commit on other platforms, refer to the [documentation](https://pre-commit.com/#install).
