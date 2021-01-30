@@ -1,6 +1,6 @@
 //
 //  Privileges.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/23/20.
 //
@@ -9,6 +9,7 @@ import Foundation
 
 public enum Privilege: String, Codable, CaseIterable {
 	// MARK: - ArcGIS Marketplace subscriptions.
+
 	case marketplaceAdminManage = "marketplace:admin:manage"
 	case marketplaceAdminPurchase = "marketplace:admin:purchase"
 	case marketplaceAdminStartTrial = "marketplace:admin:startTrial"
@@ -17,6 +18,7 @@ public enum Privilege: String, Codable, CaseIterable {
 	case opendataUserOpenDataAdmin = "opendata:user:openDataAdmin"
 
 	// MARK: - Administrative privileges.
+
 	case portalAdminAssignToGroups = "portal:admin:assignToGroups"
 	case portalAdminCategorizeItems = "portal:admin:categorizeItems"
 	case portalAdminChangeUserRoles = "portal:admin:changeUserRoles"
@@ -60,6 +62,7 @@ public enum Privilege: String, Codable, CaseIterable {
 	case portalAdminViewUsers = "portal:admin:viewUsers"
 
 	// MARK: - Publisher privileges.
+
 	case portalPublisherBulkPublishFromDataStores = "portal:publisher:bulkPublishFromDataStores"
 	case portalPublisherPublishBigDataAnalytics = "portal:publisher:publishBigDataAnalytics"
 	case portalPublisherPublishDynamicImagery = "portal:publisher:publishDynamicImagery"
@@ -76,6 +79,7 @@ public enum Privilege: String, Codable, CaseIterable {
 	case premiumPublisherCreateNotebooks = "premium:publisher:createNotebooks"
 
 	// MARK: - User privileges.
+
 	case portalUserCategorizeItems = "portal:user:categorizeItems"
 
 	case portalUserCreateItem = "portal:user:createItem"
@@ -88,17 +92,19 @@ public enum Privilege: String, Codable, CaseIterable {
 	case portalUserViewOrgItems = "portal:user:viewOrgItems"
 
 	// MARK: - User privileges: Members.
+
 	case portalUserViewOrgUsers = "portal:user:viewOrgUsers"
 
 	// MARK: - User privileges: Groups.
+
 	case portalUserCreateGroup = "portal:user:createGroup"
 	case portalUserJoinGroup = "portal:user:joinGroup"
 	case portalUserJoinNonOrgGroup = "portal:user:joinNonOrgGroup"
 	case portalUserViewOrgGroups = "portal:user:viewOrgGroups"
 
 	// MARK: - User privileges: Content.
-	case portalUserViewTracks = "portal:user:viewTracks"
 
+	case portalUserViewTracks = "portal:user:viewTracks"
 
 	case featuresUserEdit = "features:user:edit"
 	case featuresUserFullEdit = "features:user:fullEdit"

@@ -1,12 +1,12 @@
 //
 //  ContentItem.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/1/21.
 //
 
-import Foundation
 import CodableWrappers
+import Foundation
 
 public struct ContentItem: Codable, Equatable {
 	public let id: String?
@@ -19,7 +19,7 @@ public struct ContentItem: Codable, Equatable {
 
 	@Immutable @OptionalCoding<MillisecondsSince1970DateCoding>
 	public var modified: Date?
-	
+
 	public let isOrgItem: Bool?
 	public let guid: String?
 	public let name: String?

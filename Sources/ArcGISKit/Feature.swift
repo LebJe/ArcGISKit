@@ -1,12 +1,12 @@
 //
 //  Feature.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/28/21.
 //
 
-import AsyncKit
 import AsyncHTTPClient
+import AsyncKit
 import CodableWrappers
 import Foundation
 import Multipart
@@ -96,16 +96,16 @@ public struct Feature: Codable, Equatable {
 		if !name.contains(oneOf: ".md", ".txt", ".text") {
 			mime = "text/plain"
 		} else {
-				guard let mimeType = Swime.mimeType(data: data) else {
-					throw AGKDataError.unknownMimeType
-				}
+			guard let mimeType = Swime.mimeType(data: data) else {
+				throw AGKDataError.unknownMimeType
+			}
 			mime = mimeType.mime
 		}
 
 		message.append(Part.FormData(name: "file", fileData: data, fileName: name, contentType: mime))
 
 		let req = try! HTTPClient.Request(
-			url: "\(fullURL.appendingPathComponent("addAttachment").absoluteString)?f=json&\(gis.token != nil ? "&token=\(gis.token!)" : "")",
+			url: "\(self.fullURL.appendingPathComponent("addAttachment").absoluteString)?f=json&\(gis.token != nil ? "&token=\(gis.token!)" : "")",
 			method: .POST,
 			headers: ["Content-Type": message.headers[0].value],
 			body: .data(message.body)
@@ -124,7 +124,7 @@ public struct Feature: Codable, Equatable {
 	public func deleteAttachments(ids: [Int], gis: GIS) -> EventLoopFuture<JSON> {
 		let stringIDs = ids.map(String.init(_:)).joined(separator: ",")
 		let req = try! HTTPClient.Request(
-			url: fullURL.appendingPathComponent("deleteAttachments").absoluteString + "?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")&attachmentIds=\(stringIDs.urlQueryEncoded)",
+			url: self.fullURL.appendingPathComponent("deleteAttachments").absoluteString + "?f=json\(gis.token != nil ? "&token=\(gis.token!)" : "")&attachmentIds=\(stringIDs.urlQueryEncoded)",
 			method: .POST
 		)
 

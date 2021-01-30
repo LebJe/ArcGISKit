@@ -1,12 +1,12 @@
 //
 //  User.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/22/20.
 //
 
-import Foundation
 import CodableWrappers
+import Foundation
 import NIO
 
 /// A `User` resource represents a registered user of the portal.
@@ -134,7 +134,7 @@ public struct User: Codable, Equatable {
 				var c: [ContentType] = []
 				for item in items {
 					if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
-						if itemType.lowercased() == "url" && type.lowercased() == "feature service" {
+						if itemType.lowercased() == "url", type.lowercased() == "feature service" {
 							if let u = URL(string: itemItem) {
 								c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
 							}

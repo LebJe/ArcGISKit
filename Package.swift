@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "ArcGISKit",
+	name: "ArcGISKit",
 	platforms: [.macOS(.v10_15)],
-    products: [
-        .library(
-            name: "ArcGISKit",
-            targets: ["ArcGISKit"]
-		)
-    ],
-    dependencies: [
+	products: [
+		.library(
+			name: "ArcGISKit",
+			targets: ["ArcGISKit"]
+		),
+	],
+	dependencies: [
 		// HTTP client library built on SwiftNIO
 		.package(url: "https://github.com/swift-server/async-http-client.git", from: "1.2.2"),
 
@@ -27,14 +27,14 @@ let package = Package(
 		.package(url: "https://github.com/LebJe/Multipart.git", .branch("master")),
 
 		// 🗂 Swift MIME type checking based on magic bytes
-		.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7")
+		.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7"),
 
-		//.package(url: "https://github.com/LebJe/CTabulate.git", .branch("main")),
-    ],
-    targets: [
-        .target(
-            name: "ArcGISKit",
-            dependencies: [
+		// .package(url: "https://github.com/LebJe/CTabulate.git", .branch("main")),
+	],
+	targets: [
+		.target(
+			name: "ArcGISKit",
+			dependencies: [
 				"SwiftyJSON",
 				"Multipart",
 				"Swime",
@@ -43,9 +43,9 @@ let package = Package(
 				.product(name: "CodableWrappers", package: "CodableWrappers"),
 			]
 		),
-        .testTarget(
-            name: "ArcGISKitTests",
-            dependencies: ["ArcGISKit"]
+		.testTarget(
+			name: "ArcGISKitTests",
+			dependencies: ["ArcGISKit"]
 		),
-    ]
+	]
 )

@@ -1,12 +1,12 @@
 //
 //  QueryResponse.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/9/21.
 //
 
-import Foundation
 import CodableWrappers
+import Foundation
 import SwiftyJSON
 
 public struct QueryResponse: Codable, Equatable {

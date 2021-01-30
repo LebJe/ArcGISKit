@@ -1,13 +1,13 @@
 //
 //  Group.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/23/20.
 //
 
-import Foundation
 import AsyncHTTPClient
 import CodableWrappers
+import Foundation
 
 /// The Group resource represents a group (for example, San Bernardino Fires) within the portal.
 ///
@@ -103,7 +103,7 @@ public struct Group: Equatable, Codable {
 
 				for item in items {
 					if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
-						if itemType.lowercased() == "url" && type.lowercased() == "feature service" {
+						if itemType.lowercased() == "url", type.lowercased() == "feature service" {
 							if let u = URL(string: itemItem) {
 								c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
 							}

@@ -19,4 +19,3 @@ for var colonString in arrayOfColons {
 
 	print("case \(colonString) = \"\(originalString)\"")
 }
-

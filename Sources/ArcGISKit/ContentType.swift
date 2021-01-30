@@ -1,6 +1,6 @@
 //
 //  ContentType.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/1/21.
 //

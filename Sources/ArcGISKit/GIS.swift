@@ -1,9 +1,10 @@
 import AsyncHTTPClient
-import NIO
 import Foundation
+import NIO
 
 public class GIS {
 	// MARK: - Public properties.
+
 	public let url: URL
 	public let username: String?
 	public let password: String?
@@ -11,6 +12,7 @@ public class GIS {
 	public var isAnonymous: Bool { self.authType == .anonymous && (self.username == nil && self.password == nil) }
 
 	// MARK: - Private properties.
+
 	let client: HTTPClient
 	let eventLoopGroup: EventLoopGroup
 	var fullURL: URL { self.url.appendingPathComponent(self.site) }
@@ -20,7 +22,7 @@ public class GIS {
 
 	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
 	///
-	/// If `authType` is `.webBrowser`, You must first call `GIS.url(clientID:, baseURL:, site:)` (without changing `redirectURI`)  to generate a `URL`.
+	/// If `authType` is `.webBrowser`, You must first call `GIS.generateURL(clientID:, baseURL:, site:)` (without changing `redirectURI`)  to generate a `URL`.
 	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then to copy and paste the returned code back into your app.
 	/// Once you receive the code, you can then pass it to this initializer.
 	///
@@ -60,7 +62,7 @@ public class GIS {
 	}
 
 	deinit {
-		self.client.shutdown({_ in })
+		self.client.shutdown({ _ in })
 	}
 
 	func fetchToken() throws -> EventLoopFuture<Void> {
@@ -82,35 +84,32 @@ public class GIS {
 			return self.client.execute(request: req).flatMapThrowing({ res in
 				try handle(response: res, decodeType: RequestOAuthTokenResponse.self)
 			})
-			.flatMapThrowing({
-				self.token = $0.accessToken
-				self.refeshToken = $0.refreshToken
-			})
+				.flatMapThrowing({
+					self.token = $0.accessToken
+					self.refeshToken = $0.refreshToken
+				})
 
 		} else {
 			let newURL = self.url.appendingPathComponent(self.site).appendingPathComponent("rest").appendingPathComponent("generateToken")
 
 			let req = try HTTPClient.Request(
-				url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
+				url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
 				method: .POST
 			)
 
 			return self.client.execute(request: req).flatMapThrowing({ res in
 				try handle(response: res, decodeType: RequestTokenResponse.self)
 			})
-			.flatMapThrowing({
-				self.token = $0.token
-			})
-
+				.flatMapThrowing({
+					self.token = $0.token
+				})
 		}
-
 	}
 
 	/// Retrieves the `User` that provided their credentials via `GIS.init`.
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: The retrieved `User`.
 	public func fetchUser() throws -> EventLoopFuture<User> {
-		
 		if self.isAnonymous {
 			throw AGKAuthError.isAnonymous
 		}
@@ -131,7 +130,7 @@ public class GIS {
 						// TODO: Fix.
 						try! handle(response: $0, decodeType: User.self)
 					})
-		})
+			})
 	}
 
 	/// Generates a `URL` that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to `GIS.init`.

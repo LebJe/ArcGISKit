@@ -1,6 +1,6 @@
 //
 //  FeatureService.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/25/20.
 //
@@ -111,7 +111,6 @@ public struct Relationship: Codable, Equatable {
 	public let id: Int
 	public let name: String?
 }
-
 
 public struct ControllerDatasetLayer: Codable, Equatable {
 	public let topologyLayerIds: [Int]?

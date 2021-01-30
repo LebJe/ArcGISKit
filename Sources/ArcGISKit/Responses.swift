@@ -1,12 +1,12 @@
 //
 //  Responses.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/22/20.
 //
 
-import Foundation
 import CodableWrappers
+import Foundation
 
 struct RequestTokenResponse: Codable {
 	let token: String
@@ -21,7 +21,7 @@ struct RequestOAuthTokenResponse: Codable {
 
 	@Immutable @MillisecondsSince1970DateCoding
 	var expiresIn: Date
-	
+
 	let username: String?
 	let ssl: Bool?
 	let refreshToken: String?
@@ -30,8 +30,8 @@ struct RequestOAuthTokenResponse: Codable {
 		case expiresIn = "expires_in"
 		case accessToken = "access_token"
 		case refreshToken = "refresh_token"
-		case username = "username"
-		case ssl = "ssl"
+		case username
+		case ssl
 	}
 }
 

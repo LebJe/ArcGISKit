@@ -1,6 +1,6 @@
 //
 //  Pagination.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/1/21.
 //
@@ -23,5 +23,4 @@ struct Folder: Codable {
 	let username: String?
 	@Immutable @OptionalCoding<MillisecondsSince1970DateCoding>
 	var created: Date?
-	
 }

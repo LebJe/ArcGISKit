@@ -1,6 +1,6 @@
 //
 //  FeatureServer.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 12/22/20.
 //
@@ -179,15 +179,14 @@ public struct FeatureServer {
 
 			req.body = .string(
 				"""
-			f=json&edits=\(String(data: d, encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")
-			"""
+				f=json&edits=\(String(data: d, encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")
+				"""
 			)
 
 			return gis.client.execute(request: req).map({ res in
-				return try! handle(response: res, decodeType: [EditResponse].self)
+				try! handle(response: res, decodeType: [EditResponse].self)
 			})
 		})
-
 	}
 }
 
@@ -202,7 +201,6 @@ public struct EditResponse: Codable {
 	public let id: Int
 	public let addResults: [EditResult]?
 	public let updateResults: [EditResult]?
-	
 }
 
 public struct EditResult: Codable {

@@ -1,12 +1,12 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Jeff Lebrun on 1/10/21.
 //
 
-import Foundation
 import AsyncHTTPClient
+import Foundation
 
 func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throws -> T {
 	if response.body != nil {
