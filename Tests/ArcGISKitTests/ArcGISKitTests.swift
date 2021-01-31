@@ -1,4 +1,4 @@
-@testable import ArcGISKit
+@testable import class ArcGISKit.GIS
 import NIO
 import XCTest
 

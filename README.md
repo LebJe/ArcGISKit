@@ -14,6 +14,17 @@ Documentation comments are taken from the [ArcGIS REST API](https://developers.a
 
 View the documentation on [Github Pages](https://lebje.github.io/ArcGISKit/).
 
+Table of Contents
+=================
+
+   * [ArcGISKit](#arcgiskit)
+      * [Install](#install)
+         * [Swift Package Manager](#swift-package-manager)
+      * [Usage](#usage)
+      * [Contributing](#contributing)
+
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
 **Under Construction! DO NOT READ!**
 
 ## Install

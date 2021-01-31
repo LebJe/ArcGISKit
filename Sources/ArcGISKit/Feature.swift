@@ -93,7 +93,7 @@ public struct Feature: Codable, Equatable {
 
 		var mime = ""
 
-		if !name.contains(oneOf: ".md", ".txt", ".text") {
+		if !name.contains(oneOf: ".md", ".markdown", ".txt", ".text") {
 			mime = "text/plain"
 		} else {
 			guard let mimeType = Swime.mimeType(data: data) else {

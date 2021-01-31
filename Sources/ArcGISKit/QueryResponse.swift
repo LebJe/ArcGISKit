@@ -6,7 +6,9 @@
 //
 
 import CodableWrappers
-import Foundation
+import struct Foundation.Data
+import struct Foundation.Date
+import struct Foundation.URL
 import SwiftyJSON
 
 public struct QueryResponse: Codable, Equatable {

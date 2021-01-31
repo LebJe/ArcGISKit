@@ -5,8 +5,9 @@
 //  Created by Jeff Lebrun on 1/10/21.
 //
 
-import AsyncHTTPClient
-import Foundation
+import class AsyncHTTPClient.HTTPClient
+import struct Foundation.Data
+import class Foundation.JSONDecoder
 
 func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throws -> T {
 	if response.body != nil {

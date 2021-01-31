@@ -6,7 +6,8 @@
 //
 
 import CodableWrappers
-import Foundation
+import struct Foundation.Data
+import struct Foundation.Date
 
 struct RequestTokenResponse: Codable {
 	let token: String

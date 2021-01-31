@@ -5,8 +5,6 @@
 //  Created by Jeff Lebrun on 1/9/21.
 //
 
-import Foundation
-
 /// Field Types.
 public enum ESRIFieldType: String, CaseIterable, Codable, Equatable {
 	/// Short Integer.

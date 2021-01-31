@@ -5,8 +5,6 @@
 //  Created by Jeff Lebrun on 12/23/20.
 //
 
-import Foundation
-
 public enum Privilege: String, Codable, CaseIterable {
 	// MARK: - ArcGIS Marketplace subscriptions.
 

@@ -6,7 +6,7 @@
 //
 
 import CodableWrappers
-import Foundation
+import struct Foundation.Date
 
 struct Pagination<T: Codable>: Codable {
 	let total: Int
