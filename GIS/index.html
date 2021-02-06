@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(_:eventloopgroup:url:site:)">init(_:​event​Loop​Group:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.authtype">auth​Type</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#gis.fetchuser()">fetch​User()</a></li><li class="function"><a href="#gis.generateurl(clientid:baseurl:site:redirecturi:)">generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)</a></li></ul></li></ol>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#gis.init(_:eventloopgroup:url:site:)">init(_:​event​Loop​Group:​url:​site:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#gis.url">url</a></li><li class="variable"><a href="#gis.username">username</a></li><li class="variable"><a href="#gis.password">password</a></li><li class="variable"><a href="#gis.authtype">auth​Type</a></li><li class="variable"><a href="#gis.isanonymous">is​Anonymous</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#gis.checkcredentials()">check​Credentials()</a></li><li class="function"><a href="#gis.fetchuser()">fetch​User()</a></li><li class="function"><a href="#gis.generateurl(clientid:baseurl:site:redirecturi:)">generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -136,7 +136,13 @@ Once you receive the code, you can then pass it to this initializer.</p>
     <section id="methods">
         <h2>Methods</h2>
 
-        <div role="article" class="function" id="gis.fetchuser()">
+        <div role="article" class="function" id="gis.checkcredentials()">
+    <h3>
+        <code>check​Credentials()</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">checkCredentials</span>() <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;<span class="type">Void</span>&gt;</code></pre></body></html>
+</div>
+<div role="article" class="function" id="gis.fetchuser()">
     <h3>
         <code>fetch​User()</code>
     </h3>
@@ -210,7 +216,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2021-01-31T00:58:48+0000">January 31, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-02-06T20:08:30+0000">February 6, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
