@@ -65,6 +65,12 @@ public class GIS {
 		self.client.shutdown({ _ in })
 	}
 
+	public func checkCredentials() throws -> EventLoopFuture<Void> {
+		if self.isAnonymous { throw AGKAuthError.isAnonymous }
+
+		return try self.fetchToken()
+	}
+
 	func fetchToken() throws -> EventLoopFuture<Void> {
 		if self.isAnonymous {
 			throw AGKAuthError.isAnonymous

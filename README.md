@@ -17,12 +17,18 @@ View the documentation on [Github Pages](https://lebje.github.io/ArcGISKit/).
 Table of Contents
 =================
 
+<!--ts-->
    * [ArcGISKit](#arcgiskit)
+   * [Table of Contents](#table-of-contents)
       * [Install](#install)
          * [Swift Package Manager](#swift-package-manager)
       * [Usage](#usage)
+         * [Vapor](#vapor)
       * [Contributing](#contributing)
 
+<!-- Added by: jefflebrun, at: Thu Feb  4 15:57:06 EST 2021 -->
+
+<!--te-->
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 **Under Construction! DO NOT READ!**
@@ -54,9 +60,9 @@ let group = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
 
 // Login using a username and password.
 let authenticatedGIS = GIS(
-authType: .credentials(username: "username", password: "password"), 
-eventLoopGroup: group, 
-url: URL(string: "https://my-organization.maps.arcgis.com")!
+	authType: .credentials(username: "username", password: "password"), 
+	eventLoopGroup: group, 
+	url: URL(string: "https://my-organization.maps.arcgis.com")!
 )
 
 // Login anonymously.
@@ -65,9 +71,24 @@ let anonymousGIS = GIS(authType: .anonymous, eventLoopGroup: group)
 
 // Login using a client ID and client secret.
 let idAndSecretGIS = GIS(
-authType: .idAndSecret(clientID: "id", clientSecret: "secret", username: "username"),
-eventLoopGroup: group,
-url: URL(string: "https://my-organization.maps.arcgis.com")!
+	authType: .idAndSecret(clientID: "id", clientSecret: "secret", username: "username"),
+	eventLoopGroup: group,
+	url: URL(string: "https://my-organization.maps.arcgis.com")!
+)
+```
+
+### Vapor
+
+If you are using [Vapor](https://github.com/vapor/vapor), initialize your `GIS` like this:
+
+```swift
+func routes(_ app: Application) throws {
+
+	// Initialize your GIS` using `app.eventLoopGroup`.
+	let gis = GIS(..., eventLoopGroup: app.eventLoopGroup, ...)
+	
+	...
+}
 ```
 
 Once you have a `GIS` you can fetch a `User`:
@@ -82,13 +103,13 @@ if !gis.isAnonymous {
 	// Fetch asynchronously.
 	try gis.fetchUser().whenComplete({ res in
 	switch res {
-	case .failure(let error):
-	// something went wrong...
-	break
-	case .success(let user):
-	// Use `user` here.
-	print(user)
-	}
+		case .failure(let error):
+			// something went wrong...
+			break
+		case .success(let user):
+			// Use `user` here.
+			print(user)
+		}
 	})	
 }
 ```

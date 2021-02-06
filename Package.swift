@@ -5,6 +5,7 @@ let package = Package(
 	name: "ArcGISKit",
 	platforms: [.macOS(.v10_15)],
 	products: [
+		.executable(name: "examples", targets: ["ArcGISKitExample"]),
 		.library(
 			name: "ArcGISKit",
 			targets: ["ArcGISKit"]
@@ -29,9 +30,19 @@ let package = Package(
 		// 🗂 Swift MIME type checking based on magic bytes
 		.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7"),
 
+		// Straightforward, type-safe argument parsing for Swift
+		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.3.0"),
+
 		// .package(url: "https://github.com/LebJe/CTabulate.git", .branch("main")),
 	],
 	targets: [
+		.target(
+			name: "ArcGISKitExample",
+			dependencies: [
+				"ArcGISKit",
+				.product(name: "ArgumentParser", package: "swift-argument-parser"),
+			]
+		),
 		.target(
 			name: "ArcGISKit",
 			dependencies: [

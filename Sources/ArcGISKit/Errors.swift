@@ -10,6 +10,9 @@ import Foundation
 public enum AGKAuthError: Error {
 	/// You logged in anonymously to `GIS.init`. You MUST login using a username and password, or a client ID and secret.
 	case isAnonymous
+
+	/// The username or password provided to `GIS.init` was invalid.
+	case invalidUsernameOrPassword
 }
 
 public enum AGKDataError: Error {
@@ -21,9 +24,6 @@ public enum AGKDataError: Error {
 public enum AGKRequestError: Error {
 	/// A token is required. Login using a username and password, or a client ID and secret so `GIS.init` can generate a token.
 	case tokenRequired
-
-	/// The username or password provided to `GIS.init` was invalid.
-	case invalidUsernameOrPassword
 
 	/// An unknown error occurred.
 	case unknown(message: String?, details: [String]?)
