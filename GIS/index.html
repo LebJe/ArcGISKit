@@ -141,6 +141,20 @@ Once you receive the code, you can then pass it to this initializer.</p>
         <code>check​Credentials()</code>
     </h3>
     <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">checkCredentials</span>() <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;<span class="type">Void</span>&gt;</code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Validate the credentials passed to <code>GIS.init</code>.</p>
+
+</div>
+<div class="discussion">
+    <p>If you logged in anonymously, this method will throw <code>AGKAuthError.isAnonymous</code>.</p>
+
+</div>
+  <h4>Throws</h4>
+  <p><code>AGKAuthError</code>.</p>
+
+  <h4>Returns</h4>
+  <p>A <code>EventLoopFuture</code> indicating the task has completed.</p>
+
 </div>
 <div role="article" class="function" id="gis.fetchuser()">
     <h3>
@@ -216,7 +230,7 @@ Once you receive the code, you can then pass it to this initializer.</p>
 
     <footer>
         <p>
-    Generated on <time datetime="2021-02-06T20:08:30+0000">February 6, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-02-06T20:15:38+0000">February 6, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
