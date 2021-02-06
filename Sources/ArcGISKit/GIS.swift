@@ -65,6 +65,12 @@ public class GIS {
 		self.client.shutdown({ _ in })
 	}
 
+	/// Validate the credentials passed to `GIS.init`.
+	///
+	/// If you logged in anonymously, this method will throw `AGKAuthError.isAnonymous`.
+	///
+	/// - Throws: `AGKAuthError`.
+	/// - Returns: A `EventLoopFuture` indicating the task has completed.
 	public func checkCredentials() throws -> EventLoopFuture<Void> {
 		if self.isAnonymous { throw AGKAuthError.isAnonymous }
 
