@@ -15,10 +15,18 @@ final class ArcGISKitTests: XCTestCase {
 	}
 
 	func testGenerateURL() throws {
-		let url = GIS.generateURL(clientID: self.env["AGOL_CLIENT_ID"]!, baseURL: URL(string: self.env["AGOL_URL"]!)!).absoluteString
-		let expectedURL = "\(URL(string: env["AGOL_URL"]!)!.appendingPathComponent("sharing").appendingPathComponent("rest").appendingPathComponent("oauth2").appendingPathComponent("authorize").absoluteString)?response_type=code&client_id=\(self.env["AGOL_CLIENT_ID"]!)&redirect_uri=urn:ietf:wg:oauth:2.0:oob"
+		let generatedURL = GIS.generateURL(clientID: self.env["AGOL_CLIENT_ID"]!, baseURL: URL(string: self.env["AGOL_URL"]!)!).absoluteString
 
-		XCTAssertEqual(url, expectedURL, "`url` and `expectedURL` should be equal!")
+		let url = URL(string: env["AGOL_URL"]!)!
+			.appendingPathComponent("sharing")
+			.appendingPathComponent("rest")
+			.appendingPathComponent("oauth2")
+			.appendingPathComponent("authorize")
+			.absoluteString
+
+		let expectedURL = "\(url)?response_type=code&client_id=\(self.env["AGOL_CLIENT_ID"]!)&redirect_uri=urn:ietf:wg:oauth:2.0:oob"
+
+		XCTAssertEqual(generatedURL, expectedURL, "`generatedURL` and `expectedURL` should be equal!")
 	}
 
 	static var allTests = [
