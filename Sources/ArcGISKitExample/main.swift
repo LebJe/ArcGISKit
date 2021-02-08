@@ -12,8 +12,8 @@ struct ExamplesCommand: ParsableCommand {
 	static var configuration = CommandConfiguration(
 		commandName: "examples",
 		abstract: "ArcGISKit Examples.",
-		subcommands: [FeatureServerCommand.self],
-		defaultSubcommand: nil
+		subcommands: [FeatureServerCommand.self, ViewUserCommand.self],
+		defaultSubcommand: ViewUserCommand.self
 	)
 }
 

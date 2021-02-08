@@ -33,6 +33,7 @@ extension ExamplesCommand {
 				for layer in featureService.layers ?? [] {
 					queries.append(.init(whereClause: "1=1", layerID: String(layer.id)))
 				}
+
 				let layers = try fs.query(layerQueries: queries).wait()
 				for layer in layers {
 					print("Layer \(layer.id)")
