@@ -26,7 +26,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.fetchfeatureservice()">fetch​Feature​Service()</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li><li class="function"><a href="#featureserver.delete(_:from:)">delete(_:​from:​)</a></li><li class="function"><a href="#featureserver.add(_:to:)">add(_:​to:​)</a></li><li class="function"><a href="#featureserver.update(_:in:)">update(_:​in:​)</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#featureserver.init(url:gis:)">init(url:​gis:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#featureserver.url">url</a></li></ul></li><li><a href="#methods">Methods</a><ul><li class="function"><a href="#featureserver.==(lhs:rhs:)">==(lhs:​rhs:​)</a></li><li class="function"><a href="#featureserver.fetchfeatureservice()">fetch​Feature​Service()</a></li><li class="function"><a href="#featureserver.query(layerqueries:)">query(layer​Queries:​)</a></li><li class="function"><a href="#featureserver.delete(_:from:gdbversion:)">delete(_:​from:​gdb​Version:​)</a></li><li class="function"><a href="#featureserver.add(_:to:gdbversion:)">add(_:​to:​gdb​Version:​)</a></li><li class="function"><a href="#featureserver.update(_:in:gdbversion:)">update(_:​in:​gdb​Version:​)</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -163,11 +163,11 @@
   <p>An <code>Array</code> of <code>FeatureLayer</code>s.</p>
 
 </div>
-<div role="article" class="function" id="featureserver.delete(_:from:)">
+<div role="article" class="function" id="featureserver.delete(_:from:gdbversion:)">
     <h3>
-        <code>delete(_:​from:​)</code>
+        <code>delete(_:​from:​gdb​Version:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">delete</span>(<span class="keyword">_</span> <span class="variable">featureIDs</span>: [<span class="type">Int</span>], <span class="variable">from</span> <span class="variable">id</span>: <span class="type">String</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">delete</span>(<span class="keyword">_</span> <span class="variable">featureIDs</span>: [<span class="type">Int</span>], <span class="variable">from</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Deletes <code>features</code> from the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
 
@@ -207,6 +207,12 @@
     <td><p>The ID of the <code>FeatureLayer</code> you wish to delete the features from.</p>
 </td>
 </tr>
+<tr>
+    <th>gdb​Version</th>
+    <td><code class="type">String?</code></td>
+    <td><p>The version of the geo-database you want to delete features from.</p>
+</td>
+</tr>
   </tbody>
 </table>
   <h4>Throws</h4>
@@ -216,11 +222,11 @@
   <p><code>EventLoopFuture&lt;[EditResponse]&gt;</code>.</p>
 
 </div>
-<div role="article" class="function" id="featureserver.add(_:to:)">
+<div role="article" class="function" id="featureserver.add(_:to:gdbversion:)">
     <h3>
-        <code>add(_:​to:​)</code>
+        <code>add(_:​to:​gdb​Version:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">add</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<a href="https://lebje.github.io/ArcGISKit/Feature"><span class="type">Feature</span></a>], <span class="variable">to</span> <span class="variable">id</span>: <span class="type">String</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">add</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<a href="https://lebje.github.io/ArcGISKit/Feature"><span class="type">Feature</span></a>], <span class="variable">to</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Adds <code>features</code> to the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
 
@@ -262,6 +268,12 @@
     <td><p>The ID of the <code>FeatureLayer</code> you wish to add the <code>features</code> to.</p>
 </td>
 </tr>
+<tr>
+    <th>gdb​Version</th>
+    <td><code class="type">String?</code></td>
+    <td><p>The version of the geo-database you want to add features to.</p>
+</td>
+</tr>
   </tbody>
 </table>
   <h4>Throws</h4>
@@ -271,11 +283,11 @@
   <p><code>EventLoopFuture&lt;[EditResponse]&gt;</code>.</p>
 
 </div>
-<div role="article" class="function" id="featureserver.update(_:in:)">
+<div role="article" class="function" id="featureserver.update(_:in:gdbversion:)">
     <h3>
-        <code>update(_:​in:​)</code>
+        <code>update(_:​in:​gdb​Version:​)</code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">update</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<a href="https://lebje.github.io/ArcGISKit/Feature"><span class="type">Feature</span></a>], <span class="variable">in</span> <span class="variable">id</span>: <span class="type">String</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">update</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<a href="https://lebje.github.io/ArcGISKit/Feature"><span class="type">Feature</span></a>], <span class="variable">in</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) <span class="keyword">throws</span> -&gt; <span class="type">EventLoopFuture</span>&lt;[<a href="https://lebje.github.io/ArcGISKit/EditResponse"><span class="type">EditResponse</span></a>]&gt;</code></pre></body></html>
 <div class="summary" role="doc-abstract">
     <p>Updates <code>features</code> in the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
 
@@ -315,6 +327,12 @@
     <td><p>The ID of the <code>FeatureLayer</code> that contains the <code>Feature</code>s you wish to update.</p>
 </td>
 </tr>
+<tr>
+    <th>gdb​Version</th>
+    <td><code class="type">String?</code></td>
+    <td><p>The version of the geo-database you want to update features in.</p>
+</td>
+</tr>
   </tbody>
 </table>
   <h4>Throws</h4>
@@ -333,7 +351,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-02-08T17:08:56+0000">February 8, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-03-21T16:16:50+0000">March 21, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
 </p>
     </footer>
 </body>
