@@ -86,23 +86,24 @@ public struct FeatureServer {
 	/// Deletes `features` from the `FeatureLayer` with the id of `id`.
 	///
 	/// To delete the first feature from the first layer, you could write:
-	///	```swift
-	///	let layers = try myFeatureServer
-	///		.query(layerQueries: [.init(whereClause: "1=1", layerID: "0")])
-	///		.wait()
+	/// ```swift
+	/// let layers = try myFeatureServer
+	/// 	.query(layerQueries: [.init(whereClause: "1=1", layerID: "0")])
+	/// 	.wait()
 	/// let feature = layers[0].features[0]
-	///	let res = try myFeatureServer
-	///		.delete([feature.attributes!["OBJECTID"].intValue], from: String(layers[0].id))
-	///		.wait()
-	///	```
+	/// let res = try myFeatureServer
+	/// 	.delete([feature.attributes!["OBJECTID"].intValue], from: String(layers[0].id))
+	/// 	.wait()
+	/// ```
 	///
 	/// - Parameters:
 	///   - featureIDs: The ID of the `Feature`s you wish to delete.
 	///   - id: The ID of the `FeatureLayer` you wish to delete the features from.
+	///   - gdbVersion: The version of the geo-database you want to delete features from.
 	/// - Throws: `AGKRequestError`
 	/// - Returns: `EventLoopFuture<[EditResponse]>`.
-	public func delete(_ featureIDs: [Int], from id: String) throws -> EventLoopFuture<[EditResponse]> {
-		try self.edit([.init(id: id, deletes: featureIDs)])
+	public func delete(_ featureIDs: [Int], from id: String, gdbVersion: String? = nil) throws -> EventLoopFuture<[EditResponse]> {
+		try self.edit([.init(id: id, deletes: featureIDs)], gdbVersion: gdbVersion)
 	}
 
 	/// Adds `features` to the `FeatureLayer` with the id of `id`.
@@ -123,10 +124,11 @@ public struct FeatureServer {
 	/// - Parameters:
 	///   - features: The `Feature`s you wish to add.
 	///   - id: The ID of the `FeatureLayer` you wish to add the `features` to.
+	///   - gdbVersion: The version of the geo-database you want to add features to.
 	/// - Throws: `AGKRequestError`
 	/// - Returns: `EventLoopFuture<[EditResponse]>`.
-	public func add(_ features: [Feature], to id: String) throws -> EventLoopFuture<[EditResponse]> {
-		try self.edit([.init(id: id, adds: features)])
+	public func add(_ features: [Feature], to id: String, gdbVersion: String? = nil) throws -> EventLoopFuture<[EditResponse]> {
+		try self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion)
 	}
 
 	/// Updates `features` in the `FeatureLayer` with the id of `id`.
@@ -145,10 +147,11 @@ public struct FeatureServer {
 	/// - Parameters:
 	///   - features: The `Feature`s you wish to update.
 	///   - id: The ID of the `FeatureLayer` that contains the `Feature`s you wish to update.
+	///   - gdbVersion: The version of the geo-database you want to update features in.
 	/// - Throws: `AGKRequestError`
 	/// - Returns: `EventLoopFuture<[EditResponse]>`.
-	public func update(_ features: [Feature], in id: String) throws -> EventLoopFuture<[EditResponse]> {
-		try self.edit([.init(id: id, updates: features)])
+	public func update(_ features: [Feature], in id: String, gdbVersion: String? = nil) throws -> EventLoopFuture<[EditResponse]> {
+		try self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion)
 	}
 
 	/// Edit the attributes in the `FeatureLayer`s that are contained within this `FeatureServer`.
@@ -165,7 +168,7 @@ public struct FeatureServer {
 	/// - Parameter a: The values you wish to edit, delete, or add.
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: `EventLoopFuture<[EditResponse]>`
-	func edit(_ a: [A]) throws -> EventLoopFuture<[EditResponse]> {
+	func edit(_ a: [A], gdbVersion: String? = nil) throws -> EventLoopFuture<[EditResponse]> {
 		try self.gis.fetchToken().flatMap({ _ in
 			var req = try! HTTPClient.Request(
 				url: url.appendingPathComponent("applyEdits").absoluteString,
@@ -178,7 +181,7 @@ public struct FeatureServer {
 
 			req.body = .string(
 				"""
-				f=json&edits=\(String(data: d, encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")
+				f=json&edits=\(String(data: d, encoding: .utf8)!.urlQueryEncoded)\(gis.token != nil ? "&token=\(gis.token!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
 				"""
 			)
 
