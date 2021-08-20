@@ -14,7 +14,6 @@
             </strong>
             <span>Documentation</span>
         </a>
-        <sup>Beta</sup>
     </header>
 
     <!--
@@ -37,7 +36,9 @@
     <code class="name">Feature​Service</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">FeatureService</span>: <span class="type">Codable</span>, <span class="type">Equatable</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">FeatureService</span>: <span class="type">Codable</span>, <span class="type">Equatable</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets with a spatial column are considered layers; those without a spatial column are considered tables. A feature service allows clients to query and edit feature geometry and attributes.</p>
 
@@ -76,7 +77,7 @@
 <text text-anchor="middle" x="207" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Equatable</text>
 </g>
 <!-- FeatureService&#45;&gt;Equatable -->
-<g id="edge1" class="edge conformsTo">
+<g id="edge2" class="edge conformsTo">
 <title>FeatureService&#45;&gt;Equatable</title>
 <path fill="none" stroke="#000000" d="M375.5134,-71.9243C344.4871,-61.9959 305.8297,-49.6255 273.3694,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="274.1008,-35.7975 263.5098,-36.0831 271.9673,-42.4645 274.1008,-35.7975"/>
@@ -88,7 +89,7 @@
 <text text-anchor="middle" x="657" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Codable</text>
 </g>
 <!-- FeatureService&#45;&gt;Codable -->
-<g id="edge2" class="edge conformsTo">
+<g id="edge1" class="edge conformsTo">
 <title>FeatureService&#45;&gt;Codable</title>
 <path fill="none" stroke="#000000" d="M488.4866,-71.9243C519.5129,-61.9959 558.1703,-49.6255 590.6306,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="592.0327,-42.4645 600.4902,-36.0831 589.8992,-35.7975 592.0327,-42.4645"/>
@@ -110,231 +111,308 @@
 
         <div role="article" class="variable" id="featureservice.currentversion">
     <h3>
-        <code>current​Version</code>
+        <code><a href="#featureservice.currentversion">current​Version</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">currentVersion</span>: <span class="type">Double</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">currentVersion</span>: <span class="type">Double</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.servicedescription">
     <h3>
-        <code>service​Description</code>
+        <code><a href="#featureservice.servicedescription">service​Description</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">serviceDescription</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">serviceDescription</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.hasversioneddata">
     <h3>
-        <code>has​Versioned​Data</code>
+        <code><a href="#featureservice.hasversioneddata">has​Versioned​Data</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">hasVersionedData</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">hasVersionedData</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsdisconnectedediting">
     <h3>
-        <code>supports​Disconnected​Editing</code>
+        <code><a href="#featureservice.supportsdisconnectedediting">supports​Disconnected​Editing</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsDisconnectedEditing</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsDisconnectedEditing</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsdatumtransformation">
     <h3>
-        <code>supports​Datum​Transformation</code>
+        <code><a href="#featureservice.supportsdatumtransformation">supports​Datum​Transformation</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsDatumTransformation</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsDatumTransformation</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsreturndeleteresults">
     <h3>
-        <code>supports​Return​Delete​Results</code>
+        <code><a href="#featureservice.supportsreturndeleteresults">supports​Return​Delete​Results</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsReturnDeleteResults</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsReturnDeleteResults</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.hasstaticdata">
     <h3>
-        <code>has​Static​Data</code>
+        <code><a href="#featureservice.hasstaticdata">has​Static​Data</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">hasStaticData</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">hasStaticData</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.maxrecordcount">
     <h3>
-        <code>max​Record​Count</code>
+        <code><a href="#featureservice.maxrecordcount">max​Record​Count</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">maxRecordCount</span>: <span class="type">Int</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">maxRecordCount</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.hasattachments">
     <h3>
-        <code>has​Attachments</code>
+        <code><a href="#featureservice.hasattachments">has​Attachments</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">hasAttachments</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">hasAttachments</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportedqueryformats">
     <h3>
-        <code>supported​Query​Formats</code>
+        <code><a href="#featureservice.supportedqueryformats">supported​Query​Formats</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportedQueryFormats</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportedQueryFormats</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsrelationshipsresource">
     <h3>
-        <code>supports​Relationships​Resource</code>
+        <code><a href="#featureservice.supportsrelationshipsresource">supports​Relationships​Resource</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsRelationshipsResource</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsRelationshipsResource</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.capabilities">
     <h3>
-        <code>capabilities</code>
+        <code><a href="#featureservice.capabilities">capabilities</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">capabilities</span>: [<a href="https://lebje.github.io/ArcGISKit/Capability"><span class="type">Capability</span></a>]</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="attribute">@</span><span class="type">Immutable</span> <span class="attribute">@</span><span class="type">CodingUses</span>&lt;<a href="https://lebje.github.io/ArcGISKit/CommaSeparatedCapabilityCoder"><span class="type">CommaSeparatedCapabilityCoder</span></a>&gt;
+	<span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">capabilities</span>: [<a href="https://lebje.github.io/ArcGISKit/Capability"><span class="type">Capability</span></a>] </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.description">
     <h3>
-        <code>description</code>
+        <code><a href="#featureservice.description">description</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">description</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">description</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.copyrighttext">
     <h3>
-        <code>copyright​Text</code>
+        <code><a href="#featureservice.copyrighttext">copyright​Text</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">copyrightText</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">copyrightText</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.usertypeextensions">
     <h3>
-        <code>user​Type​Extensions</code>
+        <code><a href="#featureservice.usertypeextensions">user​Type​Extensions</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">userTypeExtensions</span>: [<span class="type">String</span>]?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">userTypeExtensions</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.advancededitingcapabilities">
     <h3>
-        <code>advanced​Editing​Capabilities</code>
+        <code><a href="#featureservice.advancededitingcapabilities">advanced​Editing​Capabilities</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">advancedEditingCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/AdvancedEditingCapabilities"><span class="type">AdvancedEditingCapabilities</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">advancedEditingCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/AdvancedEditingCapabilities"><span class="type">AdvancedEditingCapabilities</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.spatialreference">
     <h3>
-        <code>spatial​Reference</code>
+        <code><a href="#featureservice.spatialreference">spatial​Reference</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">spatialReference</span>: <a href="https://lebje.github.io/ArcGISKit/SpatialReference"><span class="type">SpatialReference</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">spatialReference</span>: <a href="https://lebje.github.io/ArcGISKit/SpatialReference"><span class="type">SpatialReference</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.initialextent">
     <h3>
-        <code>initial​Extent</code>
+        <code><a href="#featureservice.initialextent">initial​Extent</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">initialExtent</span>: <a href="https://lebje.github.io/ArcGISKit/Extent"><span class="type">Extent</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">initialExtent</span>: <a href="https://lebje.github.io/ArcGISKit/Extent"><span class="type">Extent</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.fullextent">
     <h3>
-        <code>full​Extent</code>
+        <code><a href="#featureservice.fullextent">full​Extent</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">fullExtent</span>: <a href="https://lebje.github.io/ArcGISKit/Extent"><span class="type">Extent</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">fullExtent</span>: <a href="https://lebje.github.io/ArcGISKit/Extent"><span class="type">Extent</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.validationsystemlayers">
     <h3>
-        <code>validation​System​Layers</code>
+        <code><a href="#featureservice.validationsystemlayers">validation​System​Layers</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">validationSystemLayers</span>: <a href="https://lebje.github.io/ArcGISKit/ValidationSystemLayer"><span class="type">ValidationSystemLayer</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">validationSystemLayers</span>: <a href="https://lebje.github.io/ArcGISKit/ValidationSystemLayer"><span class="type">ValidationSystemLayer</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.extractchangescapabilities">
     <h3>
-        <code>extract​Changes​Capabilities</code>
+        <code><a href="#featureservice.extractchangescapabilities">extract​Changes​Capabilities</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">extractChangesCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/ExtractChangesCapability"><span class="type">ExtractChangesCapability</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">extractChangesCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/ExtractChangesCapability"><span class="type">ExtractChangesCapability</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.synccapabilities">
     <h3>
-        <code>sync​Capabilities</code>
+        <code><a href="#featureservice.synccapabilities">sync​Capabilities</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">syncCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/SyncCapability"><span class="type">SyncCapability</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">syncCapabilities</span>: <a href="https://lebje.github.io/ArcGISKit/SyncCapability"><span class="type">SyncCapability</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.editortrackinginfo">
     <h3>
-        <code>editor​Tracking​Info</code>
+        <code><a href="#featureservice.editortrackinginfo">editor​Tracking​Info</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">editorTrackingInfo</span>: <a href="https://lebje.github.io/ArcGISKit/EditorTrackingInfo"><span class="type">EditorTrackingInfo</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">editorTrackingInfo</span>: <a href="https://lebje.github.io/ArcGISKit/EditorTrackingInfo"><span class="type">EditorTrackingInfo</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.allowgeometryupdates">
     <h3>
-        <code>allow​Geometry​Updates</code>
+        <code><a href="#featureservice.allowgeometryupdates">allow​Geometry​Updates</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">allowGeometryUpdates</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">allowGeometryUpdates</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.units">
     <h3>
-        <code>units</code>
+        <code><a href="#featureservice.units">units</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">units</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">units</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.syncenabled">
     <h3>
-        <code>sync​Enabled</code>
+        <code><a href="#featureservice.syncenabled">sync​Enabled</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">syncEnabled</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">syncEnabled</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.datumtransformations">
     <h3>
-        <code>datum​Transformations</code>
+        <code><a href="#featureservice.datumtransformations">datum​Transformations</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">datumTransformations</span>: [<a href="https://lebje.github.io/ArcGISKit/DatumTransformation"><span class="type">DatumTransformation</span></a>]?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">datumTransformations</span>: [<a href="https://lebje.github.io/ArcGISKit/DatumTransformation"><span class="type">DatumTransformation</span></a>]? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.layers">
     <h3>
-        <code>layers</code>
+        <code><a href="#featureservice.layers">layers</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">layers</span>: [<a href="https://lebje.github.io/ArcGISKit/Layer"><span class="type">Layer</span></a>]?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">layers</span>: [<a href="https://lebje.github.io/ArcGISKit/Layer"><span class="type">Layer</span></a>]? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.tables">
     <h3>
-        <code>tables</code>
+        <code><a href="#featureservice.tables">tables</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">tables</span>: [<a href="https://lebje.github.io/ArcGISKit/Table"><span class="type">Table</span></a>]?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">tables</span>: [<a href="https://lebje.github.io/ArcGISKit/Table"><span class="type">Table</span></a>]? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.relationships">
     <h3>
-        <code>relationships</code>
+        <code><a href="#featureservice.relationships">relationships</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">relationships</span>: [<a href="https://lebje.github.io/ArcGISKit/Relationship"><span class="type">Relationship</span></a>]?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">relationships</span>: [<a href="https://lebje.github.io/ArcGISKit/Relationship"><span class="type">Relationship</span></a>]? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.controllerdatasetlayers">
     <h3>
-        <code>controller​Dataset​Layers</code>
+        <code><a href="#featureservice.controllerdatasetlayers">controller​Dataset​Layers</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">controllerDatasetLayers</span>: <a href="https://lebje.github.io/ArcGISKit/ControllerDatasetLayer"><span class="type">ControllerDatasetLayer</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">controllerDatasetLayers</span>: <a href="https://lebje.github.io/ArcGISKit/ControllerDatasetLayer"><span class="type">ControllerDatasetLayer</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.heightmodelinfo">
     <h3>
-        <code>height​Model​Info</code>
+        <code><a href="#featureservice.heightmodelinfo">height​Model​Info</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">heightModelInfo</span>: <a href="https://lebje.github.io/ArcGISKit/HeightModelInfo"><span class="type">HeightModelInfo</span></a>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">heightModelInfo</span>: <a href="https://lebje.github.io/ArcGISKit/HeightModelInfo"><span class="type">HeightModelInfo</span></a>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.enablezdefaults">
     <h3>
-        <code>enable​ZDefaults</code>
+        <code><a href="#featureservice.enablezdefaults">enable​ZDefaults</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">enableZDefaults</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">enableZDefaults</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsdynamiclayers">
     <h3>
-        <code>supports​Dynamic​Layers</code>
+        <code><a href="#featureservice.supportsdynamiclayers">supports​Dynamic​Layers</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsDynamicLayers</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsDynamicLayers</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.allowupdatewithoutmvalues">
     <h3>
-        <code>allow​Update​Without​MValues</code>
+        <code><a href="#featureservice.allowupdatewithoutmvalues">allow​Update​Without​MValues</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">allowUpdateWithoutMValues</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">allowUpdateWithoutMValues</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.supportsvcsprojection">
     <h3>
-        <code>supports​VCSProjection</code>
+        <code><a href="#featureservice.supportsvcsprojection">supports​VCSProjection</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">supportsVCSProjection</span>: <span class="type">Bool</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">supportsVCSProjection</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.referencescale">
     <h3>
-        <code>reference​Scale</code>
+        <code><a href="#featureservice.referencescale">reference​Scale</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">referenceScale</span>: <span class="type">Int</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">referenceScale</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
 </div>
 <div role="article" class="variable" id="featureservice.serviceitemid">
     <h3>
-        <code>service​Item​Id</code>
+        <code><a href="#featureservice.serviceitemid">service​Item​Id</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">serviceItemId</span>: <span class="type">String</span>?</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">serviceItemId</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
 </div>
     </section>
 
@@ -345,7 +423,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-03-21T16:16:51+0000">March 21, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.5</span>.
+    Generated on <time datetime="2021-08-20T22:04:32+0000">August 20, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
