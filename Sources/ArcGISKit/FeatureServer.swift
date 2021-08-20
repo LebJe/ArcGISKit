@@ -197,6 +197,14 @@ struct A: Codable {
 	var updates: [Feature] = []
 	var deletes: [Int] = []
 	var adds: [Feature] = []
+
+    func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: Self.CodingKeys)
+		try container.encode(self.id, forKey: .id)
+		if !self.updates.isEmpty { try container.encodeIfPresent(self.updates, forKey: .updates) }
+		if !self.deletes.isEmpty { try container.encodeIfPresent(self.deletes, forKey: .deletes) }
+		if !self.adds.isEmpty { try container.encodeIfPresent(self.adds, forKey: .adds) }
+	}
 }
 
 public struct EditResponse: Codable {
@@ -207,6 +215,7 @@ public struct EditResponse: Codable {
 
 public struct EditResult: Codable {
 	public let objectId: Int
-	public let globalId: String
+    public let uniqueId: Int?
+	public let globalId: String?
 	public let success: Bool
 }
