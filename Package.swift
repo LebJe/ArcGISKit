@@ -28,7 +28,7 @@ let package = Package(
 		.package(url: "https://github.com/LebJe/Multipart.git", .branch("master")),
 
 		// 🗂 Swift MIME type checking based on magic bytes
-		.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7"),
+		//.package(url: "https://github.com/sendyhalim/Swime.git", from: "3.0.7"),
 
 		// Straightforward, type-safe argument parsing for Swift
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.3.0"),
@@ -48,7 +48,7 @@ let package = Package(
 			dependencies: [
 				"SwiftyJSON",
 				"Multipart",
-				"Swime",
+				//"Swime",
 				.product(name: "AsyncKit", package: "async-kit"),
 				.product(name: "AsyncHTTPClient", package: "async-http-client"),
 				.product(name: "CodableWrappers", package: "CodableWrappers"),

@@ -11,7 +11,7 @@ import CodableWrappers
 import Foundation
 import Multipart
 import SwiftyJSON
-import Swime
+//import Swime
 
 public struct Feature: Codable, Equatable {
 	public init(geometry: Geometry? = nil, attributes: JSON? = nil) {
@@ -84,25 +84,25 @@ public struct Feature: Codable, Equatable {
 	///   - gis: The `GIS` to use to authenticate.
 	/// - Throws: `AGKDataError`.
 	/// - Returns: `EventLoopFuture<JSON>`.
-	public func addAttachment(data: Data, name: String, gis: GIS) throws -> EventLoopFuture<JSON> {
+	public func addAttachment(data: Data, name: String, , mimeType: String? = nil, gis: GIS) throws -> EventLoopFuture<JSON> {
 		var message = Multipart(type: .formData)
 
 		if let token = gis.token {
 			message.append(Part.FormData(name: "token", value: token))
 		}
 
-		var mime = ""
+		//var mime = ""
 
-		if !name.contains(oneOf: ".md", ".markdown", ".txt", ".text") {
-			mime = "text/plain"
-		} else {
-			guard let mimeType = Swime.mimeType(data: data) else {
-				throw AGKDataError.unknownMimeType
-			}
-			mime = mimeType.mime
-		}
+	//	if !name.contains(oneOf: ".md", ".markdown", ".txt", ".text") {
+	//		mime = "text/plain"
+	//	} else {
+	//		guard let mimeType = Swime.mimeType(data: data) else {
+	//			throw AGKDataError.unknownMimeType
+	//		}
+	//		mime = mimeType.mime
+	//	}
 
-		message.append(Part.FormData(name: "file", fileData: data, fileName: name, contentType: mime))
+		message.append(Part.FormData(name: "file", fileData: data, fileName: name, contentType: mimeType))
 
 		let req = try! HTTPClient.Request(
 			url: "\(self.fullURL.appendingPathComponent("addAttachment").absoluteString)?f=json&\(gis.token != nil ? "&token=\(gis.token!)" : "")",
