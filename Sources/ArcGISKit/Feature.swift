@@ -84,7 +84,7 @@ public struct Feature: Codable, Equatable {
 	///   - gis: The `GIS` to use to authenticate.
 	/// - Throws: `AGKDataError`.
 	/// - Returns: `EventLoopFuture<JSON>`.
-	public func addAttachment(data: Data, name: String, , mimeType: String? = nil, gis: GIS) throws -> EventLoopFuture<JSON> {
+	public func addAttachment(data: Data, name: String, mimeType: String? = nil, gis: GIS) throws -> EventLoopFuture<JSON> {
 		var message = Multipart(type: .formData)
 
 		if let token = gis.token {
