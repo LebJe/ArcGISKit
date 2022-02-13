@@ -25,26 +25,13 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#classes">Classes</a></li><li><a href="#structures">Structures</a></li><li><a href="#enumerations">Enumerations</a></li></ol>
+            <ol><li><a href="#structures">Structures</a></li><li><a href="#enumerations">Enumerations</a></li><li><a href="#functions">Functions</a></li><li><a href="#variables">Variables</a></li></ol>
         </div>
     </nav>
 
     <main>
         <article>
-                <section id="classes">
-        <h2>Classes</h2>
-        <dl>
-            <dt class="class">
-    <a href="https://lebje.github.io/ArcGISKit/GIS" title="class - GIS">
-        GIS
-    </a>
-</dt>
-<dd>
-    
-</dd>
-        </dl>
-    </section>
-    <section id="structures">
+                <section id="structures">
         <h2>Structures</h2>
         <dl>
             <dt class="structure">
@@ -61,28 +48,20 @@
     </a>
 </dt>
 <dd>
-    
-</dd>
-<dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/Feature" title="structure - Feature">
-        Feature
-    </a>
-</dt>
-<dd>
-    
-</dd>
-<dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/FeatureServer" title="structure - FeatureServer">
-        Feature​Server
-    </a>
-</dt>
-<dd>
-    <p>A <code>FeatureServer</code> manages <code>FeatureService</code>s.</p>
+    <p>An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is independent of the user owning the item.</p>
 
 </dd>
 <dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/FeatureServer_LayerQuery" title="structure - FeatureServer.LayerQuery">
-        Feature​Server.​Layer​Query
+    <a href="https://lebje.github.io/ArcGISKit/FeatureLayer" title="structure - FeatureLayer">
+        Feature​Layer
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="https://lebje.github.io/ArcGISKit/LayerQuery" title="structure - LayerQuery">
+        Layer​Query
     </a>
 </dt>
 <dd>
@@ -226,25 +205,8 @@
     
 </dd>
 <dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/Group" title="structure - Group">
-        Group
-    </a>
-</dt>
-<dd>
-    <p>The Group resource represents a group (for example, San Bernardino Fires) within the portal.</p>
-
-</dd>
-<dt class="structure">
     <a href="https://lebje.github.io/ArcGISKit/QueryResponse" title="structure - QueryResponse">
         Query​Response
-    </a>
-</dt>
-<dd>
-    
-</dd>
-<dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/FeatureLayer" title="structure - FeatureLayer">
-        Feature​Layer
     </a>
 </dt>
 <dd>
@@ -259,8 +221,8 @@
     
 </dd>
 <dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/CodedValues" title="structure - CodedValues">
-        Coded​Values
+    <a href="https://lebje.github.io/ArcGISKit/CodedValue" title="structure - CodedValue">
+        Coded​Value
     </a>
 </dt>
 <dd>
@@ -299,6 +261,22 @@
     
 </dd>
 <dt class="structure">
+    <a href="https://lebje.github.io/ArcGISKit/Paginated" title="structure - Paginated">
+        Paginated
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="https://lebje.github.io/ArcGISKit/Folder" title="structure - Folder">
+        Folder
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
     <a href="https://lebje.github.io/ArcGISKit/AttachmentGroup" title="structure - AttachmentGroup">
         Attachment​Group
     </a>
@@ -323,17 +301,8 @@
     
 </dd>
 <dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/User" title="structure - User">
-        User
-    </a>
-</dt>
-<dd>
-    <p>A <code>User</code> resource represents a registered user of the portal.</p>
-
-</dd>
-<dt class="structure">
-    <a href="https://lebje.github.io/ArcGISKit/UserMembership" title="structure - UserMembership">
-        User​Membership
+    <a href="https://lebje.github.io/ArcGISKit/Membership" title="structure - Membership">
+        Membership
     </a>
 </dt>
 <dd>
@@ -354,6 +323,22 @@
 
 </dd>
 <dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/Access" title="enumeration - Access">
+        Access
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/ItemControl" title="enumeration - ItemControl">
+        Item​Control
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
     <a href="https://lebje.github.io/ArcGISKit/ContentType" title="enumeration - ContentType">
         Content​Type
     </a>
@@ -363,13 +348,12 @@
 
 </dd>
 <dt class="enumeration">
-    <a href="https://lebje.github.io/ArcGISKit/ESRIFieldType" title="enumeration - ESRIFieldType">
-        ESRIField​Type
+    <a href="https://lebje.github.io/ArcGISKit/Either" title="enumeration - Either">
+        Either
     </a>
 </dt>
 <dd>
-    <p>Field Types.</p>
-
+    
 </dd>
 <dt class="enumeration">
     <a href="https://lebje.github.io/ArcGISKit/AGKAuthError" title="enumeration - AGKAuthError">
@@ -397,8 +381,25 @@
 
 </dd>
 <dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/ESRIFieldType" title="enumeration - ESRIFieldType">
+        ESRIField​Type
+    </a>
+</dt>
+<dd>
+    <p>Field Types.</p>
+
+</dd>
+<dt class="enumeration">
     <a href="https://lebje.github.io/ArcGISKit/Capability" title="enumeration - Capability">
         Capability
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/Domain_DomainType" title="enumeration - Domain.DomainType">
+        Domain.​Domain​Type
     </a>
 </dt>
 <dd>
@@ -410,16 +411,8 @@
     </a>
 </dt>
 <dd>
-    <p>The order a <code>Group</code> is sorted by.</p>
+    <p>The order results are sorted by.</p>
 
-</dd>
-<dt class="enumeration">
-    <a href="https://lebje.github.io/ArcGISKit/Privilege" title="enumeration - Privilege">
-        Privilege
-    </a>
-</dt>
-<dd>
-    
 </dd>
 <dt class="enumeration">
     <a href="https://lebje.github.io/ArcGISKit/Provider" title="enumeration - Provider">
@@ -427,7 +420,794 @@
     </a>
 </dt>
 <dd>
+    <p>Indicates the level of access of the user: <code>private</code>, <code>org</code>, <code>public</code>, or <code>account</code>.
+If <code>private</code>, the user descriptive information will not be available to others nor will the username be searchable.</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/Role" title="enumeration - Role">
+        Role
+    </a>
+</dt>
+<dd>
     
+</dd>
+        </dl>
+    </section>
+    <section id="functions">
+        <h2>Functions</h2>
+        <dl>
+            <dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/fetchAttachments(gis_)" title="function - fetchAttachments(gis:)">
+        fetch​Attachments(gis:​)
+    </a>
+</dt>
+<dd>
+    <p>Fetch all the <code>Attachment</code>s contained in this <code>Feature</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/addAttachment(data_name_gis_mimeType_)" title="function - addAttachment(data:name:gis:mimeType:)">
+        add​Attachment(data:​name:​gis:​mime​Type:​)
+    </a>
+</dt>
+<dd>
+    <p>Add an <code>Attachment</code> to this <code>Feature</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/deleteAttachments(ids_gis_)" title="function - deleteAttachments(ids:gis:)">
+        delete​Attachments(ids:​gis:​)
+    </a>
+</dt>
+<dd>
+    <p>Deletes all the <code>Attachment</code>s whose ID is contained within <code>ids</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/append()" title="function - append()">
+        append()
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/query(layerQueries_)" title="function - query(layerQueries:)">
+        query(layer​Queries:​)
+    </a>
+</dt>
+<dd>
+    <p>Query the <code>FeatureServer</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/delete(__from_gdbVersion_)" title="function - delete(_:from:gdbVersion:)">
+        delete(_:​from:​gdb​Version:​)
+    </a>
+</dt>
+<dd>
+    <p>Deletes <code>features</code> from the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/add(__to_gdbVersion_)" title="function - add(_:to:gdbVersion:)">
+        add(_:​to:​gdb​Version:​)
+    </a>
+</dt>
+<dd>
+    <p>Adds <code>features</code> to the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/update(__in_gdbVersion_)" title="function - update(_:in:gdbVersion:)">
+        update(_:​in:​gdb​Version:​)
+    </a>
+</dt>
+<dd>
+    <p>Updates <code>features</code> in the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/fetchToken()" title="function - fetchToken()">
+        fetch​Token()
+    </a>
+</dt>
+<dd>
+    <p>Requests a token and saves it in <code>self.currentToken</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/generateURL(clientID_baseURL_site_redirectURI_)" title="function - generateURL(clientID:baseURL:site:redirectURI:)">
+        generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)
+    </a>
+</dt>
+<dd>
+    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/advance(limit_)" title="function - advance(limit:)">
+        advance(limit:​)
+    </a>
+</dt>
+<dd>
+    <p>Retrieves the values from <code>self.nextStart</code> to <code>limit</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/fetchContent(from_)" title="function - fetchContent(from:)">
+        fetch​Content(from:​)
+    </a>
+</dt>
+<dd>
+    <p>Retrieves the content owned by this <code>Group</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/fetchContent(from_)" title="function - fetchContent(from:)">
+        fetch​Content(from:​)
+    </a>
+</dt>
+<dd>
+    <p>Retrieves the content owned by this <code>User</code>.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/update(clearEmptyFields_gis_)" title="function - update(clearEmptyFields:gis:)">
+        update(clear​Empty​Fields:​gis:​)
+    </a>
+</dt>
+<dd>
+    <p>Updates the information for this <code>User</code> on ArcGIS Online or Enterprise.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/move(to_)" title="function - move(to:)">
+        move(to:​)
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/createFolder(name_gis_)" title="function - createFolder(name:gis:)">
+        create​Folder(name:​gis:​)
+    </a>
+</dt>
+<dd>
+    <p>Creates a folder in which items can be placed. Folders are only visible to a user and solely used for organizing content within that user's content space.</p>
+
+</dd>
+<dt class="function">
+    <a href="https://lebje.github.io/ArcGISKit/addFile(name_data_folder_type_tags_gis_)" title="function - addFile(name:data:folder:type:tags:gis:)">
+        add​File(name:​data:​folder:​type:​tags:​gis:​)
+    </a>
+</dt>
+<dd>
+    
+</dd>
+        </dl>
+    </section>
+    <section id="variables">
+        <h2>Variables</h2>
+        <dl>
+            <dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/geometry" title="variable - geometry">
+        geometry
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/attributes" title="variable - attributes">
+        attributes
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/attachments" title="variable - attachments">
+        attachments
+    </a>
+</dt>
+<dd>
+    <p>The <code>Attachment</code>s contained in this <code>Feature</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/url" title="variable - url">
+        url
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/url" title="variable - url">
+        url
+    </a>
+</dt>
+<dd>
+    <p>The URL used to access the <code>User</code>'s ArcGIS Online organization, ArcGIS Enterprise installation, et cetera.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/username" title="variable - username">
+        username
+    </a>
+</dt>
+<dd>
+    <p>The username of the current <code>User</code>, if logged in.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/password" title="variable - password">
+        password
+    </a>
+</dt>
+<dd>
+    <p>The password of the current <code>User</code>, if logged in.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/authType" title="variable - authType">
+        auth​Type
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/isAnonymous" title="variable - isAnonymous">
+        is​Anonymous
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/currentToken" title="variable - currentToken">
+        current​Token
+    </a>
+</dt>
+<dd>
+    <p>The token for the logged in <code>User</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/refreshToken" title="variable - refreshToken">
+        refresh​Token
+    </a>
+</dt>
+<dd>
+    <p>The token that is used to refresh <code>self.currentToken</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/tokenExpirationDate" title="variable - tokenExpirationDate">
+        token​Expiration​Date
+    </a>
+</dt>
+<dd>
+    <p>The <code>Date</code> when <code>self.currentToken</code> will expire.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/tokenExpired" title="variable - tokenExpired">
+        token​Expired
+    </a>
+</dt>
+<dd>
+    <p>If <code>self.currentToken</code> expired.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/current" title="variable - current">
+        current
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/id" title="variable - id">
+        id
+    </a>
+</dt>
+<dd>
+    <p>The given group ID.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/title" title="variable - title">
+        title
+    </a>
+</dt>
+<dd>
+    <p>The title of the group. This is the name that is displayed to users and by which they refer to the group. Every group must have a title, and it must be unique for a user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/isInvitationOnly" title="variable - isInvitationOnly">
+        is​Invitation​Only
+    </a>
+</dt>
+<dd>
+    <p>If this is set to true, users will not be able to apply to join the group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/owner" title="variable - owner">
+        owner
+    </a>
+</dt>
+<dd>
+    <p>The owner user name of the group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/description" title="variable - description">
+        description
+    </a>
+</dt>
+<dd>
+    <p>The group description.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/typeKeywords" title="variable - typeKeywords">
+        type​Keywords
+    </a>
+</dt>
+<dd>
+    <p>An array of keywords that further describes a group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/snippet" title="variable - snippet">
+        snippet
+    </a>
+</dt>
+<dd>
+    <p>The group summary.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/tags" title="variable - tags">
+        tags
+    </a>
+</dt>
+<dd>
+    <p>User-defined tags that describe the group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/phone" title="variable - phone">
+        phone
+    </a>
+</dt>
+<dd>
+    <p>The contact information for the group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/sortField" title="variable - sortField">
+        sort​Field
+    </a>
+</dt>
+<dd>
+    <p>The sorted field.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/sortOrder" title="variable - sortOrder">
+        sort​Order
+    </a>
+</dt>
+<dd>
+    <p>The sort order, either descending or ascending.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/isViewOnly" title="variable - isViewOnly">
+        is​View​Only
+    </a>
+</dt>
+<dd>
+    <p>Boolean value indicating whether the results are only for viewing.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/isFav" title="variable - isFav">
+        is​Fav
+    </a>
+</dt>
+<dd>
+    <p>Boolean value indicating whether marked in favorites.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/thumbnail" title="variable - thumbnail">
+        thumbnail
+    </a>
+</dt>
+<dd>
+    <p>The URL to the thumbnail used for the group. All group thumbnails are relative to the URL: <code>https://[&lt;community-url&gt;](https://developers.arcgis.com/rest/users-groups-and-items/community-root.htm)/groups/&lt;groupId&gt;/info</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/created" title="variable - created">
+        created
+    </a>
+</dt>
+<dd>
+    <p>THe date the group was created.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/modified" title="variable - modified">
+        modified
+    </a>
+</dt>
+<dd>
+    <p>The date the group was last modified.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/access" title="variable - access">
+        access
+    </a>
+</dt>
+<dd>
+    <p>The access privileges of the group that determine who can see and access the group. This can be set to private, org, or public.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/userMembership" title="variable - userMembership">
+        user​Membership
+    </a>
+</dt>
+<dd>
+    <p>If the request is made by an authenticated user, a <code>UserMembership</code> object is returned containing information about the user's access to the group. This includes the <code>username</code> of the calling user; the <code>memberType</code>, which specifies the type of membership the user has in the group (owner, member, admin, none); and the <code>applications</code> (number of requests to join the group) count available to administrators and owners.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/protected" title="variable - protected">
+        protected
+    </a>
+</dt>
+<dd>
+    <p>Indicates if the group is protected from deletion. The default value is <code>false</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/autoJoin" title="variable - autoJoin">
+        auto​Join
+    </a>
+</dt>
+<dd>
+    <p>Only applies to org accounts. Indicates if the group allows joining without requesting membership approval. The default value is <code>false</code>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/hasCategorySchema" title="variable - hasCategorySchema">
+        has​Category​Schema
+    </a>
+</dt>
+<dd>
+    <p>If <code>true</code>, the group has content category set.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/isOpenData" title="variable - isOpenData">
+        is​Open​Data
+    </a>
+</dt>
+<dd>
+    <p>If <code>true</code>, the group is designated as available for use in Open Data sites.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/id" title="variable - id">
+        id
+    </a>
+</dt>
+<dd>
+    <p>The ID of the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/firstName" title="variable - firstName">
+        first​Name
+    </a>
+</dt>
+<dd>
+    <p>The user's first name.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/lastName" title="variable - lastName">
+        last​Name
+    </a>
+</dt>
+<dd>
+    <p>The user's last name.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/fullName" title="variable - fullName">
+        full​Name
+    </a>
+</dt>
+<dd>
+    <p>The user's full name.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/username" title="variable - username">
+        username
+    </a>
+</dt>
+<dd>
+    <p>The username of the given user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/idpUsername" title="variable - idpUsername">
+        idp​Username
+    </a>
+</dt>
+<dd>
+    <p>The original username if using enterprise logins.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/email" title="variable - email">
+        email
+    </a>
+</dt>
+<dd>
+    <p>The user's e-mail address.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/description" title="variable - description">
+        description
+    </a>
+</dt>
+<dd>
+    <p>A description of the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/tags" title="variable - tags">
+        tags
+    </a>
+</dt>
+<dd>
+    <p>User-defined tags that describe the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/availableCredits" title="variable - availableCredits">
+        available​Credits
+    </a>
+</dt>
+<dd>
+    <p>The number of credits available to the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/assignedCredits" title="variable - assignedCredits">
+        assigned​Credits
+    </a>
+</dt>
+<dd>
+    <p>The number of credits allocated to the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/preferredView" title="variable - preferredView">
+        preferred​View
+    </a>
+</dt>
+<dd>
+    <p>The user's preferred view for content, either web or GIS.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/access" title="variable - access">
+        access
+    </a>
+</dt>
+<dd>
+    <p>Indicates the level of access of the user: private, org, or public.
+If <code>private</code>, the user descriptive information will not be available to others nor will the username be searchable.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/mfaEnabled" title="variable - mfaEnabled">
+        mfa​Enabled
+    </a>
+</dt>
+<dd>
+    <p>Indicates if the user's account has multifactor authentication set up.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/favGroupId" title="variable - favGroupId">
+        fav​Group​Id
+    </a>
+</dt>
+<dd>
+    <p>The user's favorites group and is created automatically for each user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/lastLogin" title="variable - lastLogin">
+        last​Login
+    </a>
+</dt>
+<dd>
+    <p>The last login date of the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/storageUsage" title="variable - storageUsage">
+        storage​Usage
+    </a>
+</dt>
+<dd>
+    <p>The total storage used by the user's organization or subscription in Byte.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/storageQuota" title="variable - storageQuota">
+        storage​Quota
+    </a>
+</dt>
+<dd>
+    <p>The total storage amount allowed for the user's organization or subscription in Byte. Usually 2TB for organization, 2GB for non-organization.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/orgId" title="variable - orgId">
+        org​Id
+    </a>
+</dt>
+<dd>
+    <p>The ID of the organization the user belongs to.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/role" title="variable - role">
+        role
+    </a>
+</dt>
+<dd>
+    <p>Defines the user's role in the organization.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/privileges" title="variable - privileges">
+        privileges
+    </a>
+</dt>
+<dd>
+    <p>An array of <code>Privilege</code>s for this <code>User</code>. For a complete listing, see <a href="https://developers.arcgis.com/rest/users-groups-and-items/privileges.htm#ESRI_SECTION2_3EAEA3BADD1446A68EA07F9F46F6690C">Privileges</a>.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/roleId" title="variable - roleId">
+        role​Id
+    </a>
+</dt>
+<dd>
+    <p>(Optional) The ID of the user's role if it is a custom one.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/userLicenseTypeId" title="variable - userLicenseTypeId">
+        user​License​Type​Id
+    </a>
+</dt>
+<dd>
+    <p>The user's user license type ID.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/disabled" title="variable - disabled">
+        disabled
+    </a>
+</dt>
+<dd>
+    <p>Disables access to the organization by the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/units" title="variable - units">
+        units
+    </a>
+</dt>
+<dd>
+    <p>User-defined units for measurement.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/culture" title="variable - culture">
+        culture
+    </a>
+</dt>
+<dd>
+    <p>The user locale information (language and country).</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/cultureFormat" title="variable - cultureFormat">
+        culture​Format
+    </a>
+</dt>
+<dd>
+    <p>The user preferred number and date format defined in CLDR (only applicable for English and Spanish, i.e. when culture is en or es).
+See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages.htm#GUID-F2075D30-8644-4A62-915F-D21A4CEB4587">Languages</a> for supported formats. It will inherit from <a href="https://developers.arcgis.com/rest/users-groups-and-items/portal-self.htm">organization</a> <code>cultureFormat</code> if undefined.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/region" title="variable - region">
+        region
+    </a>
+</dt>
+<dd>
+    <p>The user preferred region, used to set the featured maps on the home page, content in the gallery, and the default extent of new maps in the Viewer.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/thumbnail" title="variable - thumbnail">
+        thumbnail
+    </a>
+</dt>
+<dd>
+    <p>The file name of the thumbnail used for the user.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/created" title="variable - created">
+        created
+    </a>
+</dt>
+<dd>
+    <p>The date the user was created.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/modified" title="variable - modified">
+        modified
+    </a>
+</dt>
+<dd>
+    <p>The date the user was last modified.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/groups" title="variable - groups">
+        groups
+    </a>
+</dt>
+<dd>
+    <p>An array of groups the user belongs to. See <a href="https://developers.arcgis.com/rest/users-groups-and-items/group.htm">Group</a> for properties of a group.</p>
+
+</dd>
+<dt class="variable">
+    <a href="https://lebje.github.io/ArcGISKit/provider" title="variable - provider">
+        provider
+    </a>
+</dt>
+<dd>
+    <p>The identity provider for the organization.</p>
+
 </dd>
         </dl>
     </section>
@@ -437,7 +1217,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-09-05T19:21:59+0000">September 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2022-02-13T14:35:52+0000">February 13, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>

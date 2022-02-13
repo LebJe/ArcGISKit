@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGISKit - generateURL(clientID:baseURL:site:redirectURI:)</title>
+    <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="https://lebje.github.io/ArcGISKit/">
+            <strong>
+                ArcGISKit
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol/>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+<small>Function</small>
+<span class="name">generate​URL(client​ID:​base​URL:​site:​redirect​URI:​)</span>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">generateURL</span>(
+		<span class="variable">clientID</span>: <span class="type">String</span>,
+		<span class="variable">baseURL</span>: <span class="type">URL</span> = <span class="variable">URL</span>(<span class="variable">string</span>: <span class="string literal">"</span><span class="string literal">https://arcgis.com</span><span class="string literal">"</span>)!,
+		<span class="variable">site</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">sharing</span><span class="string literal">"</span>,
+		<span class="variable">redirectURI</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal">urn:ietf:wg:oauth:2.0:oob</span><span class="string literal">"</span>
+	) -&gt; <span class="type">URL</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>client​ID</th>
+    <td><code class="type">String</code></td>
+    <td></td>
+</tr>
+<tr>
+    <th>base​URL</th>
+    <td><code class="type">URL</code></td>
+    <td><p>Your ArcGIS Server hostname.</p>
+</td>
+</tr>
+<tr>
+    <th>site</th>
+    <td><code class="type">String</code></td>
+    <td><p>Your ArcGIS Server site name. The default is &quot;sharing&quot;.</p>
+</td>
+</tr>
+<tr>
+    <th>redirect​URI</th>
+    <td><code class="type">String</code></td>
+    <td><p>The <code>URL</code> that will receive a code once the user has logged in. Use the default (&quot;urn:ietf:wg:oauth:2.0:oob&quot;) to have ArcGIS Online present the code to the user instead of redirecting to a different <code>URL</code>.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+  <h4>Returns</h4>
+  <p>The generated <code>URL</code>.</p>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2022-02-13T14:35:52+0000">February 13, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

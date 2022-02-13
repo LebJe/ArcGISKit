@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGISKit - add(_:to:gdbVersion:)</title>
+    <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="https://lebje.github.io/ArcGISKit/">
+            <strong>
+                ArcGISKit
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol/>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+<small>Function</small>
+<span class="name">add(_:​to:​gdb​Version:​)</span>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">add</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<span class="type">Feature</span>], <span class="variable">to</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Adds <code>features</code> to the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
+
+</div>
+<div class="discussion">
+    <p>To add a feature to the first layer, you could write:</p>
+
+<html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">layers</span> = <span class="keyword">try</span> <span class="variable">await</span> <span class="variable">myFeatureServer</span>
+	.<span class="variable">query</span>(<span class="variable">layerQueries</span>: [.<span class="variable">init</span>(<span class="variable">whereClause</span>: <span class="string literal">"</span><span class="string literal">1=1</span><span class="string literal">"</span>, <span class="variable">layerID</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>)])
+<span class="keyword">var</span> <span class="variable">attributes</span> = <span class="variable">JSON</span>()
+<span class="variable">attributes</span>[<span class="string literal">"</span><span class="string literal">Greeting</span><span class="string literal">"</span>] = <span class="string literal">"</span><span class="string literal">Hi!</span><span class="string literal">"</span>
+
+<span class="keyword">let</span> <span class="variable">feature</span> = <span class="variable">Feature</span>(<span class="variable">geometry</span>: <a href="https://lebje.github.io/ArcGISKit/Geometry"><span class="type">Geometry</span></a>(<span class="variable">x</span>: <span class="number literal">0.0</span>, <span class="variable">y</span>: <span class="number literal">0.0</span>, <span class="variable">rings</span>: <span class="keyword">nil</span>), <span class="variable">attributes</span>: <a href="https://lebje.github.io/ArcGISKit/attributes"><span class="type">attributes</span></a>)
+
+<span class="keyword">let</span> <span class="variable">res</span> = <span class="keyword">try</span> <span class="variable">await</span> <span class="variable">myFeatureServer</span>.<span class="variable">add</span>([<span class="variable">feature</span>], <span class="variable">to</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>)
+</code></pre></body></html>
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>features</th>
+    <td><code class="type">[Feature]</code></td>
+    <td><p>The <code>Feature</code>s you wish to add.</p>
+</td>
+</tr>
+<tr>
+    <th>id</th>
+    <td><code class="type">String</code></td>
+    <td><p>The ID of the <code>FeatureLayer</code> you wish to add the <code>features</code> to.</p>
+</td>
+</tr>
+<tr>
+    <th>gdb​Version</th>
+    <td><code class="type">String?</code></td>
+    <td><p>The version of the geo-database you want to add features to.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+  <h4>Throws</h4>
+  <p><code>AGKRequestError</code></p>
+
+  <h4>Returns</h4>
+  <p><code>[EditResponse]</code>.</p>
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2022-02-13T14:35:52+0000">February 13, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

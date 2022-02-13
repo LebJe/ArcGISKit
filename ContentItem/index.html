@@ -25,7 +25,7 @@
     <nav>
         <div class="wrapper">
             <h2>On This Page</h2>
-            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#contentitem.id">id</a></li><li class="variable"><a href="#contentitem.item">item</a></li><li class="variable"><a href="#contentitem.itemtype">item​Type</a></li><li class="variable"><a href="#contentitem.owner">owner</a></li><li class="variable"><a href="#contentitem.uploaded">uploaded</a></li><li class="variable"><a href="#contentitem.modified">modified</a></li><li class="variable"><a href="#contentitem.isorgitem">is​Org​Item</a></li><li class="variable"><a href="#contentitem.guid">guid</a></li><li class="variable"><a href="#contentitem.name">name</a></li><li class="variable"><a href="#contentitem.title">title</a></li><li class="variable"><a href="#contentitem.type">type</a></li></ul></li></ol>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Conforms To</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#contentitem.id">id</a></li><li class="variable"><a href="#contentitem.title">title</a></li><li class="variable"><a href="#contentitem.name">name</a></li><li class="variable"><a href="#contentitem.type">type</a></li><li class="variable"><a href="#contentitem.typekeywords">type​Keywords</a></li><li class="variable"><a href="#contentitem.owner">owner</a></li><li class="variable"><a href="#contentitem.url">url</a></li><li class="variable"><a href="#contentitem.size">size</a></li><li class="variable"><a href="#contentitem.protected">protected</a></li><li class="variable"><a href="#contentitem.commentsenabled">comments​Enabled</a></li><li class="variable"><a href="#contentitem.isorgitem">is​Org​Item</a></li><li class="variable"><a href="#contentitem.guid">guid</a></li><li class="variable"><a href="#contentitem.created">created</a></li><li class="variable"><a href="#contentitem.modified">modified</a></li><li class="variable"><a href="#contentitem.snippet">snippet</a></li><li class="variable"><a href="#contentitem.description">description</a></li><li class="variable"><a href="#contentitem.documentation">documentation</a></li><li class="variable"><a href="#contentitem.categories">categories</a></li><li class="variable"><a href="#contentitem.appcategories">app​Categories</a></li><li class="variable"><a href="#contentitem.thumbnail">thumbnail</a></li><li class="variable"><a href="#contentitem.banner">banner</a></li><li class="variable"><a href="#contentitem.screenshots">screenshots</a></li><li class="variable"><a href="#contentitem.culture">culture</a></li><li class="variable"><a href="#contentitem.languages">languages</a></li><li class="variable"><a href="#contentitem.tags">tags</a></li><li class="variable"><a href="#contentitem.access">access</a></li><li class="variable"><a href="#contentitem.accessinformation">access​Information</a></li><li class="variable"><a href="#contentitem.licenseinfo">license​Info</a></li><li class="variable"><a href="#contentitem.industries">industries</a></li><li class="variable"><a href="#contentitem.listed">listed</a></li><li class="variable"><a href="#contentitem.ownerfolder">owner​Folder</a></li><li class="variable"><a href="#contentitem.numcomments">num​Comments</a></li><li class="variable"><a href="#contentitem.numrating">num​Rating</a></li><li class="variable"><a href="#contentitem.avgrating">avg​Rating</a></li><li class="variable"><a href="#contentitem.numviews">num​Views</a></li><li class="variable"><a href="#contentitem.itemcontrol">item​Control</a></li><li class="variable"><a href="#contentitem.scorecompleteness">score​Completeness</a></li><li class="variable"><a href="#contentitem.spatialreference">spatial​Reference</a></li><li class="variable"><a href="#contentitem.extent">extent</a></li></ul></li></ol>
         </div>
     </nav>
 
@@ -39,6 +39,22 @@
 <div class="declaration">
 <pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">ContentItem</span>: <span class="type">Codable</span>, <span class="type">Equatable</span>  </body></html></code></pre>
 </div>
+<div class="summary" role="doc-abstract">
+    <p>An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is independent of the user owning the item.</p>
+
+</div>
+<div class="discussion">
+    <p>An item can have associated JSON data that's available via the item data resource. For example, an item of type Map Package returns the actual bits corresponding to the map package via the item data resource.</p>
+
+<p>The <code>numViews</code> is incremented when an item is opened.</p>
+
+<ul>
+<li>
+<p>Reference: https://developers.arcgis.com/rest/users-groups-and-items/item.htm</p>
+</li>
+</ul>
+
+</div>
 <section id="relationships">
     <h2 hidden>Relationships</h2>
         <figure>
@@ -47,11 +63,11 @@
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Generated by graphviz version 2.40.1 (20161225.0304)
  -->
-<!-- Title: %17 Pages: 1 -->
+<!-- Title: %245 Pages: 1 -->
 <svg width="872pt" height="116pt"
  viewBox="0.00 0.00 872.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>%17</title>
+<title>%245</title>
 <polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-112 868,-112 868,4 -4,4"/>
 <!-- ContentItem -->
 <g id="node1" class="node structure current">
@@ -69,7 +85,7 @@
 <text text-anchor="middle" x="207" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Equatable</text>
 </g>
 <!-- ContentItem&#45;&gt;Equatable -->
-<g id="edge1" class="edge conformsTo">
+<g id="edge2" class="edge conformsTo">
 <title>ContentItem&#45;&gt;Equatable</title>
 <path fill="none" stroke="#000000" d="M375.5134,-71.9243C344.4871,-61.9959 305.8297,-49.6255 273.3694,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="274.1008,-35.7975 263.5098,-36.0831 271.9673,-42.4645 274.1008,-35.7975"/>
@@ -81,7 +97,7 @@
 <text text-anchor="middle" x="657" y="-14.3" font-family="Menlo" font-size="14.00" fill="#000000">Codable</text>
 </g>
 <!-- ContentItem&#45;&gt;Codable -->
-<g id="edge2" class="edge conformsTo">
+<g id="edge1" class="edge conformsTo">
 <title>ContentItem&#45;&gt;Codable</title>
 <path fill="none" stroke="#000000" d="M488.4866,-71.9243C519.5129,-61.9959 558.1703,-49.6255 590.6306,-39.2382"/>
 <polygon fill="#000000" stroke="#000000" points="592.0327,-42.4645 600.4902,-36.0831 589.8992,-35.7975 592.0327,-42.4645"/>
@@ -106,23 +122,65 @@
         <code><a href="#contentitem.id">id</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">id</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">id</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The unique ID for this item.</p>
+
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.item">
+<div role="article" class="variable" id="contentitem.title">
     <h3>
-        <code><a href="#contentitem.item">item</a></code>
+        <code><a href="#contentitem.title">title</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">item</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">title</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The title of the item. This is the name that's displayed to users and by which they refer to the item. Every item must have a title.</p>
+
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.itemtype">
+<div role="article" class="variable" id="contentitem.name">
     <h3>
-        <code><a href="#contentitem.itemtype">item​Type</a></code>
+        <code><a href="#contentitem.name">name</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">itemType</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">name</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The file name of the item for file types. Read-only.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.type">
+    <h3>
+        <code><a href="#contentitem.type">type</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">type</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The GIS content type of this item.</p>
+
+</div>
+<div class="discussion">
+    <p>Example types include Web Map, Map Service, Shapefile, and Web Mapping Application.</p>
+
+<p>See the overview section of <a href="https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm">Items and item types</a> to get an understanding of the item type hierarchy.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.typekeywords">
+    <h3>
+        <code><a href="#contentitem.typekeywords">type​Keywords</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">typeKeywords</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array of keywords that further describes the type of this item. Each item is tagged with a set of type keywords that are derived based on its primary type.</p>
+
 </div>
 </div>
 <div role="article" class="variable" id="contentitem.owner">
@@ -132,23 +190,57 @@
     <div class="declaration">
 <pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">owner</span>: <span class="type">String</span>? </body></html></code></pre>
 </div>
+<div class="summary" role="doc-abstract">
+    <p>The username of the user who owns this item.</p>
+
 </div>
-<div role="article" class="variable" id="contentitem.uploaded">
+</div>
+<div role="article" class="variable" id="contentitem.url">
     <h3>
-        <code><a href="#contentitem.uploaded">uploaded</a></code>
+        <code><a href="#contentitem.url">url</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="attribute">@</span><span class="type">Immutable</span> <span class="attribute">@</span><span class="type">OptionalCoding</span>&lt;<span class="type">MillisecondsSince1970DateCoding</span>&gt;
-	<span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">uploaded</span>: <span class="type">Date</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">url</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The URL for the resource represented by the item. Applies only to items that represent web-accessible resources such as map services.</p>
+
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.modified">
+<div role="article" class="variable" id="contentitem.size">
     <h3>
-        <code><a href="#contentitem.modified">modified</a></code>
+        <code><a href="#contentitem.size">size</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="attribute">@</span><span class="type">Immutable</span> <span class="attribute">@</span><span class="type">OptionalCoding</span>&lt;<span class="type">MillisecondsSince1970DateCoding</span>&gt;
-	<span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">modified</span>: <span class="type">Date</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">size</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The size of the item in bytes.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.protected">
+    <h3>
+        <code><a href="#contentitem.protected">protected</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">protected</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Protects the item from deletion. <code>false</code> is the default.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.commentsenabled">
+    <h3>
+        <code><a href="#contentitem.commentsenabled">comments​Enabled</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">commentsEnabled</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Indicates if comments are allowed on the item.</p>
+
 </div>
 </div>
 <div role="article" class="variable" id="contentitem.isorgitem">
@@ -167,28 +259,330 @@
 <pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">guid</span>: <span class="type">String</span>? </body></html></code></pre>
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.name">
+<div role="article" class="variable" id="contentitem.created">
     <h3>
-        <code><a href="#contentitem.name">name</a></code>
+        <code><a href="#contentitem.created">created</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">name</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="attribute">@</span><span class="type">Immutable</span> <span class="attribute">@</span><span class="type">OptionalCoding</span>&lt;<span class="type">MillisecondsSince1970DateCoding</span>&gt;
+	<span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">created</span>: <span class="type">Date</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The date the item was created. Shown in UNIX time in milliseconds.</p>
+
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.title">
+<div role="article" class="variable" id="contentitem.modified">
     <h3>
-        <code><a href="#contentitem.title">title</a></code>
+        <code><a href="#contentitem.modified">modified</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">title</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="attribute">@</span><span class="type">Immutable</span> <span class="attribute">@</span><span class="type">OptionalCoding</span>&lt;<span class="type">MillisecondsSince1970DateCoding</span>&gt;
+	<span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">modified</span>: <span class="type">Date</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The date the item was last modified. Shown in UNIX time in milliseconds.</p>
+
 </div>
 </div>
-<div role="article" class="variable" id="contentitem.type">
+<div role="article" class="variable" id="contentitem.snippet">
     <h3>
-        <code><a href="#contentitem.type">type</a></code>
+        <code><a href="#contentitem.snippet">snippet</a></code>
     </h3>
     <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">type</span>: <span class="type">String</span>? </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">snippet</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>A short summary description of the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.description">
+    <h3>
+        <code><a href="#contentitem.description">description</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">description</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Item description.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.documentation">
+    <h3>
+        <code><a href="#contentitem.documentation">documentation</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">documentation</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.categories">
+    <h3>
+        <code><a href="#contentitem.categories">categories</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">categories</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array of organization categories that are set on the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.appcategories">
+    <h3>
+        <code><a href="#contentitem.appcategories">app​Categories</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">appCategories</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array that primarily applies to a list of categories that the application item is applicable to.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.thumbnail">
+    <h3>
+        <code><a href="#contentitem.thumbnail">thumbnail</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">thumbnail</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Primarily applies to thumbnails associated with an application. The URL to the thumbnail used for the application.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.banner">
+    <h3>
+        <code><a href="#contentitem.banner">banner</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">banner</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Primarily applies to the banner associated with an application. The URL to the banner used for the application.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.screenshots">
+    <h3>
+        <code><a href="#contentitem.screenshots">screenshots</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">screenshots</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array that primarily applies to screenshots associated with an application. The URL to the screenshots used for the application.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.culture">
+    <h3>
+        <code><a href="#contentitem.culture">culture</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">culture</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The item locale information (language and country).</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.languages">
+    <h3>
+        <code><a href="#contentitem.languages">languages</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">languages</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array that primarily applies to languages associated with the application.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.tags">
+    <h3>
+        <code><a href="#contentitem.tags">tags</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">tags</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array of user defined tags that describe the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.access">
+    <h3>
+        <code><a href="#contentitem.access">access</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">access</span>: <a href="https://lebje.github.io/ArcGISKit/Access"><span class="type">Access</span></a>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Indicates the level of access to the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.accessinformation">
+    <h3>
+        <code><a href="#contentitem.accessinformation">access​Information</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">accessInformation</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Information on the source of the item and its copyright status.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.licenseinfo">
+    <h3>
+        <code><a href="#contentitem.licenseinfo">license​Info</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">licenseInfo</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Any license information or restrictions.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.industries">
+    <h3>
+        <code><a href="#contentitem.industries">industries</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">industries</span>: [<span class="type">String</span>]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array that primarily applies to industries associated with the application.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.listed">
+    <h3>
+        <code><a href="#contentitem.listed">listed</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">listed</span>: <span class="type">Bool</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>If <code>true</code>, the item is listed in the marketplace</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.ownerfolder">
+    <h3>
+        <code><a href="#contentitem.ownerfolder">owner​Folder</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">ownerFolder</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The ID of the folder in which the owner has stored the item. The property is only returned to the item owner or the org admin.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.numcomments">
+    <h3>
+        <code><a href="#contentitem.numcomments">num​Comments</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">numComments</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Number of comments on the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.numrating">
+    <h3>
+        <code><a href="#contentitem.numrating">num​Rating</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">numRating</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Number of ratings on the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.avgrating">
+    <h3>
+        <code><a href="#contentitem.avgrating">avg​Rating</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">avgRating</span>: <span class="type">Double</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Average rating. Uses a weighted average called &quot;Bayesian average.&quot;</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.numviews">
+    <h3>
+        <code><a href="#contentitem.numviews">num​Views</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">numViews</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Number of views of the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.itemcontrol">
+    <h3>
+        <code><a href="#contentitem.itemcontrol">item​Control</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">itemControl</span>: <a href="https://lebje.github.io/ArcGISKit/ItemControl"><span class="type">ItemControl</span></a>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>(Optional) Indicates user's control to the item.</p>
+
+</div>
+<div class="discussion">
+    <p>Values: <code>admin</code> (for item owner and org admin) | <code>update</code> (for members of groups with item update capability that the item is shared with)</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.scorecompleteness">
+    <h3>
+        <code><a href="#contentitem.scorecompleteness">score​Completeness</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">scoreCompleteness</span>: <span class="type">Double</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Item information completeness score based upon item snippet, thumbnail, description, title, tags etc.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.spatialreference">
+    <h3>
+        <code><a href="#contentitem.spatialreference">spatial​Reference</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">spatialReference</span>: <a href="https://lebje.github.io/ArcGISKit/Either"><span class="type">Either</span></a>&lt;<span class="type">String</span>, <a href="https://lebje.github.io/ArcGISKit/SpatialReference"><span class="type">SpatialReference</span></a>&gt;? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>The coordinate system of the item.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="contentitem.extent">
+    <h3>
+        <code><a href="#contentitem.extent">extent</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">extent</span>: [[<span class="type">Double</span>]]? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An array that defines the bounding rectangle of the item. Should always be in WGS84.</p>
+
 </div>
 </div>
     </section>
@@ -200,7 +594,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2021-09-05T19:21:59+0000">September 5, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2022-02-13T14:35:53+0000">February 13, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
