@@ -1,9 +1,8 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  Exports.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 1/9/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
+@_exported import JSON
 @_exported import NIO
-@_exported import SwiftyJSON

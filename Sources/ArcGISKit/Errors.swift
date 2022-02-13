@@ -1,14 +1,11 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  Errors.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 12/22/20.
-//
-
-import Foundation
+//  The full text of the license can be found in the file named LICENSE.
 
 public enum AGKAuthError: Error {
-	/// You logged in anonymously to `GIS.init`. You MUST login using a username and password, or a client ID and secret.
+	/// You logged in anonymously using `GIS.init`. You must login using a username and password, or a client ID and secret.
 	case isAnonymous
 
 	/// The username or password provided to `GIS.init` was invalid.

@@ -1,58 +1,118 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
+// Copyright (c) 2022 Jeff Lebrun
+//
+//  Licensed under the MIT License.
+//
+//  The full text of the license can be found in the file named LICENSE.
 
-public class GIS {
+import AsyncHTTPClient
+import struct Foundation.Date
+import struct Foundation.URL
+import NIO
+import NIOCore
+import WebURL
+
+public final actor GIS {
 	// MARK: - Public properties.
 
-	public let url: URL
+	/// The URL used to access the `User`'s ArcGIS Online organization, ArcGIS Enterprise installation, et cetera.
+	public let url: WebURL
+
+	/// The username of the current `User`, if logged in.
 	public let username: String?
+
+	/// The password of the current `User`, if logged in.
 	public let password: String?
+
 	public let authType: AuthenticationType
+
 	public var isAnonymous: Bool { self.authType == .anonymous && (self.username == nil && self.password == nil) }
+
+	/// The token for the logged in `User`.
+	public var currentToken: String?
+
+	/// The token that is used to refresh `self.currentToken`.
+	public var refreshToken: String?
+
+	/// The `Date` when `self.currentToken` will expire.
+	public var tokenExpirationDate: Date?
+
+	/// If `self.currentToken` expired.
+	public var tokenExpired: Bool {
+		if let eDate = self.tokenExpirationDate {
+			return eDate.timeIntervalSince1970 < Date().timeIntervalSince1970
+		}
+		return true
+	}
+
+	/// Retrieves the ``User`` that provided their credentials via ``GIS.init``.
+	/// - Throws: `AGKRequestError`.
+	/// - Reference: [https://developers.arcgis.com/rest/users-groups-and-items/user.htm](https://developers.arcgis.com/rest/users-groups-and-items/user.htm)
+	public var user: User {
+		get async throws {
+			guard !self.isAnonymous else { throw AGKAuthError.isAnonymous }
+
+			var newURL = self.fullURL + ["community", "users", self.username!]
+
+			newURL.formParams.token = self.currentToken!
+			newURL.formParams.f = "json"
+
+			let req = try! HTTPClient.Request(url: newURL, method: .POST)
+
+			// TODO: Fix.
+			return try await handle(response: self.client.execute(request: req).get(), decodeType: User.self)
+		}
+	}
 
 	// MARK: - Private properties.
 
 	let client: HTTPClient
 	let eventLoopGroup: EventLoopGroup
-	var fullURL: URL { self.url.appendingPathComponent(self.site) }
+	var fullURL: WebURL { self.url + self.site }
 	let site: String
-	var token: String?
-	var refeshToken: String?
 
 	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
-	///
-	/// If `authType` is `.webBrowser`, You must first call `GIS.generateURL(clientID:, baseURL:, site:)` (without changing `redirectURI`)  to generate a `URL`.
-	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then to copy and paste the returned code back into your app.
-	/// Once you receive the code, you can then pass it to this initializer.
 	///
 	/// - Parameters:
 	///   - authType: The method of authentication you wish to use.
 	///   - eventLoopGroup: The `EventLoopGroup` needed for the `HTTPClient`.
 	///   - url: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	/// - Throws: `AGKRequestError`.
-	public init(_ authType: AuthenticationType, eventLoopGroup: EventLoopGroup, url: URL = URL(string: "https://arcgis.com")!, site: String = "sharing") {
-		self.url = url
+	/// - Throws: `AGKRequestError`
+	///
+	/// If `authType` is ``AuthenticationType.webBrowser``, You must first call ``GIS.generateURL(clientID:baseURL:site:)`` (without changing `redirectURI`) to generate a `URL`.
+	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then copy and paste the returned code back into your app.
+	/// Once you receive the code, you can then pass it to this initializer.
+	public init(
+		authentication authType: AuthenticationType,
+		eventLoopGroup: EventLoopGroup,
+		url: URL = URL(string: "https://arcgis.com")!,
+		site: String = "sharing"
+	) async throws {
+		self.url = WebURL(url.absoluteString)!
 		self.site = site
 		self.eventLoopGroup = eventLoopGroup
-		self.client = HTTPClient(eventLoopGroupProvider: .shared(self.eventLoopGroup), configuration: .init(redirectConfiguration: .follow(max: 10, allowCycles: false)))
+		self.client = HTTPClient(
+			eventLoopGroupProvider: .shared(self.eventLoopGroup),
+			configuration: HTTPClient.Configuration(redirectConfiguration: .follow(max: 10, allowCycles: false))
+		)
 
 		switch authType {
 			case let .credentials(username: username, password: password):
 				self.authType = authType
 				self.username = username
 				self.password = password
+				try await self.fetchToken()
 			case .anonymous:
 				self.authType = authType
-				self.token = nil
+				self.currentToken = nil
 				self.username = nil
 				self.password = nil
 			case let .idAndSecret(clientID: _, clientSecret: _, username: u):
 				self.authType = authType
-				self.token = nil
+				self.currentToken = nil
 				self.username = u
 				self.password = nil
+				try await self.fetchToken()
 			case .webBrowser:
 				fatalError("Web browser authentication is not implemented yet.")
 //				self.authType = authType
@@ -61,88 +121,47 @@ public class GIS {
 		}
 	}
 
-	deinit {
-		self.client.shutdown({ _ in })
-	}
+	deinit { self.client.shutdown({ _ in }) }
 
-	/// Validate the credentials passed to `GIS.init`.
-	///
-	/// If you logged in anonymously, this method will throw `AGKAuthError.isAnonymous`.
-	///
-	/// - Throws: `AGKAuthError`.
-	/// - Returns: A `EventLoopFuture` indicating the task has completed.
-	public func checkCredentials() throws -> EventLoopFuture<Void> {
-		if self.isAnonymous { throw AGKAuthError.isAnonymous }
-
-		return try self.fetchToken()
-	}
-
-	func fetchToken() throws -> EventLoopFuture<Void> {
-		if self.isAnonymous {
+	/// Requests a token and saves it in `self.currentToken`.
+	public func fetchToken() async throws {
+		guard !self.isAnonymous else {
 			throw AGKAuthError.isAnonymous
 		}
+
+		// TODO: Use `self.refreshToken` if it is not nil.
 
 		if case let .idAndSecret(clientID: cI, clientSecret: cS, username: _) = self.authType {
-			let newURL = self.fullURL
-				.appendingPathComponent("rest")
-				.appendingPathComponent("oauth2")
-				.appendingPathComponent("token")
+			var newURL = self.fullURL + ["rest", "oauth2", "token"]
+			newURL.formParams += [
+				"f": "json",
+				"grant_type": "client_credentials",
+				"client_id": cI,
+				"client_secret": cS,
+			]
 
-			let req = try HTTPClient.Request(
-				url: "\(newURL.absoluteString)?f=json&grant_type=client_credentials&client_id=\(cI.urlQueryEncoded)&client_secret=\(cS.urlQueryEncoded)",
-				method: .GET
-			)
+			let req = try HTTPClient.Request(url: newURL, method: .GET)
 
-			return self.client.execute(request: req).flatMapThrowing({ res in
-				try handle(response: res, decodeType: RequestOAuthTokenResponse.self)
-			})
-				.flatMapThrowing({
-					self.token = $0.accessToken
-					self.refeshToken = $0.refreshToken
-				})
+			let res = try handle(response: await self.client.execute(request: req).get(), decodeType: RequestOAuthTokenResponse.self)
+
+			self.refreshToken = res.refreshToken
+			self.tokenExpirationDate = res.expiresIn
+			self.currentToken = res.accessToken
 
 		} else {
-			let newURL = self.url.appendingPathComponent(self.site).appendingPathComponent("rest").appendingPathComponent("generateToken")
+			var req = try HTTPClient.Request(url: self.fullURL + ["rest", "generateToken"], method: .POST)
 
-			let req = try HTTPClient.Request(
-				url: "\(newURL.absoluteString)?f=json&username=\(username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&referer=\("https://arcgis.com".urlQueryEncoded)",
-				method: .POST
+			req.headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
+
+			req.body = .string(
+				"f=json&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
 			)
 
-			return self.client.execute(request: req).flatMapThrowing({ res in
-				try handle(response: res, decodeType: RequestTokenResponse.self)
-			})
-				.flatMapThrowing({
-					self.token = $0.token
-				})
+			let res = try handle(response: await self.client.execute(request: req).get(), decodeType: RequestTokenResponse.self)
+
+			self.tokenExpirationDate = res.expires
+			self.currentToken = res.token
 		}
-	}
-
-	/// Retrieves the `User` that provided their credentials via `GIS.init`.
-	/// - Throws: `AGKRequestError`.
-	/// - Returns: The retrieved `User`.
-	public func fetchUser() throws -> EventLoopFuture<User> {
-		if self.isAnonymous {
-			throw AGKAuthError.isAnonymous
-		}
-
-		return try self.fetchToken()
-			.flatMap({ _ in
-				let newURL = self.fullURL
-					.appendingPathComponent("community")
-					.appendingPathComponent("users")
-					.appendingPathComponent(self.username!)
-				let req = try! HTTPClient.Request(
-					url: "\(newURL.absoluteString)?f=json&token=\(self.token!.urlQueryEncoded)",
-					method: .POST
-				)
-
-				return self.client.execute(request: req)
-					.map({
-						// TODO: Fix.
-						try! handle(response: $0, decodeType: User.self)
-					})
-			})
 	}
 
 	/// Generates a `URL` that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to `GIS.init`.
@@ -152,20 +171,41 @@ public class GIS {
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
 	///   - redirectURI: The `URL` that will receive a code once the user has logged in. Use the default ("urn:ietf:wg:oauth:2.0:oob") to have ArcGIS Online present the code to the user instead of redirecting to a different `URL`.
 	/// - Returns: The generated `URL`.
-	public static func generateURL(clientID: String, baseURL: URL = URL(string: "https://arcgis.com")!, site: String = "sharing", redirectURI: String = "urn:ietf:wg:oauth:2.0:oob") -> URL {
-		let u = baseURL
-			.appendingPathComponent(site)
-			.appendingPathComponent("rest")
-			.appendingPathComponent("oauth2")
-			.appendingPathComponent("authorize")
-		return URL(string: "\(u.absoluteString)?response_type=code&client_id=\(clientID)&redirect_uri=\(redirectURI.urlQueryEncoded)")!
+	public static func generateURL(
+		clientID: String,
+		baseURL: URL = URL(string: "https://arcgis.com")!,
+		site: String = "sharing",
+		redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
+	) -> URL {
+		var u = WebURL(baseURL.absoluteString)!
+
+		u.pathComponents += [site, "rest", "oauth2", "authorize"]
+		u.formParams += [
+			"response_type": "code",
+			"client_id": clientID,
+			"redirect_uri": redirectURI,
+		]
+
+		return URL(string: u.serialized())!
 	}
 }
 
-func getContent<T: Codable>(client: HTTPClient, token: String, url: URL, decodeType: T.Type) throws -> EventLoopFuture<[T]> {
-	let req = try HTTPClient.Request(url: "\(url.absoluteString)?token=\(token)&f=json&start=1&num=100", method: .GET)
-
-	return client.execute(request: req).flatMapThrowing({
-		try handle(response: $0, decodeType: Pagination<T>.self).items
-	})
-}
+///// Retrieves the content owned by a `User`, in a `Group`, etc.
+///// - Parameters:
+/////   - client: The client used to make HTTP requests.
+/////   - token: The token used to authenticate.
+/////   - url: Where the content is located.
+/////   - start: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235) for more information.
+/////   - limit: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235) for more information.
+/////   - The type that will be retrieved from `url`.
+// func getContent<T: Codable>(
+//	client: HTTPClient,
+//	token: String? = nil,
+//	url: URL,
+//	start: Int = 1,
+//	limit: Int = 100,
+//	decodeType: T.Type
+// ) async throws -> [T] {
+//	let req = try HTTPClient.Request(url: "\(url.absoluteString)?&f=json&start=\(start)&num=\(limit)\(token != nil ? "&token=\(token!)" : "")", method: .GET)
+//	return try handle(response: try await client.execute(request: req).get(), decodeType: Paginated<T>.self).items
+// }

@@ -1,16 +1,15 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  FeatureServerCommand.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 2/4/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import ArcGISKit
 import ArgumentParser
 import struct Foundation.URL
 
 extension ExamplesCommand {
-	struct FeatureServerCommand: ParsableCommand {
+	struct FeatureServerCommand: AsyncParsableCommand {
 		static var configuration = CommandConfiguration(commandName: "feature-server", abstract: "View Feature Server details.")
 
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
@@ -22,11 +21,11 @@ extension ExamplesCommand {
 			guard featureServerURL != nil else { throw ValidationError("The Feature Server URL must be valid.") }
 		}
 
-		func run() throws {
+		func runAsync() async throws {
 			do {
-				let gis = try authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
+				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
 				let fs = try FeatureServer(url: featureServerURL!, gis: gis)
-				let featureService = try fs.fetchFeatureService().wait()
+				let featureService = try await fs.featureService
 
 				var queries: [FeatureServer.LayerQuery] = []
 
@@ -34,13 +33,15 @@ extension ExamplesCommand {
 					queries.append(.init(whereClause: "1=1", layerID: String(layer.id)))
 				}
 
-				let layers = try fs.query(layerQueries: queries).wait()
+				let layers = try await fs.query(layerQueries: queries)
 				for layer in layers {
 					print("Layer \(layer.id)")
 					print()
 
+					print("  Fields:")
+
+					print("-------------------")
 					for field in layer.fields {
-						print("  Fields:")
 						print()
 						print("    Name: " + field.name)
 						print("    Alias: " + (field.alias ?? ""))
@@ -49,8 +50,10 @@ extension ExamplesCommand {
 					}
 					print("---------------------------------------------")
 				}
-			} catch is AGKAuthError {
+			} catch AGKAuthError.invalidUsernameOrPassword {
 				print("Incorrect username or password.")
+			} catch {
+				print("An error occurred: \(error)")
 			}
 		}
 	}

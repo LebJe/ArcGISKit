@@ -1,9 +1,8 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  FeatureService.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 12/25/20.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import CodableWrappers
 
@@ -12,7 +11,7 @@ import CodableWrappers
 /// This resource provides basic information about the feature service, including the feature layers and tables that it contains, the service description, and so on.
 public struct FeatureService: Codable, Equatable {
 	public let currentVersion: Double?
-	public let serviceDescription: String?
+	public let serviceDescription: String
 	public let hasVersionedData: Bool?
 	public let supportsDisconnectedEditing: Bool?
 	public let supportsDatumTransformation: Bool?
@@ -64,7 +63,7 @@ public enum Capability: String, CaseIterable, Codable {
 		sync,
 		uploads,
 		extract,
-		changetracking
+		changeTracking = "changetracking"
 }
 
 public struct AdvancedEditingCapabilities: Codable, Equatable {
@@ -76,6 +75,8 @@ public struct SpatialReference: Codable, Equatable {
 	public let wkid: Int?
 	public let latestWkid: Int?
 	public let vcsWkid: Int?
+	public let wkt: String?
+	public let latestWkt: String?
 	public let latestVcsWkid: Int?
 	public let xyTolerance: Double?
 	public let zTolerance: Double?
@@ -87,6 +88,25 @@ public struct SpatialReference: Codable, Equatable {
 	public let zUnits: Double?
 	public let falseM: Double?
 	public let mUnits: Double?
+
+	public init(wkid: Int? = nil, latestWkid: Int? = nil, vcsWkid: Int? = nil, wkt: String? = nil, latestWkt: String? = nil, latestVcsWkid: Int? = nil, xyTolerance: Double? = nil, zTolerance: Double? = nil, mTolerance: Double? = nil, falseX: Double? = nil, falseY: Double? = nil, xyUnits: Double? = nil, falseZ: Double? = nil, zUnits: Double? = nil, falseM: Double? = nil, mUnits: Double? = nil) {
+		self.wkid = wkid
+		self.latestWkid = latestWkid
+		self.vcsWkid = vcsWkid
+		self.wkt = wkt
+		self.latestWkt = latestWkt
+		self.latestVcsWkid = latestVcsWkid
+		self.xyTolerance = xyTolerance
+		self.zTolerance = zTolerance
+		self.mTolerance = mTolerance
+		self.falseX = falseX
+		self.falseY = falseY
+		self.xyUnits = xyUnits
+		self.falseZ = falseZ
+		self.zUnits = zUnits
+		self.falseM = falseM
+		self.mUnits = mUnits
+	}
 }
 
 public struct Layer: Codable, Equatable {
@@ -133,10 +153,12 @@ public struct GeoTransform: Codable, Equatable {
 }
 
 public struct Extent: Codable, Equatable {
-	public let xmin: Double?
-	public let ymin: Double?
-	public let xmax: Double?
-	public let ymax: Double?
+	public let xmin: Double
+	public let ymin: Double
+	public let zmin: Double?
+	public let xmax: Double
+	public let ymax: Double
+	public let zmax: Double?
 	public let spatialReference: SpatialReference?
 }
 

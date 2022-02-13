@@ -1,32 +1,17 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  QueryResponse.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 1/9/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import CodableWrappers
 import struct Foundation.Data
 import struct Foundation.Date
-import struct Foundation.URL
-import SwiftyJSON
+import JSON
+import WebURL
 
 public struct QueryResponse: Codable, Equatable {
 	public var layers: [FeatureLayer]
-}
-
-public struct FeatureLayer: Codable, Equatable {
-	@OmitCoding
-	var featureServerURL: URL? = nil
-
-	public let id: Int
-	public let objectIdFieldName: String?
-	public let globalIdFieldName: String?
-	public let geometryType: String?
-	public let spatialReference: SpatialReference?
-	public let geometryProperties: GeometryProperties?
-	public let fields: [Field]
-	public var features: [Feature]
 }
 
 public struct GeometryProperties: Codable, Equatable {
@@ -35,26 +20,36 @@ public struct GeometryProperties: Codable, Equatable {
 	public let units: String?
 }
 
-public struct CodedValues: Codable, Equatable {
+public struct CodedValue: Codable, Equatable {
 	public let name: String?
-	public let code: JSON?
+	public let code: Either<String, Int>?
 }
 
 public struct Domain: Codable, Equatable {
-	public let type: String
+	public let type: Domain.DomainType
 	public let name: String?
+	public let range: [Int]?
+	public let codedValues: [CodedValue]?
+	public let description: String?
 	public let mergePolicy: String?
 	public let splitPolicy: String?
-	public let codedValues: [CodedValues]
+
+	public enum DomainType: String, Codable, Equatable {
+		case range
+		case codedValue
+		case inherited
+	}
 }
 
 public struct Field: Codable, Equatable {
 	public let name: String
 	public let type: ESRIFieldType
 	public let alias: String?
-	public let sqlType: String
 	public let domain: Domain?
+	public let editable: Bool?
+	public let exactMatch: Bool?
 	public let length: Int?
+	public let sqlType: String
 	public let defaultValue: JSON?
 }
 
@@ -108,13 +103,24 @@ public struct Attachment: Codable, Equatable {
 }
 
 public struct Geometry: Codable, Equatable {
-	public init(x: Double? = nil, y: Double? = nil, rings: [[[Double]]]? = nil) {
+	public init(x: Double? = nil, y: Double? = nil, rings: [[[Double]]]? = nil, spatialReference: SpatialReference? = nil) {
 		self.x = x
 		self.y = y
 		self.rings = rings
+		self.spatialReference = spatialReference
 	}
 
 	public var x: Double?
 	public var y: Double?
 	public var rings: [[[Double]]]?
+	public var spatialReference: SpatialReference?
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: Self.CodingKeys.self)
+
+		try container.encodeIfPresent(self.x, forKey: .x)
+		try container.encodeIfPresent(self.y, forKey: .y)
+		try container.encodeIfPresent(self.rings, forKey: .rings)
+		try container.encodeIfPresent(self.spatialReference, forKey: .spatialReference)
+	}
 }

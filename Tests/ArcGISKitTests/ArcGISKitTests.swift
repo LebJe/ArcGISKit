@@ -1,17 +1,32 @@
-@testable import class ArcGISKit.GIS
+// Copyright (c) 2022 Jeff Lebrun
+//
+//  Licensed under the MIT License.
+//
+//  The full text of the license can be found in the file named LICENSE.
+
+import _Concurrency
+@testable import ArcGISKit
 import NIO
 import XCTest
 
 final class ArcGISKitTests: XCTestCase {
 	let env = ProcessInfo.processInfo.environment
 
-	func testInitGIS() throws {
-		let group = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+	func testInitGIS() async throws {
+		let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
 
-		XCTAssertNoThrow(
-			try GIS(.credentials(username: self.env["AGOL_USERNAME"] ?? "", password: self.env["AGOL_PASSWORD"]!), eventLoopGroup: group, url: URL(string: self.env["AGOL_URL"] ?? "https://arcgis.com")!).fetchUser(),
-			"Initializing `GIS` with valid credentials and fetching user details should not throw."
-		)
+		async { @MainActor in
+			let gis = try await GIS(
+				.credentials(
+					username: self.env["AGOL_USERNAME"] ?? "",
+					password: self.env["AGOL_PASSWORD"]!
+				),
+				eventLoopGroup: group,
+				url: URL(string: self.env["AGOL_URL"] ?? "https://arcgis.com")!
+			)
+
+			print(try await gis.user.fullName)
+		}
 	}
 
 	func testGenerateURL() throws {

@@ -1,23 +1,22 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  Coders.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 1/28/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import CodableWrappers
-import Foundation
 
 public struct CommaSeparatedCapabilityCoder: StaticCoder {
 	public static func decode(from decoder: Decoder) throws -> [Capability] {
 		try String(from: decoder)
-			.components(separatedBy: ",")
+			.split(separator: ",")
 			.map({ Capability(rawValue: $0.lowercased())! })
 	}
 
 	public static func encode(value: [Capability], to encoder: Encoder) throws {
-		let array = value.map(\.rawValue.capitalized)
-
-		try array.joined(separator: ",").encode(to: encoder)
+		try value
+			.map(\.rawValue.capitalized)
+			.joined(separator: ",")
+			.encode(to: encoder)
 	}
 }

@@ -5,5 +5,8 @@ Brewfile.lock.json
 /*.xcodeproj
 xcuserdata/
 /.swiftpm
-.build/
 Package.resolved
+Sources/ArcGISKit/ArcGISKit.docc/.docc-build
+ArcGISKit.doccarchive
+docs/
+.vscode

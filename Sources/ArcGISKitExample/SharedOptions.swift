@@ -1,9 +1,8 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  File.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 2/5/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import ArgumentParser
 import struct Foundation.URL

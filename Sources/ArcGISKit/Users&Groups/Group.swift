@@ -1,15 +1,15 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  Group.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 12/23/20.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import AsyncHTTPClient
 import CodableWrappers
-import Foundation
+import struct Foundation.Date
+import WebURL
 
-/// The Group resource represents a group (for example, San Bernardino Fires) within the portal.
+/// The [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) resource represents a group (for example, San Bernardino Fires) within the portal.
 ///
 /// The owner is automatically an administrator and is returned in the list of administrators. Administrators can invite, add to, or remove members from a group as well as update or delete the group. The administrator for an organization can also reassign the group to another member of the organization.
 ///
@@ -23,7 +23,7 @@ public struct Group: Equatable, Codable {
 	public let id: String?
 
 	/// The title of the group. This is the name that is displayed to users and by which they refer to the group. Every group must have a title, and it must be unique for a user.
-	public let title: String?
+	public let title: String
 
 	/// If this is set to true, users will not be able to apply to join the group.
 	public let isInvitationOnly: Bool?
@@ -70,10 +70,10 @@ public struct Group: Equatable, Codable {
 	public var modified: Date
 
 	/// The access privileges of the group that determine who can see and access the group. This can be set to private, org, or public.
-	public let access: String
+	public let access: Access
 
 	/// If the request is made by an authenticated user, a `UserMembership` object is returned containing information about the user's access to the group. This includes the `username` of the calling user; the `memberType`, which specifies the type of membership the user has in the group (owner, member, admin, none); and the `applications` (number of requests to join the group) count available to administrators and owners.
-	public let userMembership: UserMembership?
+	public let userMembership: User.Membership?
 
 	/// Indicates if the group is protected from deletion. The default value is `false`.
 	public let protected: Bool
@@ -91,35 +91,39 @@ public struct Group: Equatable, Codable {
 	/// - Parameter gis: The `GIS` to use to authenticate.
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: The fetched content.
-	public func fetchContent(from gis: GIS) throws -> EventLoopFuture<[ContentType]> {
-		let groupURL = gis.fullURL
-			.appendingPathComponent("content")
-			.appendingPathComponent("groups")
-			.appendingPathComponent(self.id!)
+	public func fetchContent(from gis: GIS) async throws -> [ContentType] {
+		var groupURL = await gis.fullURL + ["content", "groups", self.id!]
 
-		return try getContent(client: gis.client, token: gis.token!, url: groupURL, decodeType: ContentItem.self)
-			.flatMapThrowing({ items in
-				var c: [ContentType] = []
+		var p = Paginator<ContentItem>(client: gis.client, url: groupURL, token: await gis.currentToken!)
+		var c: [ContentType] = []
 
-				for item in items {
-					if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
-						if itemType.lowercased() == "url", type.lowercased() == "feature service" {
-							if let u = URL(string: itemItem) {
-								c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
-							}
-						}
-					} else {
-						c.append(.other(metadata: item))
-					}
+		while try await p.advance() {
+			if let current = p.current {
+				for item in current.items {
+					// if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
+					// 	if itemType.lowercased() == "url", type.lowercased() == "feature service" {
+					// 		if let u = URL(string: itemItem) {
+					// 			c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+					// 		}
+					// 	}
+					// } else {
+					// 	c.append(.other(metadata: item))
+					// }
+
+					c.append(.other(metadata: item))
 				}
+			}
+		}
 
-				return c
-			})
+		return c
 	}
 }
 
-/// The order a `Group` is sorted by.
+/// The order results are sorted by.
 public enum SortOrder: String, Codable, CaseIterable, Equatable {
+	/// Sort in ascending order.
 	case ascending = "asc"
+
+	/// Sort in descending order.
 	case descending = "desc"
 }

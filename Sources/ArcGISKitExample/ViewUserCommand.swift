@@ -1,9 +1,8 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  ViewUserCommand.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 2/8/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import Foundation
 
@@ -12,15 +11,15 @@ import ArgumentParser
 import struct Foundation.URL
 
 extension ExamplesCommand {
-	struct ViewUserCommand: ParsableCommand {
+	struct ViewUserCommand: AsyncParsableCommand {
 		static var configuration = CommandConfiguration(commandName: "view-user", abstract: "View user details.")
 
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
 
-		func run() throws {
+		func runAsync() async throws {
 			do {
-				let gis = try authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
-				let user = try gis.fetchUser().wait()
+				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
+				let user = try await gis.user
 
 				print("ID: " + user.id)
 				print("Name: " + (user.fullName ?? ""))

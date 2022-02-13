@@ -1,9 +1,8 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  Responses.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 12/22/20.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 import CodableWrappers
 import struct Foundation.Data

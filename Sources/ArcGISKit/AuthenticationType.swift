@@ -1,12 +1,11 @@
+// Copyright (c) 2022 Jeff Lebrun
 //
-//  AuthenticationType.swift
+//  Licensed under the MIT License.
 //
-//
-//  Created by Jeff Lebrun on 1/5/21.
-//
+//  The full text of the license can be found in the file named LICENSE.
 
 /// The methods to use to authenticate.
-public enum AuthenticationType: Equatable {
+public enum AuthenticationType: Sendable, Equatable {
 	/// Authenticate using your username and password.
 	case credentials(username: String, password: String)
 
