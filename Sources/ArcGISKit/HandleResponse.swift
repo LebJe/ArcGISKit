@@ -14,9 +14,8 @@ func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throw
 		do {
 			return try XJSONDecoder().decode(decodeType, from: Array(buffer: response.body!))
 		} catch {
-			throw error
 			do {
-				let re = try JSONDecoder().decode(ResponseError.self, from: Data(buffer: response.body!))
+				let re = try XJSONDecoder().decode(ResponseError.self, from: Array(buffer: response.body!))
 	
 				throw AGKRequestError.unknown(message: re.error?.message, details: re.error?.details)
 
