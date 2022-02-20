@@ -18,6 +18,9 @@ public struct FeatureLayer: Codable, Equatable {
 	public var geometryType: String? = nil
 	public var spatialReference: SpatialReference? = nil
 	public var geometryProperties: GeometryProperties? = nil
-	public var fields: [Field] = []
+	
+	@FallbackCoding<EmptyArray>
+	public var fields: [Field]? = []
+	
 	public var features: [Feature] = []
 }
