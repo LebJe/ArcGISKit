@@ -17,7 +17,7 @@ final class ArcGISKitTests: XCTestCase {
 
 		async { @MainActor in
 			let gis = try await GIS(
-				.credentials(
+				authentication: .credentials(
 					username: self.env["AGOL_USERNAME"] ?? "",
 					password: self.env["AGOL_PASSWORD"]!
 				),

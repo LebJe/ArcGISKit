@@ -57,6 +57,18 @@ public struct FeatureServer {
 
 	public func append() {}
 
+	public func info(layerID: String) async throws -> FeatureLayerInfo {
+		var newURL = self.url + layerID
+		newURL.formParams.f = "json"
+		if let token = await self.gis.currentToken {
+			newURL.formParams.token = token
+		}
+
+		let req = try! HTTPClient.Request(url: newURL, method: .GET)
+
+		return try handle(response: try await self.gis.client.execute(request: req).get(), decodeType: FeatureLayerInfo.self)
+	}
+
 	/// Query the `FeatureServer`.
 	/// - Parameter layerQueries: The queries you want to perform.
 	/// - Returns: An `Array` of `FeatureLayer`s.

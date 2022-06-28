@@ -18,9 +18,64 @@ public struct FeatureLayer: Codable, Equatable {
 	public var geometryType: String? = nil
 	public var spatialReference: SpatialReference? = nil
 	public var geometryProperties: GeometryProperties? = nil
-	
+
 	@FallbackCoding<EmptyArray>
 	public var fields: [Field]? = []
-	
+
 	public var features: [Feature] = []
+}
+
+public struct FeatureLayerInfo: Codable, Equatable {
+	public let drawingInfo: DrawingInfo?
+}
+
+public struct DrawingInfo: Codable, Equatable {
+	public let renderer: Renderer
+	public let scaleSymbols: Bool
+	public let transparency: Int
+	// let labelingInfo: Any?
+
+	public struct Renderer: Codable, Equatable {
+		public let type: String
+		public let field1: String?
+		public let uniqueValueInfos: [UniqueValueInfo]?
+		public let fieldDelimiter: String?
+		public let authoringInfo: AuthoringInfo?
+
+		public struct UniqueValueInfo: Codable, Equatable {
+			public struct Symbol: Codable, Equatable {
+				public struct Outline: Codable, Equatable {
+					public let type: String
+					public let style: String
+					public let color: [Int]
+					public let width: Double
+				}
+
+				public let type: String
+				public let style: String
+				public let color: [Int]
+				public let outline: Outline
+			}
+
+			public let symbol: Symbol
+			public let value: String
+			public let label: String
+		}
+
+		public struct AuthoringInfo: Codable, Equatable {
+			public struct ColorRamp: Codable, Equatable {
+				public struct ColorRamp: Codable, Equatable {
+					public let type: String
+					public let algorithm: String
+					public let fromColor: [Int]
+					public let toColor: [Int]
+				}
+
+				public let type: String
+				public let colorRamps: [ColorRamp]
+			}
+
+			public let colorRamp: ColorRamp?
+		}
+	}
 }

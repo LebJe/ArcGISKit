@@ -41,7 +41,7 @@ extension ExamplesCommand {
 					print("  Fields:")
 
 					print("-------------------")
-					for field in layer.fields {
+					for field in layer.fields ?? [] {
 						print()
 						print("    Name: " + field.name)
 						print("    Alias: " + (field.alias ?? ""))
