@@ -21,7 +21,7 @@ extension ExamplesCommand {
 			guard featureServerURL != nil else { throw ValidationError("The Feature Server URL must be valid.") }
 		}
 
-		func runAsync() async throws {
+		func run() async throws {
 			do {
 				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
 				let fs = try FeatureServer(url: featureServerURL!, gis: gis)

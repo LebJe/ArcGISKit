@@ -4,7 +4,6 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import CodableWrappers
 import struct Foundation.Date
 import WebURL
@@ -92,9 +91,9 @@ public struct Group: Equatable, Codable {
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: The fetched content.
 	public func fetchContent(from gis: GIS) async throws -> [ContentType] {
-		var groupURL = await gis.fullURL + ["content", "groups", self.id!]
+		let groupURL = await gis.fullURL + ["content", "groups", self.id!]
 
-		var p = Paginator<ContentItem>(client: gis.client, url: groupURL, token: await gis.currentToken!)
+		var p = Paginator<ContentItem>(client: gis.httpClient, url: groupURL, token: await gis.currentToken!)
 		var c: [ContentType] = []
 
 		while try await p.advance() {

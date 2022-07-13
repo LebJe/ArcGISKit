@@ -4,11 +4,7 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import Foundation
-import NIO
-import NIOCore
-import NIOHTTP1
 import WebURL
 
 extension String {
@@ -29,9 +25,19 @@ extension StringProtocol {
 	}
 }
 
-extension HTTPClient.Request {
-	init(url: WebURL, method: NIOHTTP1.HTTPMethod = .GET, headers: NIOHTTP1.HTTPHeaders = HTTPHeaders(), body: AsyncHTTPClient.HTTPClient.Body? = nil) throws {
-		try self.init(url: url.serialized(), method: method, headers: headers, body: body)
+extension AGKHTTPRequest {
+	init(url: WebURL, method: AGKHTTPMethod = .GET, headers: AGKHTTPHeaders = [:], body: Either<String, [UInt8]>? = nil) {
+		self.url = URL(string: url.serialized())!
+		self.method = method
+		self.headers = headers
+		if let body = body {
+			switch body {
+				case let .left(s):
+					self.body = Array(s.utf8)
+				case let .right(u):
+					self.body = u
+			}
+		}
 	}
 }
 
@@ -47,4 +53,11 @@ func + <C: Collection>(lhs: WebURL, rhs: C) -> WebURL where C.Element: StringPro
 	var url = lhs
 	url.pathComponents += rhs
 	return url
+}
+
+extension String {
+	/// Initialize `String` from an array of bytes.
+	init(_ bytes: [UInt8]) {
+		self = String(bytes.map({ Character(Unicode.Scalar($0)) }))
+	}
 }

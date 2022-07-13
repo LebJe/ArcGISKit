@@ -4,11 +4,8 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import struct Foundation.Date
 import struct Foundation.URL
-import NIO
-import NIOCore
 import WebURL
 
 public final actor GIS {
@@ -56,17 +53,16 @@ public final actor GIS {
 			newURL.formParams.token = self.currentToken!
 			newURL.formParams.f = "json"
 
-			let req = try! HTTPClient.Request(url: newURL, method: .POST)
+			let req = AGKHTTPRequest(url: newURL, method: .POST)
 
 			// TODO: Fix.
-			return try await handle(response: self.client.execute(request: req).get(), decodeType: User.self)
+			return try await handle(response: self.httpClient.send(request: req), decodeType: User.self)
 		}
 	}
 
 	// MARK: - Private properties.
 
-	let client: HTTPClient
-	let eventLoopGroup: EventLoopGroup
+	let httpClient: AGKHTTPClient
 	var fullURL: WebURL { self.url + self.site }
 	let site: String
 
@@ -84,17 +80,13 @@ public final actor GIS {
 	/// Once you receive the code, you can then pass it to this initializer.
 	public init(
 		authentication authType: AuthenticationType,
-		eventLoopGroup: EventLoopGroup,
 		url: URL = URL(string: "https://arcgis.com")!,
-		site: String = "sharing"
+		site: String = "sharing",
+		client: AGKHTTPClient
 	) async throws {
 		self.url = WebURL(url.absoluteString)!
 		self.site = site
-		self.eventLoopGroup = eventLoopGroup
-		self.client = HTTPClient(
-			eventLoopGroupProvider: .shared(self.eventLoopGroup),
-			configuration: HTTPClient.Configuration(redirectConfiguration: .follow(max: 10, allowCycles: false))
-		)
+		self.httpClient = client
 
 		switch authType {
 			case let .credentials(username: username, password: password):
@@ -121,7 +113,7 @@ public final actor GIS {
 		}
 	}
 
-	deinit { self.client.shutdown({ _ in }) }
+	deinit { self.httpClient.shutdown() }
 
 	/// Requests a token and saves it in `self.currentToken`.
 	public func fetchToken() async throws {
@@ -140,24 +132,42 @@ public final actor GIS {
 				"client_secret": cS,
 			]
 
-			let req = try HTTPClient.Request(url: newURL, method: .GET)
+			let req = AGKHTTPRequest(url: url)
 
-			let res = try handle(response: await self.client.execute(request: req).get(), decodeType: RequestOAuthTokenResponse.self)
+			let res = try handle(response: try await self.httpClient.send(request: req), decodeType: RequestOAuthTokenResponse.self)
 
 			self.refreshToken = res.refreshToken
 			self.tokenExpirationDate = res.expiresIn
 			self.currentToken = res.accessToken
 
 		} else {
-			var req = try HTTPClient.Request(url: self.fullURL + ["rest", "generateToken"], method: .POST)
+			var newURL: WebURL
 
-			req.headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
+			var infoURL = self.fullURL + ["rest", "info"]
+			infoURL.formParams += ["f": "json"]
 
-			req.body = .string(
-				"f=json&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
+			if let tokenURLString = try await handle(
+				response: self.httpClient.send(request: AGKHTTPRequest(url: infoURL)),
+				decodeType: ServerInfo.self
+			).authInfo?.tokenServicesUrl, let tokenURL = WebURL(tokenURLString) {
+				if let tokenURLHost = tokenURL.host, let baseURLHost = self.url.host, tokenURLHost.serialized != baseURLHost.serialized {
+					newURL = self.fullURL + ["rest", "generateToken"]
+				}
+				newURL = tokenURL
+			} else {
+				newURL = self.fullURL + ["rest", "generateToken"]
+			}
+
+			let req = AGKHTTPRequest(
+				url: newURL,
+				method: .POST,
+				headers: ["Content-Type": "application/x-www-form-urlencoded"],
+				body: .left(
+					"f=json&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
+				)
 			)
 
-			let res = try handle(response: await self.client.execute(request: req).get(), decodeType: RequestTokenResponse.self)
+			let res = try handle(response: await self.httpClient.send(request: req), decodeType: RequestTokenResponse.self)
 
 			self.tokenExpirationDate = res.expires
 			self.currentToken = res.token
@@ -177,9 +187,8 @@ public final actor GIS {
 		site: String = "sharing",
 		redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
 	) -> URL {
-		var u = WebURL(baseURL.absoluteString)!
+		var u = WebURL(baseURL.absoluteString)! + [site, "rest", "oauth2", "authorize"]
 
-		u.pathComponents += [site, "rest", "oauth2", "authorize"]
 		u.formParams += [
 			"response_type": "code",
 			"client_id": clientID,
@@ -209,3 +218,12 @@ public final actor GIS {
 //	let req = try HTTPClient.Request(url: "\(url.absoluteString)?&f=json&start=\(start)&num=\(limit)\(token != nil ? "&token=\(token!)" : "")", method: .GET)
 //	return try handle(response: try await client.execute(request: req).get(), decodeType: Paginated<T>.self).items
 // }
+
+struct ServerInfo: Decodable {
+	var authInfo: AuthInfo? = nil
+
+	struct AuthInfo: Decodable {
+		var tokenServicesUrl: String? = nil
+		var isTokenBasedSecurity: Bool? = nil
+	}
+}

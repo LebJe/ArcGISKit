@@ -4,7 +4,6 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import CodableWrappers
 import Foundation
 import WebURL
@@ -124,9 +123,9 @@ public struct User: Codable, Equatable {
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: The fetched content.
 	public func fetchContent(from gis: GIS) async throws -> [ContentType] {
-		var contentURL = await gis.fullURL + ["rest", "content", "users", self.username]
+		let contentURL = await gis.fullURL + ["rest", "content", "users", self.username]
 
-		var p = Paginator<ContentItem>(client: gis.client, url: contentURL, token: await gis.currentToken!)
+		var p = Paginator<ContentItem>(client: gis.httpClient, url: contentURL, token: await gis.currentToken!)
 		var c: [ContentType] = []
 
 		while try await p.advance() {
@@ -157,23 +156,26 @@ public struct User: Codable, Equatable {
 	///
 	/// - Returns: `true` if the user's information was successfully updated, `false` otherwise.
 	public func update(clearEmptyFields: Bool = false, gis: GIS) async throws {
-		var updateURL = await gis.fullURL + ["community", "users", self.username]
+		// let updateURL = await gis.fullURL + ["community", "users", self.username]
 
-		var req = try HTTPClient.Request(url: updateURL, method: .POST)
-		req.body = .string("""
-		clearEmptyFields=\(clearEmptyFields)
-		\(self.description != nil ? "description=\(self.description!)" : "")
-		\(self.tags != nil ? "tags=" + self.tags!.joined(separator: ", ") : "")
-		\(self.access != nil ? "access=\(self.access!)" : "")
-		\(self.preferredView != nil ? "preferredView=\(self.preferredView!)" : "")
-		\(self.thumbnail != nil ? "thumbnail=\(self.thumbnail!)" : "")
-		\(self.fullName != nil ? "fullname=\(self.fullName!)" : "")
-		\(self.email != nil ? "email=\(self.email!)" : "")
-		\(self.culture != nil ? "culture=\(self.culture!)" : "")
-		\(self.cultureFormat != nil ? "cultureFormat=\(self.cultureFormat!)" : "")
-		\(self.region != nil ? "region=\(self.region!)" : "")
-		\(self.idpUsername != nil ? "idpUsername=\(self.idpUsername!)" : "")
-		""")
+		// let req = AGKHTTPRequest(
+		// 	url: updateURL,
+		// 	method: .POST,
+		// 	body: .left("""
+		// 	clearEmptyFields=\(clearEmptyFields)
+		// 	\(self.description != nil ? "description=\(self.description!)" : "")
+		// 	\(self.tags != nil ? "tags=" + self.tags!.joined(separator: ", ") : "")
+		// 	\(self.access != nil ? "access=\(self.access!)" : "")
+		// 	\(self.preferredView != nil ? "preferredView=\(self.preferredView!)" : "")
+		// 	\(self.thumbnail != nil ? "thumbnail=\(self.thumbnail!)" : "")
+		// 	\(self.fullName != nil ? "fullname=\(self.fullName!)" : "")
+		// 	\(self.email != nil ? "email=\(self.email!)" : "")
+		// 	\(self.culture != nil ? "culture=\(self.culture!)" : "")
+		// 	\(self.cultureFormat != nil ? "cultureFormat=\(self.cultureFormat!)" : "")
+		// 	\(self.region != nil ? "region=\(self.region!)" : "")
+		// 	\(self.idpUsername != nil ? "idpUsername=\(self.idpUsername!)" : "")
+		// 	""")
+		// )
 	}
 
 	public func move(to folder: String) async throws {}
@@ -198,9 +200,9 @@ public struct User: Codable, Equatable {
 			createFolderURL.formParams.token = token
 		}
 
-		let req = try HTTPClient.Request(url: createFolderURL, method: .POST)
+		let req = AGKHTTPRequest(url: createFolderURL, method: .POST)
 
-		let res = try handle(response: try await gis.client.execute(request: req).get(), decodeType: JSON.self)
+		let res = try handle(response: await gis.httpClient.send(request: req), decodeType: JSON.self)
 
 		return res["folder"]["id"].string
 	}
@@ -239,14 +241,14 @@ public struct User: Codable, Equatable {
 
 		let multipart = MultipartFormData(body: parts)
 
-		let req = try HTTPClient.Request(
+		let req = AGKHTTPRequest(
 			url: addItemURL,
 			method: .POST,
 			headers: ["Content-Type": "multipart/form-data; boundary=\"\(multipart.boundary)\""],
-			body: .data(multipart.httpBody)
+			body: .right(Array(multipart.httpBody))
 		)
 
-		let res = String(buffer: try await gis.client.execute(request: req).get().body!)
+		let res = String(try await gis.httpClient.send(request: req).body!)
 
 		return res
 	}

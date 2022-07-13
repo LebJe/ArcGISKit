@@ -6,27 +6,23 @@
 
 import _Concurrency
 @testable import ArcGISKit
-import NIO
+import ArcGISKitAsyncHTTPClient
 import XCTest
 
 final class ArcGISKitTests: XCTestCase {
 	let env = ProcessInfo.processInfo.environment
 
 	func testInitGIS() async throws {
-		let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+		let gis = try await GIS(
+			authentication: .credentials(
+				username: self.env["AGOL_USERNAME"] ?? "",
+				password: self.env["AGOL_PASSWORD"]!
+			),
+			url: URL(string: self.env["AGOL_URL"] ?? "https://arcgis.com")!,
+			client: AHCHTTPClient()
+		)
 
-		async { @MainActor in
-			let gis = try await GIS(
-				authentication: .credentials(
-					username: self.env["AGOL_USERNAME"] ?? "",
-					password: self.env["AGOL_PASSWORD"]!
-				),
-				eventLoopGroup: group,
-				url: URL(string: self.env["AGOL_URL"] ?? "https://arcgis.com")!
-			)
-
-			print(try await gis.user.fullName)
-		}
+		print(try await gis.user.fullName)
 	}
 
 	func testGenerateURL() throws {
@@ -43,9 +39,4 @@ final class ArcGISKitTests: XCTestCase {
 
 		XCTAssertEqual(generatedURL, expectedURL, "`generatedURL` and `expectedURL` should be equal!")
 	}
-
-	static var allTests = [
-		("Test initialing GIS", testInitGIS),
-		("Test Generate URL", testGenerateURL),
-	]
 }

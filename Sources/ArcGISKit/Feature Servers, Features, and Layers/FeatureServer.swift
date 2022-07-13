@@ -4,10 +4,8 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import ExtrasJSON
 import Foundation
-import NIO
 import WebURL
 
 /// A `FeatureServer` manages `FeatureService`s.
@@ -49,9 +47,9 @@ public struct FeatureServer {
 				newURL.formParams.token = token
 			}
 
-			let req = try! HTTPClient.Request(url: newURL, method: .GET)
+			let req = AGKHTTPRequest(url: newURL)
 
-			return try handle(response: try await self.gis.client.execute(request: req).get(), decodeType: FeatureService.self)
+			return try handle(response: try await self.gis.httpClient.send(request: req), decodeType: FeatureService.self)
 		}
 	}
 
@@ -64,9 +62,9 @@ public struct FeatureServer {
 			newURL.formParams.token = token
 		}
 
-		let req = try! HTTPClient.Request(url: newURL, method: .GET)
+		let req = AGKHTTPRequest(url: newURL)
 
-		return try handle(response: try await self.gis.client.execute(request: req).get(), decodeType: FeatureLayerInfo.self)
+		return try handle(response: await self.gis.httpClient.send(request: req), decodeType: FeatureLayerInfo.self)
 	}
 
 	/// Query the `FeatureServer`.
@@ -88,9 +86,9 @@ public struct FeatureServer {
 			newURL.formParams.token = token
 		}
 
-		let req = try! HTTPClient.Request(url: newURL, method: .GET)
+		let req = AGKHTTPRequest(url: newURL)
 
-		var qr = try! handle(response: try await self.gis.client.execute(request: req).get(), decodeType: QueryResponse.self)
+		var qr = try! handle(response: try await self.gis.httpClient.send(request: req), decodeType: QueryResponse.self)
 
 		for i in 0..<qr.layers.count {
 			for j in 0..<qr.layers[i].features.count {
@@ -192,19 +190,20 @@ public struct FeatureServer {
 		var newURL = self.url
 		newURL.pathComponents += ["applyEdits"]
 
-		var req = try! HTTPClient.Request(url: newURL, method: .POST)
-
 		let d = try! String(bytes: XJSONEncoder().encode(aud), encoding: .utf8)!
 
-		req.headers.add(name: "Content-Type", value: "application/x-www-form-urlencoded")
-
-		req.body = .string(
-			"""
-			f=json&edits=\(d.urlQueryEncoded)\(await self.gis.currentToken != nil ? "&token=\(await self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
-			"""
+		let req = AGKHTTPRequest(
+			url: newURL,
+			method: .POST,
+			headers: ["Content-Type": "application/x-www-form-urlencoded"],
+			body: .left(
+				"""
+				f=json&edits=\(d.urlQueryEncoded)\(await self.gis.currentToken != nil ? "&token=\(await self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
+				"""
+			)
 		)
 
-		return try! handle(response: try await self.gis.client.execute(request: req).get(), decodeType: [EditResponse].self)
+		return try! handle(response: try await self.gis.httpClient.send(request: req), decodeType: [EditResponse].self)
 	}
 }
 

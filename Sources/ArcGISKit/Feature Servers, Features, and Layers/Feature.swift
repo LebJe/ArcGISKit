@@ -4,7 +4,6 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import CodableWrappers
 import struct Foundation.Data
 import struct Foundation.UUID
@@ -46,16 +45,16 @@ public struct Feature: Codable, Equatable {
 			attachmentsURL.formParams.token = token
 		}
 
-		var req = try! HTTPClient.Request(url: attachmentsURL, method: .GET)
+		var req = AGKHTTPRequest(url: attachmentsURL)
 
 		var values: [(Int, AttachmentResponse)] = []
 
-		var at = try! await handle(response: gis.client.execute(request: req).get(), decodeType: AttachmentInfosResponse.self)
+		var at = try! await handle(response: gis.httpClient.send(request: req), decodeType: AttachmentInfosResponse.self)
 
 		for ati in at.attachmentInfos {
-			req = try! HTTPClient.Request(url: attachmentsURL + String(ati.id), method: .GET)
+			req = AGKHTTPRequest(url: attachmentsURL + String(ati.id))
 
-			values.append((ati.id, try await handle(response: gis.client.execute(request: req).get(), decodeType: AttachmentResponse.self)))
+			values.append((ati.id, try await handle(response: gis.httpClient.send(request: req), decodeType: AttachmentResponse.self)))
 		}
 
 		for i in 0..<at.attachmentInfos.count {
@@ -100,14 +99,14 @@ public struct Feature: Codable, Equatable {
 			newURL.formParams.token = token
 		}
 
-		let req = try! HTTPClient.Request(
+		let req = AGKHTTPRequest(
 			url: newURL,
 			method: .POST,
 			headers: ["Content-Type": "multipart/form-data; boundary=\"\(multipart.boundary)\""],
-			body: .data(multipart.httpBody)
+			body: .right(Array(multipart.httpBody))
 		)
 
-		return try await handle(response: gis.client.execute(request: req).get(), decodeType: JSON.self)
+		return try await handle(response: gis.httpClient.send(request: req), decodeType: JSON.self)
 	}
 
 	/// Deletes all the `Attachment`s whose ID is contained within `ids`.
@@ -125,8 +124,8 @@ public struct Feature: Codable, Equatable {
 			newURL.formParams.token = token
 		}
 
-		let req = try! HTTPClient.Request(url: newURL, method: .POST)
+		let req = AGKHTTPRequest(url: newURL, method: .POST)
 
-		return try await handle(response: gis.client.execute(request: req).get(), decodeType: JSON.self)
+		return try await handle(response: gis.httpClient.send(request: req), decodeType: JSON.self)
 	}
 }

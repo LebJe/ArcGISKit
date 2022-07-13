@@ -4,18 +4,16 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import class AsyncHTTPClient.HTTPClient
 import ExtrasJSON
-import struct Foundation.Data
-import class Foundation.JSONDecoder
 
-func handle<T: Codable>(response: HTTPClient.Response, decodeType: T.Type) throws -> T {
+func handle<T: Decodable>(response: AGKHTTPResponse, decodeType: T.Type) throws -> T {
 	if response.body != nil {
 		do {
-			return try XJSONDecoder().decode(decodeType, from: Array(buffer: response.body!))
+			return try XJSONDecoder().decode(decodeType, from: response.body!)
 		} catch {
 			do {
-				let re = try XJSONDecoder().decode(ResponseError.self, from: Array(buffer: response.body!))
+				print(String(response.body!))
+				let re = try XJSONDecoder().decode(ResponseError.self, from: response.body!)
 
 				throw AGKRequestError.unknown(message: re.error?.message, details: re.error?.details)
 

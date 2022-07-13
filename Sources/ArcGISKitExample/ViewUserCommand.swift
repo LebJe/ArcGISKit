@@ -16,7 +16,7 @@ extension ExamplesCommand {
 
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
 
-		func runAsync() async throws {
+		func run() async throws {
 			do {
 				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
 				let user = try await gis.user

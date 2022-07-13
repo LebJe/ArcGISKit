@@ -4,10 +4,8 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import AsyncHTTPClient
 import CodableWrappers
 import struct Foundation.Date
-
 import WebURL
 
 ///
@@ -26,11 +24,11 @@ public struct Paginator<T: Codable> {
 	private var nextStart: Int = 0
 	private var url: WebURL
 	private var token: String? = nil
-	private var client: HTTPClient
+	private var client: AGKHTTPClient
 
 	public var current: Paginated<T>? = nil
 
-	public init(client: HTTPClient, url: WebURL, token: String? = nil) {
+	public init(client: AGKHTTPClient, url: WebURL, token: String? = nil) {
 		self.client = client
 		self.url = url
 		self.token = token
@@ -48,8 +46,8 @@ public struct Paginator<T: Codable> {
 
 		if let t = token { self.url.formParams.token = t }
 
-		let req = try HTTPClient.Request(url: self.url, method: .GET)
-		let res = try handle(response: try await self.client.execute(request: req).get(), decodeType: Paginated<T>.self)
+		let req = AGKHTTPRequest(url: self.url)
+		let res = try handle(response: await self.client.send(request: req), decodeType: Paginated<T>.self)
 		self.nextStart = res.nextStart
 		self.current = res
 
