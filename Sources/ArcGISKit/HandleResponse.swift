@@ -12,7 +12,6 @@ func handle<T: Decodable>(response: AGKHTTPResponse, decodeType: T.Type) throws 
 			return try XJSONDecoder().decode(decodeType, from: response.body!)
 		} catch {
 			do {
-				print(String(response.body!))
 				let re = try XJSONDecoder().decode(ResponseError.self, from: response.body!)
 
 				throw AGKRequestError.unknown(message: re.error?.message, details: re.error?.details)

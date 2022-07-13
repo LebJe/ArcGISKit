@@ -150,9 +150,6 @@ public final actor GIS {
 				response: self.httpClient.send(request: AGKHTTPRequest(url: infoURL)),
 				decodeType: ServerInfo.self
 			).authInfo?.tokenServicesUrl, let tokenURL = WebURL(tokenURLString) {
-				if let tokenURLHost = tokenURL.host, let baseURLHost = self.url.host, tokenURLHost.serialized != baseURLHost.serialized {
-					newURL = self.fullURL + ["rest", "generateToken"]
-				}
 				newURL = tokenURL
 			} else {
 				newURL = self.fullURL + ["rest", "generateToken"]
