@@ -5,6 +5,7 @@
 //  The full text of the license can be found in the file named LICENSE.
 
 import Foundation
+import GenericHTTPClient
 import WebURL
 
 extension String {
@@ -25,19 +26,9 @@ extension StringProtocol {
 	}
 }
 
-extension AGKHTTPRequest {
-	init(url: WebURL, method: AGKHTTPMethod = .GET, headers: AGKHTTPHeaders = [:], body: Either<String, [UInt8]>? = nil) {
-		self.url = URL(string: url.serialized())!
-		self.method = method
-		self.headers = headers
-		if let body = body {
-			switch body {
-				case let .left(s):
-					self.body = Array(s.utf8)
-				case let .right(u):
-					self.body = u
-			}
-		}
+extension GHCHTTPRequest {
+	init(url: WebURL, method: GHCHTTPMethod = .GET, headers: GHCHTTPHeaders = [:], body: Self.HTTPBody? = nil) {
+		self.init(url: URL(string: url.serialized())!, method: method, headers: headers, body: body)
 	}
 }
 

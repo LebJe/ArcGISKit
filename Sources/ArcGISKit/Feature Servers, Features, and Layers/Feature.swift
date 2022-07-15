@@ -7,6 +7,7 @@
 import CodableWrappers
 import struct Foundation.Data
 import struct Foundation.UUID
+import GenericHTTPClient
 import JSON
 @_exported import MultipartFormData
 import WebURL
@@ -45,14 +46,14 @@ public struct Feature: Codable, Equatable {
 			attachmentsURL.formParams.token = token
 		}
 
-		var req = AGKHTTPRequest(url: attachmentsURL)
+		var req = GHCHTTPRequest(url: attachmentsURL)
 
 		var values: [(Int, AttachmentResponse)] = []
 
 		var at = try! await handle(response: gis.httpClient.send(request: req), decodeType: AttachmentInfosResponse.self)
 
 		for ati in at.attachmentInfos {
-			req = AGKHTTPRequest(url: attachmentsURL + String(ati.id))
+			req = GHCHTTPRequest(url: attachmentsURL + String(ati.id))
 
 			values.append((ati.id, try await handle(response: gis.httpClient.send(request: req), decodeType: AttachmentResponse.self)))
 		}
@@ -99,11 +100,11 @@ public struct Feature: Codable, Equatable {
 			newURL.formParams.token = token
 		}
 
-		let req = AGKHTTPRequest(
+		let req = GHCHTTPRequest(
 			url: newURL,
 			method: .POST,
 			headers: ["Content-Type": "multipart/form-data; boundary=\"\(multipart.boundary)\""],
-			body: .right(Array(multipart.httpBody))
+			body: .bytes(Array(multipart.httpBody))
 		)
 
 		return try await handle(response: gis.httpClient.send(request: req), decodeType: JSON.self)
@@ -124,7 +125,7 @@ public struct Feature: Codable, Equatable {
 			newURL.formParams.token = token
 		}
 
-		let req = AGKHTTPRequest(url: newURL, method: .POST)
+		let req = GHCHTTPRequest(url: newURL, method: .POST)
 
 		return try await handle(response: gis.httpClient.send(request: req), decodeType: JSON.self)
 	}

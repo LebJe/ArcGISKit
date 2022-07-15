@@ -6,6 +6,7 @@
 
 import CodableWrappers
 import struct Foundation.Date
+import GenericHTTPClient
 import WebURL
 
 ///
@@ -24,11 +25,11 @@ public struct Paginator<T: Codable> {
 	private var nextStart: Int = 0
 	private var url: WebURL
 	private var token: String? = nil
-	private var client: AGKHTTPClient
+	private var client: GHCHTTPClient
 
 	public var current: Paginated<T>? = nil
 
-	public init(client: AGKHTTPClient, url: WebURL, token: String? = nil) {
+	public init(client: GHCHTTPClient, url: WebURL, token: String? = nil) {
 		self.client = client
 		self.url = url
 		self.token = token
@@ -46,7 +47,7 @@ public struct Paginator<T: Codable> {
 
 		if let t = token { self.url.formParams.token = t }
 
-		let req = AGKHTTPRequest(url: self.url)
+		let req = GHCHTTPRequest(url: self.url)
 		let res = try handle(response: await self.client.send(request: req), decodeType: Paginated<T>.self)
 		self.nextStart = res.nextStart
 		self.current = res

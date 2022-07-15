@@ -5,8 +5,9 @@
 //  The full text of the license can be found in the file named LICENSE.
 
 import ExtrasJSON
+import GenericHTTPClient
 
-func handle<T: Decodable>(response: AGKHTTPResponse, decodeType: T.Type) throws -> T {
+func handle<T: Decodable>(response: GHCHTTPResponse, decodeType: T.Type) throws -> T {
 	if response.body != nil {
 		do {
 			return try XJSONDecoder().decode(decodeType, from: response.body!)

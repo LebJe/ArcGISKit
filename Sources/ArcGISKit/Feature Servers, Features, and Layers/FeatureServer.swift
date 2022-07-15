@@ -6,6 +6,7 @@
 
 import ExtrasJSON
 import Foundation
+import GenericHTTPClient
 import WebURL
 
 /// A `FeatureServer` manages `FeatureService`s.
@@ -47,7 +48,7 @@ public struct FeatureServer {
 				newURL.formParams.token = token
 			}
 
-			let req = AGKHTTPRequest(url: newURL)
+			let req = GHCHTTPRequest(url: newURL)
 
 			return try handle(response: try await self.gis.httpClient.send(request: req), decodeType: FeatureService.self)
 		}
@@ -62,7 +63,7 @@ public struct FeatureServer {
 			newURL.formParams.token = token
 		}
 
-		let req = AGKHTTPRequest(url: newURL)
+		let req = GHCHTTPRequest(url: newURL)
 
 		return try handle(response: await self.gis.httpClient.send(request: req), decodeType: FeatureLayerInfo.self)
 	}
@@ -86,7 +87,7 @@ public struct FeatureServer {
 			newURL.formParams.token = token
 		}
 
-		let req = AGKHTTPRequest(url: newURL)
+		let req = GHCHTTPRequest(url: newURL)
 
 		var qr = try! handle(response: try await self.gis.httpClient.send(request: req), decodeType: QueryResponse.self)
 
@@ -192,11 +193,11 @@ public struct FeatureServer {
 
 		let d = try! String(bytes: XJSONEncoder().encode(aud), encoding: .utf8)!
 
-		let req = AGKHTTPRequest(
+		let req = GHCHTTPRequest(
 			url: newURL,
 			method: .POST,
 			headers: ["Content-Type": "application/x-www-form-urlencoded"],
-			body: .left(
+			body: .string(
 				"""
 				f=json&edits=\(d.urlQueryEncoded)\(await self.gis.currentToken != nil ? "&token=\(await self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
 				"""

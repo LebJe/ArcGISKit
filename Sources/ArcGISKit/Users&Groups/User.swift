@@ -6,6 +6,7 @@
 
 import CodableWrappers
 import Foundation
+import GenericHTTPClient
 import WebURL
 
 /// A [User](https://developers.arcgis.com/rest/users-groups-and-items/user.htm) resource represents a registered user of the portal.
@@ -158,10 +159,10 @@ public struct User: Codable, Equatable {
 	public func update(clearEmptyFields: Bool = false, gis: GIS) async throws {
 		// let updateURL = await gis.fullURL + ["community", "users", self.username]
 
-		// let req = AGKHTTPRequest(
+		// let req = GHCHTTPRequest(
 		// 	url: updateURL,
 		// 	method: .POST,
-		// 	body: .left("""
+		// 	body: .string("""
 		// 	clearEmptyFields=\(clearEmptyFields)
 		// 	\(self.description != nil ? "description=\(self.description!)" : "")
 		// 	\(self.tags != nil ? "tags=" + self.tags!.joined(separator: ", ") : "")
@@ -200,7 +201,7 @@ public struct User: Codable, Equatable {
 			createFolderURL.formParams.token = token
 		}
 
-		let req = AGKHTTPRequest(url: createFolderURL, method: .POST)
+		let req = GHCHTTPRequest(url: createFolderURL, method: .POST)
 
 		let res = try handle(response: await gis.httpClient.send(request: req), decodeType: JSON.self)
 
@@ -241,11 +242,11 @@ public struct User: Codable, Equatable {
 
 		let multipart = MultipartFormData(body: parts)
 
-		let req = AGKHTTPRequest(
+		let req = GHCHTTPRequest(
 			url: addItemURL,
 			method: .POST,
 			headers: ["Content-Type": "multipart/form-data; boundary=\"\(multipart.boundary)\""],
-			body: .right(Array(multipart.httpBody))
+			body: .bytes(Array(multipart.httpBody))
 		)
 
 		let res = String(try await gis.httpClient.send(request: req).body!)

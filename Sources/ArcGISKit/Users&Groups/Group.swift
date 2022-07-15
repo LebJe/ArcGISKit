@@ -6,6 +6,7 @@
 
 import CodableWrappers
 import struct Foundation.Date
+import GenericHTTPClient
 import WebURL
 
 /// The [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) resource represents a group (for example, San Bernardino Fires) within the portal.

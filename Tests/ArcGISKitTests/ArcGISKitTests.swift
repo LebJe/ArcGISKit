@@ -6,7 +6,7 @@
 
 import _Concurrency
 @testable import ArcGISKit
-import ArcGISKitAsyncHTTPClient
+import GHCAsyncHTTPClient
 import XCTest
 
 final class ArcGISKitTests: XCTestCase {

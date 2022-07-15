@@ -6,6 +6,7 @@
 
 import struct Foundation.Date
 import struct Foundation.URL
+import GenericHTTPClient
 import WebURL
 
 public final actor GIS {
@@ -53,7 +54,7 @@ public final actor GIS {
 			newURL.formParams.token = self.currentToken!
 			newURL.formParams.f = "json"
 
-			let req = AGKHTTPRequest(url: newURL, method: .POST)
+			let req = GHCHTTPRequest(url: newURL, method: .POST)
 
 			// TODO: Fix.
 			return try await handle(response: self.httpClient.send(request: req), decodeType: User.self)
@@ -62,7 +63,7 @@ public final actor GIS {
 
 	// MARK: - Private properties.
 
-	let httpClient: AGKHTTPClient
+	let httpClient: GHCHTTPClient
 	var fullURL: WebURL { self.url + self.site }
 	let site: String
 
@@ -82,7 +83,7 @@ public final actor GIS {
 		authentication authType: AuthenticationType,
 		url: URL = URL(string: "https://arcgis.com")!,
 		site: String = "sharing",
-		client: AGKHTTPClient
+		client: GHCHTTPClient
 	) async throws {
 		self.url = WebURL(url.absoluteString)!
 		self.site = site
@@ -132,7 +133,7 @@ public final actor GIS {
 				"client_secret": cS,
 			]
 
-			let req = AGKHTTPRequest(url: url)
+			let req = GHCHTTPRequest(url: url)
 
 			let res = try handle(response: try await self.httpClient.send(request: req), decodeType: RequestOAuthTokenResponse.self)
 
@@ -147,7 +148,7 @@ public final actor GIS {
 			infoURL.formParams += ["f": "json"]
 
 			if let tokenURLString = try await handle(
-				response: self.httpClient.send(request: AGKHTTPRequest(url: infoURL)),
+				response: self.httpClient.send(request: GHCHTTPRequest(url: infoURL)),
 				decodeType: ServerInfo.self
 			).authInfo?.tokenServicesUrl, let tokenURL = WebURL(tokenURLString) {
 				newURL = tokenURL
@@ -155,11 +156,11 @@ public final actor GIS {
 				newURL = self.fullURL + ["rest", "generateToken"]
 			}
 
-			let req = AGKHTTPRequest(
+			let req = GHCHTTPRequest(
 				url: newURL,
 				method: .POST,
 				headers: ["Content-Type": "application/x-www-form-urlencoded"],
-				body: .left(
+				body: .string(
 					"f=json&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
 				)
 			)
