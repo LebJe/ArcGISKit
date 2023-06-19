@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -32,73 +32,84 @@ public struct FeatureServer {
 	/// - Parameters:
 	///   - url: The URL to the Feature Server, e.g: "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
 	///   - gis: The `GIS` to use to authenticate.
-	/// - Throws: `AGKRequestError`.
 	public init(url: URL, gis: GIS) {
 		self.url = WebURL(url.absoluteString)!
 		self.gis = gis
 	}
 
 	/// Retrieves the `FeatureService` managed by this `FeatureServer`.
-	/// - Throws: `AGKRequestError`.
-	public var featureService: FeatureService {
-		get async throws {
+	public var featureService: Result<FeatureService, AGKError> {
+		get async {
 			var newURL = self.url
 			newURL.formParams.f = "json"
 			if let token = await self.gis.currentToken {
 				newURL.formParams.token = token
 			}
 
-			let req = GHCHTTPRequest(url: newURL)
+			let req = try! GHCHTTPRequest(url: newURL)
 
-			return try handle(response: try await self.gis.httpClient.send(request: req), decodeType: FeatureService.self)
+			switch await sendAndHandle(request: req, client: self.gis.httpClient, decodeType: FeatureService.self) {
+				case let .success(fs): return .success(fs)
+				case let .failure(error): return .failure(error)
+			}
 		}
 	}
 
 	public func append() {}
 
-	public func info(layerID: String) async throws -> FeatureLayerInfo {
+	public func info(layerID: String) async -> Result<FeatureLayerInfo, AGKError> {
 		var newURL = self.url + layerID
 		newURL.formParams.f = "json"
 		if let token = await self.gis.currentToken {
 			newURL.formParams.token = token
 		}
 
-		let req = GHCHTTPRequest(url: newURL)
+		let req = try! GHCHTTPRequest(url: newURL)
 
-		return try handle(response: await self.gis.httpClient.send(request: req), decodeType: FeatureLayerInfo.self)
+		switch await sendAndHandle(request: req, client: self.gis.httpClient, decodeType: FeatureLayerInfo.self) {
+			case let .success(fsLI): return .success(fsLI)
+			case let .failure(error): return .failure(error)
+		}
 	}
 
 	/// Query the `FeatureServer`.
 	/// - Parameter layerQueries: The queries you want to perform.
 	/// - Returns: An `Array` of `FeatureLayer`s.
-	/// - Throws: `AGKRequestError`.
-	public func query(layerQueries: [Self.LayerQuery]) async throws -> [FeatureLayer] {
+	public func query(layerQueries: [Self.LayerQuery]) async -> Result<[FeatureLayer], AGKError> {
 		let layerQueriesDict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
 
 		var newURL = self.url
 
 		newURL.pathComponents += ["query"]
-		newURL.formParams += [
-			"f": "json",
-			"layerDefs": String(bytes: try XJSONEncoder().encode(layerQueriesDict), encoding: .utf8)!,
-		]
+		do {
+			try newURL.formParams += [
+				"f": "json",
+				"layerDefs": String(bytes: XJSONEncoder().encode(layerQueriesDict), encoding: .utf8)!,
+			]
+		} catch let error as EncodingError {
+			return .failure(.requestError(.encodingError(error)))
+		} catch {
+			fatalError()
+		}
 
 		if let token = await self.gis.currentToken {
 			newURL.formParams.token = token
 		}
 
-		let req = GHCHTTPRequest(url: newURL)
+		let req = try! GHCHTTPRequest(url: newURL)
 
-		var qr = try! handle(response: try await self.gis.httpClient.send(request: req), decodeType: QueryResponse.self)
-
-		for i in 0..<qr.layers.count {
-			for j in 0..<qr.layers[i].features.count {
-				qr.layers[i].featureServerURL = self.url
-				qr.layers[i].features[j].featureServerURL = self.url
-				qr.layers[i].features[j].featureLayerID = qr.layers[i].id
-			}
+		switch await sendAndHandle(request: req, client: self.gis.httpClient, decodeType: QueryResponse.self) {
+			case var .success(qr):
+				for i in 0..<qr.layers.count {
+					for j in 0..<qr.layers[i].features.count {
+						qr.layers[i].featureServerURL = self.url
+						qr.layers[i].features[j].featureServerURL = self.url
+						qr.layers[i].features[j].featureLayerID = qr.layers[i].id
+					}
+				}
+				return .success(qr.layers)
+			case let .failure(error): return .failure(error)
 		}
-		return qr.layers
 	}
 
 	/// Deletes `features` from the `FeatureLayer` with the id of `id`.
@@ -107,20 +118,24 @@ public struct FeatureServer {
 	///   - featureIDs: The ID of the `Feature`s you wish to delete.
 	///   - id: The ID of the `FeatureLayer` you wish to delete the features from.
 	///   - gdbVersion: The version of the geo-database you want to delete features from.
-	/// - Throws: `AGKRequestError`
 	/// - Returns: `[EditResponse]`.
 	///
 	/// To delete the first feature from the first layer, you could write:
 	/// ```swift
-	/// let layers = try await myFeatureServer
+	/// let result = await myFeatureServer
 	/// 	.query(layerQueries: [.init(whereClause: "1=1", layerID: "0")])
 	///
-	/// let feature = layers[0].features[0]
-	/// let res = try await myFeatureServer
-	/// 	.delete([feature.attributes!["OBJECTID"].intValue], from: String(layers[0].id))
+	/// switch result {
+	///  	case .success(let layers):
+	/// 		let feature = layers[0].features[0]
+	/// 		let res = await myFeatureServer
+	/// 			.delete([feature.attributes!["OBJECTID"].intValue], from: String(layers[0].id))
+	/// 	case .failure(let error): ...
+	/// }
+	///
 	/// ```
-	public func delete(_ featureIDs: [Int], from id: String, gdbVersion: String? = nil) async throws -> [EditResponse] {
-		try await self.edit([.init(id: id, deletes: featureIDs)], gdbVersion: gdbVersion)
+	public func delete(_ featureIDs: [Int], from id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+		await self.edit([.init(id: id, deletes: featureIDs)], gdbVersion: gdbVersion)
 	}
 
 	/// Adds `features` to the `FeatureLayer` with the id of `id`.
@@ -143,13 +158,11 @@ public struct FeatureServer {
 	///
 	/// let res = try await myFeatureServer.add([feature], to: "0")
 	///	```
-	public func add(_ features: [Feature], to id: String, gdbVersion: String? = nil) async throws -> [EditResponse] {
-		try await self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion)
+	public func add(_ features: [AGKFeature], to id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+		await self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion)
 	}
 
 	/// Updates `features` in the `FeatureLayer` with the id of `id`.
-	///
-
 	///
 	/// - Parameters:
 	///   - features: The `Feature`s you wish to update.
@@ -167,8 +180,8 @@ public struct FeatureServer {
 	/// feature.attributes!["Greeting"] = "Hi!"
 	/// let res = try await myFeatureServer.update([feature], in: "0")
 	///	```
-	public func update(_ features: [Feature], in id: String, gdbVersion: String? = nil) async throws -> [EditResponse] {
-		try await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion)
+	public func update(_ features: [AGKFeature], in id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+		await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion)
 	}
 
 	/// Edit the attributes in the `FeatureLayer`s that are contained within this `FeatureServer`.
@@ -187,32 +200,35 @@ public struct FeatureServer {
 	/// feature.attributes!["Greeting"] = "Hello!"
 	///	let res = try await myFeatureServer.edit([A(id: "0", updates: [feature])])
 	///	```
-	func edit(_ aud: [AddUpdateDelete], gdbVersion: String? = nil) async throws -> [EditResponse] {
+	func edit(_ aud: [AddUpdateDelete], gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
 		var newURL = self.url
 		newURL.pathComponents += ["applyEdits"]
 
 		let d = try! String(bytes: XJSONEncoder().encode(aud), encoding: .utf8)!
 
-		let req = GHCHTTPRequest(
+		let req = try! await GHCHTTPRequest(
 			url: newURL,
 			method: .POST,
 			headers: ["Content-Type": "application/x-www-form-urlencoded"],
 			body: .string(
 				"""
-				f=json&edits=\(d.urlQueryEncoded)\(await self.gis.currentToken != nil ? "&token=\(await self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
+				f=json&edits=\(d.urlQueryEncoded)\(self.gis.currentToken != nil ? "&token=\(self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
 				"""
 			)
 		)
 
-		return try! handle(response: try await self.gis.httpClient.send(request: req), decodeType: [EditResponse].self)
+		switch await sendAndHandle(request: req, client: self.gis.httpClient, decodeType: [EditResponse].self) {
+			case let .success(editRes): return .success(editRes)
+			case let .failure(error): return .failure(error)
+		}
 	}
 }
 
 struct AddUpdateDelete: Codable {
 	let id: String
-	var updates: [Feature] = []
+	var updates: [AGKFeature] = []
 	var deletes: [Int] = []
-	var adds: [Feature] = []
+	var adds: [AGKFeature] = []
 
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: Self.CodingKeys)

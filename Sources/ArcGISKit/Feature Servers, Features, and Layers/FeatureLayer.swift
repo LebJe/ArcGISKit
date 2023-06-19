@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -20,13 +20,15 @@ public struct FeatureLayer: Codable, Equatable {
 	public var geometryProperties: GeometryProperties? = nil
 
 	@FallbackCoding<EmptyArray>
-	public var fields: [Field]? = []
+	public var fields: [TableField]? = []
 
-	public var features: [Feature] = []
+	public var features: [AGKFeature] = []
 }
 
 public struct FeatureLayerInfo: Codable, Equatable {
 	public let drawingInfo: DrawingInfo?
+	public let fields: [TableField]?
+	public let geometryField: TableField?
 }
 
 public struct DrawingInfo: Codable, Equatable {
@@ -46,15 +48,15 @@ public struct DrawingInfo: Codable, Equatable {
 			public struct Symbol: Codable, Equatable {
 				public struct Outline: Codable, Equatable {
 					public let type: String
-					public let style: String
+					public let style: String?
 					public let color: [Int]
 					public let width: Double
 				}
 
-				public let type: String
-				public let style: String
-				public let color: [Int]
-				public let outline: Outline
+				public let type: String?
+				public let style: String?
+				public let color: [Int]?
+				public let outline: Outline?
 			}
 
 			public let symbol: Symbol

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -89,7 +89,24 @@ public struct SpatialReference: Codable, Equatable {
 	public let falseM: Double?
 	public let mUnits: Double?
 
-	public init(wkid: Int? = nil, latestWkid: Int? = nil, vcsWkid: Int? = nil, wkt: String? = nil, latestWkt: String? = nil, latestVcsWkid: Int? = nil, xyTolerance: Double? = nil, zTolerance: Double? = nil, mTolerance: Double? = nil, falseX: Double? = nil, falseY: Double? = nil, xyUnits: Double? = nil, falseZ: Double? = nil, zUnits: Double? = nil, falseM: Double? = nil, mUnits: Double? = nil) {
+	public init(
+		wkid: Int? = nil,
+		latestWkid: Int? = nil,
+		vcsWkid: Int? = nil,
+		wkt: String? = nil,
+		latestWkt: String? = nil,
+		latestVcsWkid: Int? = nil,
+		xyTolerance: Double? = nil,
+		zTolerance: Double? = nil,
+		mTolerance: Double? = nil,
+		falseX: Double? = nil,
+		falseY: Double? = nil,
+		xyUnits: Double? = nil,
+		falseZ: Double? = nil,
+		zUnits: Double? = nil,
+		falseM: Double? = nil,
+		mUnits: Double? = nil
+	) {
 		self.wkid = wkid
 		self.latestWkid = latestWkid
 		self.vcsWkid = vcsWkid

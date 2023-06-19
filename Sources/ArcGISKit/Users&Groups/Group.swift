@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -91,31 +91,37 @@ public struct Group: Equatable, Codable {
 	/// - Parameter gis: The `GIS` to use to authenticate.
 	/// - Throws: `AGKRequestError`.
 	/// - Returns: The fetched content.
-	public func fetchContent(from gis: GIS) async throws -> [ContentType] {
+	public func fetchContent(from gis: GIS) async -> Result<[ContentType], AGKError> {
 		let groupURL = await gis.fullURL + ["content", "groups", self.id!]
 
-		var p = Paginator<ContentItem>(client: gis.httpClient, url: groupURL, token: await gis.currentToken!)
+		var p = await Paginator<ContentItem>(client: gis.httpClient, url: groupURL, token: gis.currentToken!)
 		var c: [ContentType] = []
 
-		while try await p.advance() {
-			if let current = p.current {
-				for item in current.items {
-					// if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
-					// 	if itemType.lowercased() == "url", type.lowercased() == "feature service" {
-					// 		if let u = URL(string: itemItem) {
-					// 			c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
-					// 		}
-					// 	}
-					// } else {
-					// 	c.append(.other(metadata: item))
-					// }
+		do {
+			while try await p.advance().get() {
+				if let current = p.current {
+					for item in current.items {
+						// if let itemType = item.itemType, let type = item.type, let itemItem = item.item {
+						// 	if itemType.lowercased() == "url", type.lowercased() == "feature service" {
+						// 		if let u = URL(string: itemItem) {
+						// 			c.append(.featureServer(featureServer: try FeatureServer(url: u, gis: gis), metadata: item))
+						// 		}
+						// 	}
+						// } else {
+						// 	c.append(.other(metadata: item))
+						// }
 
-					c.append(.other(metadata: item))
+						c.append(.other(metadata: item))
+					}
 				}
 			}
-		}
 
-		return c
+		} catch let error as AGKError {
+			return .failure(error)
+		} catch {
+			fatalError()
+		}
+		return .success(c)
 	}
 }
 

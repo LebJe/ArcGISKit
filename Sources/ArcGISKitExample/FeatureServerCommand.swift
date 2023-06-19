@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -22,39 +22,81 @@ extension ExamplesCommand {
 		}
 
 		func run() async throws {
-			do {
-				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
-				let fs = try FeatureServer(url: featureServerURL!, gis: gis)
-				let featureService = try await fs.featureService
+			switch await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!) {
+				case let .success(gis):
+					let fs = FeatureServer(url: featureServerURL!, gis: gis)
+					switch await fs.featureService {
+						case let .success(featureService):
+							var queries: [FeatureServer.LayerQuery] = []
 
-				var queries: [FeatureServer.LayerQuery] = []
+							for layer in featureService.layers ?? [] {
+								switch await fs.info(layerID: String(layer.id)) {
+									case let .success(info):
+										print("Layer \(layer.id) \(layer.name != nil ? "(\(layer.name!))" : "")")
+										print()
 
-				for layer in featureService.layers ?? [] {
-					queries.append(.init(whereClause: "1=1", layerID: String(layer.id)))
-				}
+										print("  Fields:")
 
-				let layers = try await fs.query(layerQueries: queries)
-				for layer in layers {
-					print("Layer \(layer.id)")
-					print()
+										print("-------------------")
+										for field in info.fields ?? [] {
+											print()
+											printField(field)
+											print("-------------------")
+										}
 
-					print("  Fields:")
+										if let geoField = info.geometryField {
+											print()
+											printField(geoField)
+											print("-------------------")
+										}
+										print("---------------------------------------------")
+									case let .failure(error): print(error)
+								}
 
-					print("-------------------")
-					for field in layer.fields ?? [] {
-						print()
-						print("    Name: " + field.name)
-						print("    Alias: " + (field.alias ?? ""))
-						print("    Field Type: " + field.type.rawValue)
-						print("-------------------")
+								queries.append(.init(whereClause: "1=1", layerID: String(layer.id)))
+							}
+						case let .failure(error): print(error)
 					}
-					print("---------------------------------------------")
-				}
-			} catch AGKAuthError.invalidUsernameOrPassword {
-				print("Incorrect username or password.")
-			} catch {
-				print("An error occurred: \(error)")
+
+				case let .failure(error): print(error)
 			}
 		}
+	}
+}
+
+func printField(_ field: TableField) {
+	print("Name: " + field.name)
+	print("Alias: " + (field.alias ?? ""))
+	print("Field Type: " + field.type.rawValue)
+	print("Is Editable: \(field.editable ?? false ? "true" : "false")")
+	print("Is Nullable: \(field.nullable ? "true" : "false")")
+	print("Length: \(field.length ?? 0)")
+	print("Default Value: \(field.defaultValue ?? "(None)")")
+	if let domain = field.domain {
+		print("Domain:")
+
+		print("  Name: \(domain.name ?? "(None)")")
+		print("  Merge Policy: \(domain.mergePolicy ?? "(None)")")
+		print("  Split Policy: \(domain.splitPolicy ?? "(None)")")
+		print("  Type: \(domain.type.rawValue)")
+		print("  Range: \(domain.range?.map(String.init).joined(separator: ", ") ?? "(None)")")
+
+		print("  Coded Values:")
+		print("  ----------")
+		if domain.codedValues?.isEmpty ?? true {
+			print("    - None")
+		}
+		for value in domain.codedValues ?? [] {
+			print("  - Name: \(value.name ?? "(None)")")
+			switch value.code {
+				case let .left(str): print("    Value: \(str)")
+				case let .right(int): print("    Value: \(int)")
+				case nil: print("    Value: None")
+			}
+
+			print()
+		}
+
+		print("  ----------")
 	}
 }

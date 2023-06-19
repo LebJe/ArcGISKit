@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -17,17 +17,20 @@ extension ExamplesCommand {
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
 
 		func run() async throws {
-			do {
-				let gis = try await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!)
-				let user = try await gis.user
-
-				print("ID: " + user.id)
-				print("Name: " + (user.fullName ?? ""))
-				print("Username: " + user.username)
-				print("Email Address: " + (user.email ?? ""))
-				print("Description: " + (user.description ?? "No description"))
-			} catch is AGKAuthError {
-				print("Incorrect username or password.")
+			switch await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!) {
+				case let .success(gis):
+					switch await gis.user {
+						case let .success(user):
+							print("ID: " + user.id)
+							print("Name: " + (user.fullName ?? ""))
+							print("Username: " + user.username)
+							print("Email Address: " + (user.email ?? ""))
+							print("Description: " + (user.description ?? "No description"))
+						case let .failure(error):
+							print(error)
+					}
+				case let .failure(error):
+					print(error)
 			}
 		}
 	}

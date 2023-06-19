@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -45,25 +45,25 @@ public final actor GIS {
 	/// Retrieves the ``User`` that provided their credentials via ``GIS.init``.
 	/// - Throws: `AGKRequestError`.
 	/// - Reference: [https://developers.arcgis.com/rest/users-groups-and-items/user.htm](https://developers.arcgis.com/rest/users-groups-and-items/user.htm)
-	public var user: User {
-		get async throws {
-			guard !self.isAnonymous else { throw AGKAuthError.isAnonymous }
+	public var user: Result<User, AGKError> {
+		get async {
+			guard !self.isAnonymous else { return .failure(.authError(.isAnonymous)) }
 
 			var newURL = self.fullURL + ["community", "users", self.username!]
 
 			newURL.formParams.token = self.currentToken!
 			newURL.formParams.f = "json"
 
-			let req = GHCHTTPRequest(url: newURL, method: .POST)
+			let req = try! GHCHTTPRequest(url: newURL, method: .POST)
 
 			// TODO: Fix.
-			return try await handle(response: self.httpClient.send(request: req), decodeType: User.self)
+			return await sendAndHandle(request: req, client: self.httpClient, decodeType: User.self)
 		}
 	}
 
 	// MARK: - Private properties.
 
-	let httpClient: GHCHTTPClient
+	let httpClient: any GHCHTTPClient
 	var fullURL: WebURL { self.url + self.site }
 	let site: String
 
@@ -74,7 +74,7 @@ public final actor GIS {
 	///   - eventLoopGroup: The `EventLoopGroup` needed for the `HTTPClient`.
 	///   - url: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	/// - Throws: `AGKRequestError`
+	/// - Throws: ``AGKError``
 	///
 	/// If `authType` is ``AuthenticationType.webBrowser``, You must first call ``GIS.generateURL(clientID:baseURL:site:)`` (without changing `redirectURI`) to generate a `URL`.
 	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then copy and paste the returned code back into your app.
@@ -83,7 +83,7 @@ public final actor GIS {
 		authentication authType: AuthenticationType,
 		url: URL = URL(string: "https://arcgis.com")!,
 		site: String = "sharing",
-		client: GHCHTTPClient
+		client: any GHCHTTPClient
 	) async throws {
 		self.url = WebURL(url.absoluteString)!
 		self.site = site
@@ -94,7 +94,7 @@ public final actor GIS {
 				self.authType = authType
 				self.username = username
 				self.password = password
-				try await self.fetchToken()
+				try await self.fetchToken().get()
 			case .anonymous:
 				self.authType = authType
 				self.currentToken = nil
@@ -105,7 +105,7 @@ public final actor GIS {
 				self.currentToken = nil
 				self.username = u
 				self.password = nil
-				try await self.fetchToken()
+				try await self.fetchToken().get()
 			case .webBrowser:
 				fatalError("Web browser authentication is not implemented yet.")
 //				self.authType = authType
@@ -117,9 +117,9 @@ public final actor GIS {
 	deinit { self.httpClient.shutdown() }
 
 	/// Requests a token and saves it in `self.currentToken`.
-	public func fetchToken() async throws {
+	public func fetchToken() async -> Result<Void, AGKError> {
 		guard !self.isAnonymous else {
-			throw AGKAuthError.isAnonymous
+			return .failure(.authError(.isAnonymous))
 		}
 
 		// TODO: Use `self.refreshToken` if it is not nil.
@@ -133,30 +133,41 @@ public final actor GIS {
 				"client_secret": cS,
 			]
 
-			let req = GHCHTTPRequest(url: url)
+			let req = try! GHCHTTPRequest(url: url)
 
-			let res = try handle(response: try await self.httpClient.send(request: req), decodeType: RequestOAuthTokenResponse.self)
+			let res = await sendAndHandle(request: req, client: self.httpClient, decodeType: RequestOAuthTokenResponse.self)
 
-			self.refreshToken = res.refreshToken
-			self.tokenExpirationDate = res.expiresIn
-			self.currentToken = res.accessToken
-
+			switch res {
+				case let .success(res):
+					self.refreshToken = res.refreshToken
+					self.tokenExpirationDate = res.expiresIn
+					self.currentToken = res.accessToken
+				case let .failure(error):
+					return .failure(error)
+			}
+			return .success(())
 		} else {
 			var newURL: WebURL
 
 			var infoURL = self.fullURL + ["rest", "info"]
-			infoURL.formParams += ["f": "json"]
+			infoURL.formParams.f = "json"
 
-			if let tokenURLString = try await handle(
-				response: self.httpClient.send(request: GHCHTTPRequest(url: infoURL)),
-				decodeType: ServerInfo.self
-			).authInfo?.tokenServicesUrl, let tokenURL = WebURL(tokenURLString) {
-				newURL = tokenURL
-			} else {
-				newURL = self.fullURL + ["rest", "generateToken"]
+			let serverInfoReq = try! GHCHTTPRequest(url: infoURL)
+
+			let serverInfoResult = await sendAndHandle(request: serverInfoReq, client: self.httpClient, decodeType: ServerInfo.self)
+
+			switch serverInfoResult {
+				case let .success(serverInfo):
+					if let tokenURLString = serverInfo.authInfo?.tokenServicesUrl, let tokenURL = WebURL(tokenURLString) {
+						newURL = tokenURL
+					} else {
+						newURL = self.fullURL + ["rest", "generateToken"]
+					}
+
+				case let .failure(error): return .failure(error)
 			}
 
-			let req = GHCHTTPRequest(
+			let req = try! GHCHTTPRequest(
 				url: newURL,
 				method: .POST,
 				headers: ["Content-Type": "application/x-www-form-urlencoded"],
@@ -165,10 +176,16 @@ public final actor GIS {
 				)
 			)
 
-			let res = try handle(response: await self.httpClient.send(request: req), decodeType: RequestTokenResponse.self)
+			let res = await sendAndHandle(request: req, client: self.httpClient, decodeType: RequestTokenResponse.self)
 
-			self.tokenExpirationDate = res.expires
-			self.currentToken = res.token
+			switch res {
+				case let .success(tokenResponse):
+					self.tokenExpirationDate = tokenResponse.expires
+					self.currentToken = tokenResponse.token
+				case let .failure(error): return .failure(error)
+			}
+
+			return .success(())
 		}
 	}
 
@@ -216,12 +233,3 @@ public final actor GIS {
 //	let req = try HTTPClient.Request(url: "\(url.absoluteString)?&f=json&start=\(start)&num=\(limit)\(token != nil ? "&token=\(token!)" : "")", method: .GET)
 //	return try handle(response: try await client.execute(request: req).get(), decodeType: Paginated<T>.self).items
 // }
-
-struct ServerInfo: Decodable {
-	var authInfo: AuthInfo? = nil
-
-	struct AuthInfo: Decodable {
-		var tokenServicesUrl: String? = nil
-		var isTokenBasedSecurity: Bool? = nil
-	}
-}

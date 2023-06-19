@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -25,19 +25,19 @@ public struct Paginator<T: Codable> {
 	private var nextStart: Int = 0
 	private var url: WebURL
 	private var token: String? = nil
-	private var client: GHCHTTPClient
+	private var client: any GHCHTTPClient
 
 	public var current: Paginated<T>? = nil
 
-	public init(client: GHCHTTPClient, url: WebURL, token: String? = nil) {
+	public init(client: any GHCHTTPClient, url: WebURL, token: String? = nil) {
 		self.client = client
 		self.url = url
 		self.token = token
 	}
 
 	/// Retrieves the values from `self.nextStart` to `limit`.
-	public mutating func advance(limit: Int = 100) async throws -> Bool {
-		guard self.nextStart != -1 else { return false }
+	public mutating func advance(limit: Int = 100) async -> Result<Bool, AGKError> {
+		guard self.nextStart != -1 else { return .success(false) }
 
 		self.url.formParams += [
 			"f": "json",
@@ -47,12 +47,17 @@ public struct Paginator<T: Codable> {
 
 		if let t = token { self.url.formParams.token = t }
 
-		let req = GHCHTTPRequest(url: self.url)
-		let res = try handle(response: await self.client.send(request: req), decodeType: Paginated<T>.self)
-		self.nextStart = res.nextStart
-		self.current = res
+		let req = try! GHCHTTPRequest(url: self.url)
+		let res = await sendAndHandle(request: req, client: self.client, decodeType: Paginated<T>.self)
 
-		return true
+		switch res {
+			case let .success(res):
+				self.nextStart = res.nextStart
+				self.current = res
+			case let .failure(error): return .failure(error)
+		}
+
+		return .success(true)
 	}
 }
 

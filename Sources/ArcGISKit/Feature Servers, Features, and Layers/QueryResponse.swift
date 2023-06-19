@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -25,8 +25,8 @@ public struct CodedValue: Codable, Equatable {
 	public let code: Either<String, Int>?
 }
 
-public struct Domain: Codable, Equatable {
-	public let type: Domain.DomainType
+public struct TableDomain: Codable, Equatable {
+	public let type: TableDomain.DomainType
 	public let name: String?
 	public let range: [Int]?
 	public let codedValues: [CodedValue]?
@@ -41,12 +41,13 @@ public struct Domain: Codable, Equatable {
 	}
 }
 
-public struct Field: Codable, Equatable {
+public struct TableField: Codable, Equatable {
 	public let name: String
 	public let type: ESRIFieldType
 	public let alias: String?
-	public let domain: Domain?
+	public let domain: TableDomain?
 	public let editable: Bool?
+	public let nullable: Bool
 	public let exactMatch: Bool?
 	public let length: Int?
 	public let sqlType: String
@@ -63,10 +64,10 @@ struct AttachmentResponse: Codable {
 }
 
 struct AttachmentInfosResponse: Codable {
-	var attachmentInfos: [Attachment]
+	var attachmentInfos: [AGKAttachment]
 }
 
-public struct Attachment: Codable, Equatable {
+public struct AGKAttachment: Codable, Equatable {
 	init(
 		keywords: String?,
 		size: Int,
@@ -102,7 +103,7 @@ public struct Attachment: Codable, Equatable {
 	public var data: Data? = nil
 }
 
-public struct Geometry: Codable, Equatable {
+public struct AGKGeometry: Codable, Equatable {
 	public init(x: Double? = nil, y: Double? = nil, rings: [[[Double]]]? = nil, spatialReference: SpatialReference? = nil) {
 		self.x = x
 		self.y = y

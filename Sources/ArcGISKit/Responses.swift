@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -47,7 +47,7 @@ struct QueryAttachmentsResponse: Codable, Equatable {
 public struct AttachmentGroup: Codable, Equatable {
 	public let parentObjectId: Int
 	public let parentGlobalId: String?
-	public let attachmentInfos: [Attachment]
+	public let attachmentInfos: [AGKAttachment]
 }
 
 public struct ExifInfo: Codable, Equatable {
@@ -59,4 +59,13 @@ public struct ExifInfoTags: Codable, Equatable {
 	public let name: String
 	public let description: String?
 	public let value: JSON?
+}
+
+struct ServerInfo: Decodable {
+	var authInfo: AuthInfo? = nil
+
+	struct AuthInfo: Decodable {
+		var tokenServicesUrl: String? = nil
+		var isTokenBasedSecurity: Bool? = nil
+	}
 }

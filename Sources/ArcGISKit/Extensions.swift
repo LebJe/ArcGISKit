@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -27,13 +27,13 @@ extension StringProtocol {
 }
 
 extension GHCHTTPRequest {
-	init(url: WebURL, method: GHCHTTPMethod = .GET, headers: GHCHTTPHeaders = [:], body: Self.HTTPBody? = nil) {
-		self.init(url: URL(string: url.serialized())!, method: method, headers: headers, body: body)
+	init(url: WebURL, method: GHCHTTPMethod = .GET, headers: GHCHTTPHeaders = [:], body: Self.HTTPBody? = nil) throws {
+		try self.init(url: URL(string: url.serialized())!, method: method, headers: headers, body: body)
 	}
 }
 
 /// Append a path component to `lhs`.
-func + <S: StringProtocol>(lhs: WebURL, rhs: S) -> WebURL {
+func + (lhs: WebURL, rhs: some StringProtocol) -> WebURL {
 	var url = lhs
 	url.pathComponents += [rhs]
 	return url

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -22,9 +22,9 @@ public enum Either<Left: Codable & Equatable, Right: Codable & Equatable>: Codab
 		let container = try decoder.singleValueContainer()
 
 		do {
-			self = .left(try container.decode(Left.self))
+			self = try .left(container.decode(Left.self))
 		} catch DecodingError.typeMismatch {
-			self = .right(try container.decode(Right.self))
+			self = try .right(container.decode(Right.self))
 		}
 	}
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2022 Jeff Lebrun
+// Copyright (c) 2023 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -10,11 +10,17 @@ import GenericHTTPClient
 import GHCAsyncHTTPClient
 import GHCURLSession
 
-func authenticate(username: String, password: String, url: URL) async throws -> GIS {
-	let gis = try await GIS(
-		authentication: .credentials(username: username, password: password),
-		url: url,
-		client: URLSessionHTTPClient()
-	)
-	return gis
+func authenticate(username: String, password: String, url: URL) async -> Result<GIS, AGKError> {
+	do {
+		let gis = try await GIS(
+			authentication: .credentials(username: username, password: password),
+			url: url,
+			client: URLSessionHTTPClient()
+		)
+		return .success(gis)
+	} catch let error as AGKError {
+		return .failure(error)
+	} catch {
+		fatalError()
+	}
 }
