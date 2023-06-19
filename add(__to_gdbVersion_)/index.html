@@ -37,7 +37,7 @@
 </h1>
 
 <div class="declaration">
-<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">add</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<span class="type">Feature</span>], <span class="variable">to</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) </body></html></code></pre>
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">func</span> <span class="function">add</span>(<span class="keyword">_</span> <span class="variable">features</span>: [<span class="type">AGKFeature</span>], <span class="variable">to</span> <span class="variable">id</span>: <span class="type">String</span>, <span class="variable">gdbVersion</span>: <span class="type">String</span>? = <span class="keyword">nil</span>) </body></html></code></pre>
 </div>
 <div class="summary" role="doc-abstract">
     <p>Adds <code>features</code> to the <code>FeatureLayer</code> with the id of <code>id</code>.</p>
@@ -51,7 +51,7 @@
 <span class="keyword">var</span> <span class="variable">attributes</span> = <span class="variable">JSON</span>()
 <span class="variable">attributes</span>[<span class="string literal">"</span><span class="string literal">Greeting</span><span class="string literal">"</span>] = <span class="string literal">"</span><span class="string literal">Hi!</span><span class="string literal">"</span>
 
-<span class="keyword">let</span> <span class="variable">feature</span> = <span class="variable">Feature</span>(<span class="variable">geometry</span>: <a href="https://lebje.github.io/ArcGISKit/Geometry"><span class="type">Geometry</span></a>(<span class="variable">x</span>: <span class="number literal">0.0</span>, <span class="variable">y</span>: <span class="number literal">0.0</span>, <span class="variable">rings</span>: <span class="keyword">nil</span>), <span class="variable">attributes</span>: <a href="https://lebje.github.io/ArcGISKit/attributes"><span class="type">attributes</span></a>)
+<span class="keyword">let</span> <span class="variable">feature</span> = <span class="variable">Feature</span>(<span class="variable">geometry</span>: <span class="type">Geometry</span>(<span class="variable">x</span>: <span class="number literal">0.0</span>, <span class="variable">y</span>: <span class="number literal">0.0</span>, <span class="variable">rings</span>: <span class="keyword">nil</span>), <span class="variable">attributes</span>: <a href="https://lebje.github.io/ArcGISKit/attributes"><span class="type">attributes</span></a>)
 
 <span class="keyword">let</span> <span class="variable">res</span> = <span class="keyword">try</span> <span class="variable">await</span> <span class="variable">myFeatureServer</span>.<span class="variable">add</span>([<span class="variable">feature</span>], <span class="variable">to</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>)
 </code></pre></body></html>
@@ -69,7 +69,7 @@
   <tbody>
     <tr>
     <th>features</th>
-    <td><code class="type">[Feature]</code></td>
+    <td><code class="type">[AGKFeature]</code></td>
     <td><p>The <code>Feature</code>s you wish to add.</p>
 </td>
 </tr>
@@ -98,7 +98,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2022-07-15T02:30:17+0000">July 15, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2023-06-19T20:09:02+0000">June 19, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>

@@ -46,12 +46,17 @@
 <div class="discussion">
     <p>To delete the first feature from the first layer, you could write:</p>
 
-<html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">layers</span> = <span class="keyword">try</span> <span class="variable">await</span> <span class="variable">myFeatureServer</span>
+<html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">result</span> = <span class="variable">await</span> <span class="variable">myFeatureServer</span>
 	.<span class="variable">query</span>(<span class="variable">layerQueries</span>: [.<span class="variable">init</span>(<span class="variable">whereClause</span>: <span class="string literal">"</span><span class="string literal">1=1</span><span class="string literal">"</span>, <span class="variable">layerID</span>: <span class="string literal">"</span><span class="string literal">0</span><span class="string literal">"</span>)])
 
-<span class="keyword">let</span> <span class="variable">feature</span> = <span class="variable">layers</span>[<span class="number literal">0</span>].<span class="variable">features</span>[<span class="number literal">0</span>]
-<span class="keyword">let</span> <span class="variable">res</span> = <span class="keyword">try</span> <span class="variable">await</span> <span class="variable">myFeatureServer</span>
-	.<span class="variable">delete</span>([<span class="variable">feature</span>.<span class="variable">attributes</span>![<span class="string literal">"</span><span class="string literal">OBJECTID</span><span class="string literal">"</span>].<span class="variable">intValue</span>], <span class="variable">from</span>: <span class="type">String</span>(<span class="variable">layers</span>[<span class="number literal">0</span>].<span class="variable">id</span>))
+<span class="keyword">switch</span> <span class="variable">result</span> {
+ 	<span class="keyword">case</span> .<span class="variable">success</span>(<span class="keyword">let</span> <span class="variable">layers</span>):
+		<span class="keyword">let</span> <span class="variable">feature</span> = <span class="variable">layers</span>[<span class="number literal">0</span>].<span class="variable">features</span>[<span class="number literal">0</span>]
+		<span class="keyword">let</span> <span class="variable">res</span> = <span class="variable">await</span> <span class="variable">myFeatureServer</span>
+			.<span class="variable">delete</span>([<span class="variable">feature</span>.<span class="variable">attributes</span>![<span class="string literal">"</span><span class="string literal">OBJECTID</span><span class="string literal">"</span>].<span class="variable">intValue</span>], <span class="variable">from</span>: <span class="type">String</span>(<span class="variable">layers</span>[<span class="number literal">0</span>].<span class="variable">id</span>))
+	<span class="keyword">case</span> .<span class="variable">failure</span>(<span class="keyword">let</span> <span class="variable">error</span>): ...
+}
+
 </code></pre></body></html>
 </div>
 <h4>Parameters</h4>
@@ -85,9 +90,6 @@
 </tr>
   </tbody>
 </table>
-  <h4>Throws</h4>
-  <p><code>AGKRequestError</code></p>
-
   <h4>Returns</h4>
   <p><code>[EditResponse]</code>.</p>
 
@@ -96,7 +98,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2022-07-15T02:30:17+0000">July 15, 2022</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2023-06-19T20:09:02+0000">June 19, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
