@@ -24,7 +24,8 @@ public struct FeatureLayer: Codable, Equatable {
 	@FallbackCoding<EmptyArray>
 	public var fields: [TableField]? = []
 
-	public var features: [AGKFeature] = []
+	@FallbackDecoding<EmptyArray>
+	public var features: [AGKFeature]
 }
 
 public struct FeatureLayerInfo: Codable, Equatable {
