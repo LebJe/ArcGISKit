@@ -89,7 +89,7 @@ public struct FeatureServer {
 	/// number of object IDs returned in the ID array response.
 	///     Clients can exploit this to get all the query conforming object IDs by specifying `returnIdsOnly` as true and
 	/// subsequently requesting feature sets for subsets of object IDs.
-	///   - returnCountOnly: If `true`, the response only includes the count (number of features/records) that would be
+	///   - returnCount: If `true`, the response only includes the count (number of features/records) that would be
 	/// returned by a query. Otherwise, the response is a feature set.
 	///   - returnZ: If `true`, z-values are included in the results if the features have z-values. Otherwise, z-values are
 	/// not returned.
@@ -120,7 +120,7 @@ public struct FeatureServer {
 		layerQueries: [Self.LayerQuery],
 		returnGeometry: Bool = true,
 		returnObjectIDs: Bool = false,
-		returnCountOnly: Bool = false,
+		returnCount: Bool = false,
 		returnZ: Bool = false,
 		returnM: Bool = false,
 		geometryPrecision: Int? = nil,
@@ -139,8 +139,8 @@ public struct FeatureServer {
 				"f": "json",
 				"layerDefs": String(bytes: XJSONEncoder().encode(layerQueriesDict), encoding: .utf8)!,
 				"returnGeometry": String(describing: returnGeometry),
-				"returnObjectIDs": String(describing: returnObjectIDs),
-				"returnCountOnly": String(describing: returnCountOnly),
+				"returnIdsOnly": String(describing: returnObjectIDs),
+				"returnCountOnly": String(describing: returnCount),
 				"returnZ": String(describing: returnZ),
 				"returnM": String(describing: returnM),
 				"returnTrueCurves": String(describing: returnTrueCurves),
