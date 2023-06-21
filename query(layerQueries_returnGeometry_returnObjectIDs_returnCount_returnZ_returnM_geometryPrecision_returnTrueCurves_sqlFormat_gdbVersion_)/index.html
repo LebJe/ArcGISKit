@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArcGISKit - query(layerQueries:returnGeometry:returnObjectIDs:returnCountOnly:returnZ:returnM:geometryPrecision:returnTrueCurves:sqlFormat:gdbVersion:)</title>
+    <title>ArcGISKit - query(layerQueries:returnGeometry:returnObjectIDs:returnCount:returnZ:returnM:geometryPrecision:returnTrueCurves:sqlFormat:gdbVersion:)</title>
     <link rel="stylesheet" type="text/css" href="https://lebje.github.io/ArcGISKit/all.css" media="all" />
 </head>
 <body>
@@ -33,7 +33,7 @@
         <article>
             <h1>
 <small>Function</small>
-<span class="name">query(layer​Queries:​return​Geometry:​return​Object​IDs:​return​Count​Only:​return​Z:​return​M:​geometry​Precision:​return​True​Curves:​sql​Format:​gdb​Version:​)</span>
+<span class="name">query(layer​Queries:​return​Geometry:​return​Object​IDs:​return​Count:​return​Z:​return​M:​geometry​Precision:​return​True​Curves:​sql​Format:​gdb​Version:​)</span>
 </h1>
 
 <div class="declaration">
@@ -41,7 +41,7 @@
 		<span class="variable">layerQueries</span>: [<span class="keyword">Self</span>.<a href="https://lebje.github.io/ArcGISKit/LayerQuery"><span class="type">LayerQuery</span></a>],
 		<span class="variable">returnGeometry</span>: <span class="type">Bool</span> = <span class="keyword">true</span>,
 		<span class="variable">returnObjectIDs</span>: <span class="type">Bool</span> = <span class="keyword">false</span>,
-		<span class="variable">returnCountOnly</span>: <span class="type">Bool</span> = <span class="keyword">false</span>,
+		<span class="variable">returnCount</span>: <span class="type">Bool</span> = <span class="keyword">false</span>,
 		<span class="variable">returnZ</span>: <span class="type">Bool</span> = <span class="keyword">false</span>,
 		<span class="variable">returnM</span>: <span class="type">Bool</span> = <span class="keyword">false</span>,
 		<span class="variable">geometryPrecision</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>,
@@ -93,7 +93,7 @@
 </td>
 </tr>
 <tr>
-    <th>return​Count​Only</th>
+    <th>return​Count</th>
     <td><code class="type">Bool</code></td>
     <td><p>If <code>true</code>, the response only includes the count (number of features/records) that would be returned by a query. Otherwise, the response is a feature set.</p>
 </td>
@@ -150,7 +150,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2023-06-21T02:53:30+0000">June 21, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2023-06-21T17:20:00+0000">June 21, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
