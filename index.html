@@ -48,7 +48,8 @@
     </a>
 </dt>
 <dd>
-    <p>An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is independent of the user owning the item.</p>
+    <p>An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is
+independent of the user owning the item.</p>
 
 </dd>
 <dt class="structure">
@@ -161,7 +162,9 @@
     </a>
 </dt>
 <dd>
-    <p>A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets with a spatial column are considered layers; those without a spatial column are considered tables. A feature service allows clients to query and edit feature geometry and attributes.</p>
+    <p>A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets
+with a spatial column are considered layers; those without a spatial column are considered tables. A feature service
+allows clients to query and edit feature geometry and attributes.</p>
 
 </dd>
 <dt class="structure">
@@ -470,6 +473,14 @@
 
 </dd>
 <dt class="enumeration">
+    <a href="https://lebje.github.io/ArcGISKit/SQLFormat" title="enumeration - SQLFormat">
+        SQLFormat
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
     <a href="https://lebje.github.io/ArcGISKit/Capability" title="enumeration - Capability">
         Capability
     </a>
@@ -561,8 +572,8 @@ If <code>private</code>, the user descriptive information will not be available 
     
 </dd>
 <dt class="function">
-    <a href="https://lebje.github.io/ArcGISKit/query(layerQueries_)" title="function - query(layerQueries:)">
-        query(layer​Queries:​)
+    <a href="https://lebje.github.io/ArcGISKit/query(layerQueries_returnGeometry_returnObjectIDs_returnCountOnly_returnZ_returnM_geometryPrecision_returnTrueCurves_sqlFormat_gdbVersion_)" title="function - query(layerQueries:returnGeometry:returnObjectIDs:returnCountOnly:returnZ:returnM:geometryPrecision:returnTrueCurves:sqlFormat:gdbVersion:)">
+        query(layer​Queries:​return​Geometry:​return​Object​IDs:​return​Count​Only:​return​Z:​return​M:​geometry​Precision:​return​True​Curves:​sql​Format:​gdb​Version:​)
     </a>
 </dt>
 <dd>
@@ -611,7 +622,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
+    <p>Generates a <code>URL</code> that users of your app should go to to authenticate. Once they authenticate, they should copy and
+paste the authentication code back into your app; that code can then be passed to <code>GIS.init</code>.</p>
 
 </dd>
 <dt class="function">
@@ -664,7 +676,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>Creates a folder in which items can be placed. Folders are only visible to a user and solely used for organizing content within that user's content space.</p>
+    <p>Creates a folder in which items can be placed. Folders are only visible to a user and solely used for organizing
+content within that user's content space.</p>
 
 </dd>
 <dt class="function">
@@ -815,7 +828,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>The title of the group. This is the name that is displayed to users and by which they refer to the group. Every group must have a title, and it must be unique for a user.</p>
+    <p>The title of the group. This is the name that is displayed to users and by which they refer to the group. Every
+group must have a title, and it must be unique for a user.</p>
 
 </dd>
 <dt class="variable">
@@ -950,7 +964,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>The access privileges of the group that determine who can see and access the group. This can be set to private, org, or public.</p>
+    <p>The access privileges of the group that determine who can see and access the group. This can be set to private,
+org, or public.</p>
 
 </dd>
 <dt class="variable">
@@ -959,7 +974,10 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>If the request is made by an authenticated user, a <code>UserMembership</code> object is returned containing information about the user's access to the group. This includes the <code>username</code> of the calling user; the <code>memberType</code>, which specifies the type of membership the user has in the group (owner, member, admin, none); and the <code>applications</code> (number of requests to join the group) count available to administrators and owners.</p>
+    <p>If the request is made by an authenticated user, a <code>UserMembership</code> object is returned containing information about
+the user's access to the group. This includes the <code>username</code> of the calling user; the <code>memberType</code>, which specifies
+the type of membership the user has in the group (owner, member, admin, none); and the <code>applications</code> (number of
+requests to join the group) count available to administrators and owners.</p>
 
 </dd>
 <dt class="variable">
@@ -977,7 +995,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>Only applies to org accounts. Indicates if the group allows joining without requesting membership approval. The default value is <code>false</code>.</p>
+    <p>Only applies to org accounts. Indicates if the group allows joining without requesting membership approval. The
+default value is <code>false</code>.</p>
 
 </dd>
 <dt class="variable">
@@ -1158,7 +1177,8 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>The total storage amount allowed for the user's organization or subscription in Byte. Usually 2TB for organization, 2GB for non-organization.</p>
+    <p>The total storage amount allowed for the user's organization or subscription in Byte. Usually 2TB for organization,
+2GB for non-organization.</p>
 
 </dd>
 <dt class="variable">
@@ -1239,8 +1259,12 @@ If <code>private</code>, the user descriptive information will not be available 
     </a>
 </dt>
 <dd>
-    <p>The user preferred number and date format defined in CLDR (only applicable for English and Spanish, i.e. when culture is en or es).
-See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages.htm#GUID-F2075D30-8644-4A62-915F-D21A4CEB4587">Languages</a> for supported formats. It will inherit from <a href="https://developers.arcgis.com/rest/users-groups-and-items/portal-self.htm">organization</a> <code>cultureFormat</code> if undefined.</p>
+    <p>The user preferred number and date format defined in CLDR (only applicable for English and Spanish, i.e. when
+culture is en or es).
+See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages.htm#GUID-F2075D30-8644-4A62-915F-D21A4CEB4587">Languages</a>
+for supported formats. It will inherit from
+<a href="https://developers.arcgis.com/rest/users-groups-and-items/portal-self.htm">organization</a> <code>cultureFormat</code> if
+undefined.</p>
 
 </dd>
 <dt class="variable">
@@ -1249,7 +1273,8 @@ See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages
     </a>
 </dt>
 <dd>
-    <p>The user preferred region, used to set the featured maps on the home page, content in the gallery, and the default extent of new maps in the Viewer.</p>
+    <p>The user preferred region, used to set the featured maps on the home page, content in the gallery, and the default
+extent of new maps in the Viewer.</p>
 
 </dd>
 <dt class="variable">
@@ -1285,7 +1310,8 @@ See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages
     </a>
 </dt>
 <dd>
-    <p>An array of groups the user belongs to. See <a href="https://developers.arcgis.com/rest/users-groups-and-items/group.htm">Group</a> for properties of a group.</p>
+    <p>An array of groups the user belongs to. See
+<a href="https://developers.arcgis.com/rest/users-groups-and-items/group.htm">Group</a> for properties of a group.</p>
 
 </dd>
 <dt class="variable">
@@ -1305,7 +1331,7 @@ See <a href="https://developers.arcgis.com/rest/users-groups-and-items/languages
 
     <footer>
         <p>
-    Generated on <time datetime="2023-06-19T20:09:02+0000">June 19, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+    Generated on <time datetime="2023-06-21T01:33:46+0000">June 21, 2023</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
