@@ -13,13 +13,15 @@ public enum AGKError: Error {
 }
 
 public enum AGKAuthError: Error {
-	/// You logged in anonymously using `GIS.init`. You must login using a username and password, or a client ID and secret.
+	/// You logged in anonymously using `GIS.init`. You must login using a username and password, or a client ID and
+	/// secret.
 	case isAnonymous
 
 	/// The username or password provided to `GIS.init` was invalid.
 	case invalidUsernameOrPassword
 
-	/// A token is required. Login using a username and password, or a client ID and secret so `GIS.init` can generate a token.
+	/// A token is required. Login using a username and password, or a client ID and secret so `GIS.init` can generate a
+	/// token.
 	case tokenRequired
 }
 
@@ -32,7 +34,8 @@ public enum AGKDataError: Error {
 public enum AGKRequestError: Error {
 	case clientError(GHCError)
 
-	/// The filename could not be [percent-encoded](https://en.wikipedia.org/wiki/URL_encoding) (for uploading in a [multipart](https://en.wikipedia.org/wiki/MIME#Multipart_messages) request)
+	/// The filename could not be [percent-encoded](https://en.wikipedia.org/wiki/URL_encoding) (for uploading in a
+	/// [multipart](https://en.wikipedia.org/wiki/MIME#Multipart_messages) request)
 	case invalidFilename(name: String)
 
 	case encodingError(EncodingError)

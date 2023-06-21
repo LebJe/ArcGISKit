@@ -7,9 +7,11 @@
 import CodableWrappers
 import struct Foundation.Date
 
-/// An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is independent of the user owning the item.
+/// An item (a unit of content) in the portal. Each item has a unique identifier and a well known URL that is
+/// independent of the user owning the item.
 ///
-/// An item can have associated JSON data that's available via the item data resource. For example, an item of type Map Package returns the actual bits corresponding to the map package via the item data resource.
+/// An item can have associated JSON data that's available via the item data resource. For example, an item of type Map
+/// Package returns the actual bits corresponding to the map package via the item data resource.
 ///
 /// The `numViews` is incremented when an item is opened.
 ///
@@ -18,7 +20,8 @@ public struct ContentItem: Codable, Equatable {
 	/// The unique ID for this item.
 	public let id: String
 
-	/// The title of the item. This is the name that's displayed to users and by which they refer to the item. Every item must have a title.
+	/// The title of the item. This is the name that's displayed to users and by which they refer to the item. Every item
+	/// must have a title.
 	public let title: String
 
 	/// The file name of the item for file types. Read-only.
@@ -28,16 +31,20 @@ public struct ContentItem: Codable, Equatable {
 	///
 	/// Example types include Web Map, Map Service, Shapefile, and Web Mapping Application.
 	///
-	/// See the overview section of [Items and item types](https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm) to get an understanding of the item type hierarchy.
+	/// See the overview section of [Items and item
+	/// types](https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm) to get an understanding
+	/// of the item type hierarchy.
 	public let type: String
 
-	/// An array of keywords that further describes the type of this item. Each item is tagged with a set of type keywords that are derived based on its primary type.
+	/// An array of keywords that further describes the type of this item. Each item is tagged with a set of type keywords
+	/// that are derived based on its primary type.
 	public let typeKeywords: [String]?
 
 	/// The username of the user who owns this item.
 	public let owner: String?
 
-	/// The URL for the resource represented by the item. Applies only to items that represent web-accessible resources such as map services.
+	/// The URL for the resource represented by the item. Applies only to items that represent web-accessible resources
+	/// such as map services.
 	public let url: String?
 
 	/// The size of the item in bytes.
@@ -85,7 +92,8 @@ public struct ContentItem: Codable, Equatable {
 	/// Primarily applies to the banner associated with an application. The URL to the banner used for the application.
 	public let banner: String?
 
-	/// An array that primarily applies to screenshots associated with an application. The URL to the screenshots used for the application.
+	/// An array that primarily applies to screenshots associated with an application. The URL to the screenshots used for
+	/// the application.
 	public let screenshots: [String]?
 
 	/// The item locale information (language and country).
@@ -112,7 +120,8 @@ public struct ContentItem: Codable, Equatable {
 	/// If `true`, the item is listed in the marketplace
 	public let listed: Bool?
 
-	/// The ID of the folder in which the owner has stored the item. The property is only returned to the item owner or the org admin.
+	/// The ID of the folder in which the owner has stored the item. The property is only returned to the item owner or the
+	/// org admin.
 	public var ownerFolder: String?
 
 	/// Number of comments on the item.
@@ -129,7 +138,8 @@ public struct ContentItem: Codable, Equatable {
 
 	/// (Optional) Indicates user's control to the item.
 	///
-	/// Values: `admin` (for item owner and org admin) | `update` (for members of groups with item update capability that the item is shared with)
+	/// Values: `admin` (for item owner and org admin) | `update` (for members of groups with item update capability that
+	/// the item is shared with)
 	public let itemControl: ItemControl?
 
 	/// Item information completeness score based upon item snippet, thumbnail, description, title, tags etc.

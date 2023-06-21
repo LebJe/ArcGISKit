@@ -17,7 +17,11 @@ extension ExamplesCommand {
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
 
 		func run() async throws {
-			switch await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!) {
+			switch await authenticate(
+				username: sharedOptions.username,
+				password: sharedOptions.password,
+				url: sharedOptions.organizationURL!
+			) {
 				case let .success(gis):
 					switch await gis.user {
 						case let .success(user):

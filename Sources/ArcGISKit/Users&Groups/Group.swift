@@ -9,20 +9,27 @@ import struct Foundation.Date
 import GenericHTTPClient
 import WebURL
 
-/// The [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) resource represents a group (for example, San Bernardino Fires) within the portal.
+/// The [Group](https://developers.arcgis.com/rest/users-groups-and-items/group.htm) resource represents a group (for
+/// example, San Bernardino Fires) within the portal.
 ///
-/// The owner is automatically an administrator and is returned in the list of administrators. Administrators can invite, add to, or remove members from a group as well as update or delete the group. The administrator for an organization can also reassign the group to another member of the organization.
+/// The owner is automatically an administrator and is returned in the list of administrators. Administrators can
+/// invite, add to, or remove members from a group as well as update or delete the group. The administrator for an
+/// organization can also reassign the group to another member of the organization.
 ///
-/// Group members can leave the group. Authenticated users can apply to join a group unless the group is by invitation only.
+/// Group members can leave the group. Authenticated users can apply to join a group unless the group is by invitation
+/// only.
 ///
-/// The visibility of the group by other users is determined by the `access` property. If the group is private, no one other than the administrators and members of the group will be able to see it. If the group is shared with an organization, all members of the organization will be able to find it.
+/// The visibility of the group by other users is determined by the `access` property. If the group is private, no one
+/// other than the administrators and members of the group will be able to see it. If the group is shared with an
+/// organization, all members of the organization will be able to find it.
 ///
 /// To fetch the content owned by a `Group` call `Group.fetchContent()`.
 public struct Group: Equatable, Codable {
 	/// The given group ID.
 	public let id: String?
 
-	/// The title of the group. This is the name that is displayed to users and by which they refer to the group. Every group must have a title, and it must be unique for a user.
+	/// The title of the group. This is the name that is displayed to users and by which they refer to the group. Every
+	/// group must have a title, and it must be unique for a user.
 	public let title: String
 
 	/// If this is set to true, users will not be able to apply to join the group.
@@ -69,16 +76,21 @@ public struct Group: Equatable, Codable {
 	@Immutable @MillisecondsSince1970DateCoding
 	public var modified: Date
 
-	/// The access privileges of the group that determine who can see and access the group. This can be set to private, org, or public.
+	/// The access privileges of the group that determine who can see and access the group. This can be set to private,
+	/// org, or public.
 	public let access: Access
 
-	/// If the request is made by an authenticated user, a `UserMembership` object is returned containing information about the user's access to the group. This includes the `username` of the calling user; the `memberType`, which specifies the type of membership the user has in the group (owner, member, admin, none); and the `applications` (number of requests to join the group) count available to administrators and owners.
+	/// If the request is made by an authenticated user, a `UserMembership` object is returned containing information about
+	/// the user's access to the group. This includes the `username` of the calling user; the `memberType`, which specifies
+	/// the type of membership the user has in the group (owner, member, admin, none); and the `applications` (number of
+	/// requests to join the group) count available to administrators and owners.
 	public let userMembership: User.Membership?
 
 	/// Indicates if the group is protected from deletion. The default value is `false`.
 	public let protected: Bool
 
-	/// Only applies to org accounts. Indicates if the group allows joining without requesting membership approval. The default value is `false`.
+	/// Only applies to org accounts. Indicates if the group allows joining without requesting membership approval. The
+	/// default value is `false`.
 	public let autoJoin: Bool
 
 	/// If `true`, the group has content category set.

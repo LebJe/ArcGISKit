@@ -81,7 +81,12 @@ public struct AGKFeature: Codable, Equatable {
 	///   - gis: The `GIS` to use to authenticate.
 	/// - Throws: `AGKDataError`.
 	/// - Returns: A `JSON` response that describes whether the request succeeded or failed.
-	public func addAttachment(data: Data, name: String, gis: GIS, mimeType: MediaType? = nil) async -> Result<JSON, AGKError> {
+	public func addAttachment(
+		data: Data,
+		name: String,
+		gis: GIS,
+		mimeType: MediaType? = nil
+	) async -> Result<JSON, AGKError> {
 		var parts: [Subpart] = []
 
 		do {

@@ -28,9 +28,16 @@ public struct FeatureServer {
 		}
 	}
 
+	public enum SQLFormat: String {
+		case none
+		case native
+		case standard
+	}
+
 	/// Feature Server
 	/// - Parameters:
-	///   - url: The URL to the Feature Server, e.g: "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
+	///   - url: The URL to the Feature Server, e.g:
+	/// "https://machine.domain.com/webadaptor/rest/services/ServiceName/FeatureServer"
 	///   - gis: The `GIS` to use to authenticate.
 	public init(url: URL, gis: GIS) {
 		self.url = WebURL(url.absoluteString)!
@@ -73,9 +80,55 @@ public struct FeatureServer {
 	}
 
 	/// Query the `FeatureServer`.
-	/// - Parameter layerQueries: The queries you want to perform.
+	/// - Parameters:
+	///   - layerQueries: The queries you want to perform.
+	///   - returnGeometry: If `true``, the result includes the geometry associated with each feature returned.
+	///   - returnObjectIDs: If `true`, the response only includes an array of object IDs for each layer.
+	////    Otherwise, the response is a feature set.
+	////    While there is a limit to the number of features included in the feature set response, there is no limit to the
+	/// number of object IDs returned in the ID array response.
+	///     Clients can exploit this to get all the query conforming object IDs by specifying `returnIdsOnly` as true and
+	/// subsequently requesting feature sets for subsets of object IDs.
+	///   - returnCountOnly: If `true`, the response only includes the count (number of features/records) that would be
+	/// returned by a query. Otherwise, the response is a feature set.
+	///   - returnZ: If `true`, z-values are included in the results if the features have z-values. Otherwise, z-values are
+	/// not returned.
+	///     This parameter only applies if `returnGeometry` is `true` and at least one of the layer's `hasZ` properties is
+	/// `true`.
+	///   - returnM: If `true`, m-values are included in the results if the features have m-values. Otherwise, m-values are
+	/// not returned.
+	///     This parameter only applies if `returnGeometry`` is true and at least one of the layer's `hasM` properties is
+	/// `true``.
+	///   - geometryPrecision: The number of decimal places in the response geometries returned by the query operation.
+	/// This applies to x- and y-values only (not m- or z-values).
+	///   - returnTrueCurves: This option was added at 10.5. When set to true, the query returns true curves in output
+	/// geometries. When set to `false`, curves are converted to densified polylines or polygons.
+	///   - sqlFormat: [This parameter] can be either standard SQL-92 ``FeatureServer\SQLFormat\standard`` or it can use
+	/// the native SQL of the underlying data store ``FeatureServer\SQLFormat\native``.
+	///     The default is ``FeatureServer\SQLFormat\none``, which means the `sqlFormat` depends on the
+	/// `useStandardizedQuery` parameter.
+	///     Note: The SQL format ``FeatureServer\SQLFormat\native`` is supported only when `useStandardizedQuery` [is set
+	/// to `false`].
+	///   - useStandardizedQuery: TODO
+	///   - gdbVersion: the geodatabase version to query. This parameter applies only if the `hasVersionedData` property of
+	/// the service and the `isDataVersioned` property of the layers queried are `true`.
+	///     If `gdbVersion` is not specified, the query will apply to the published map’s version. Example: gdbVersion =
+	/// "SDE.DEFAULT"
 	/// - Returns: An `Array` of `FeatureLayer`s.
-	public func query(layerQueries: [Self.LayerQuery]) async -> Result<[FeatureLayer], AGKError> {
+	/// - Reference: https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-.htm
+	public func query(
+		layerQueries: [Self.LayerQuery],
+		returnGeometry: Bool = true,
+		returnObjectIDs: Bool = false,
+		returnCountOnly: Bool = false,
+		returnZ: Bool = false,
+		returnM: Bool = false,
+		geometryPrecision: Int? = nil,
+		returnTrueCurves: Bool = false,
+		sqlFormat: SQLFormat = .none,
+		// useStandardizedQuery: Bool = false,
+		gdbVersion: String? = nil
+	) async -> Result<[FeatureLayer], AGKError> {
 		let layerQueriesDict = layerQueries.map({ ["layerId": $0.layerID, "where": $0.whereClause, "outfields": "*"] })
 
 		var newURL = self.url
@@ -85,11 +138,26 @@ public struct FeatureServer {
 			try newURL.formParams += [
 				"f": "json",
 				"layerDefs": String(bytes: XJSONEncoder().encode(layerQueriesDict), encoding: .utf8)!,
+				"returnGeometry": String(describing: returnGeometry),
+				"returnObjectIDs": String(describing: returnObjectIDs),
+				"returnCountOnly": String(describing: returnCountOnly),
+				"returnZ": String(describing: returnZ),
+				"returnM": String(describing: returnM),
+				"returnTrueCurves": String(describing: returnTrueCurves),
+				"sqlFormat": sqlFormat.rawValue,
 			]
+
+			if let geometryPrecision {
+				newURL.formParams.geometryPrecision = String(geometryPrecision)
+			}
+
+			if let gdbVersion {
+				newURL.formParams.gdbVersion = gdbVersion
+			}
 		} catch let error as EncodingError {
 			return .failure(.requestError(.encodingError(error)))
 		} catch {
-			fatalError()
+			fatalError("Unexpected error: \(error)")
 		}
 
 		if let token = await self.gis.currentToken {
@@ -134,7 +202,11 @@ public struct FeatureServer {
 	/// }
 	///
 	/// ```
-	public func delete(_ featureIDs: [Int], from id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+	public func delete(
+		_ featureIDs: [Int],
+		from id: String,
+		gdbVersion: String? = nil
+	) async -> Result<[EditResponse], AGKError> {
 		await self.edit([.init(id: id, deletes: featureIDs)], gdbVersion: gdbVersion)
 	}
 
@@ -158,7 +230,11 @@ public struct FeatureServer {
 	///
 	/// let res = try await myFeatureServer.add([feature], to: "0")
 	///	```
-	public func add(_ features: [AGKFeature], to id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+	public func add(
+		_ features: [AGKFeature],
+		to id: String,
+		gdbVersion: String? = nil
+	) async -> Result<[EditResponse], AGKError> {
 		await self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion)
 	}
 
@@ -180,7 +256,11 @@ public struct FeatureServer {
 	/// feature.attributes!["Greeting"] = "Hi!"
 	/// let res = try await myFeatureServer.update([feature], in: "0")
 	///	```
-	public func update(_ features: [AGKFeature], in id: String, gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+	public func update(
+		_ features: [AGKFeature],
+		in id: String,
+		gdbVersion: String? = nil
+	) async -> Result<[EditResponse], AGKError> {
 		await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion)
 	}
 
@@ -212,7 +292,13 @@ public struct FeatureServer {
 			headers: ["Content-Type": "application/x-www-form-urlencoded"],
 			body: .string(
 				"""
-				f=json&edits=\(d.urlQueryEncoded)\(self.gis.currentToken != nil ? "&token=\(self.gis.currentToken!)" : "")\(gdbVersion != nil ? "&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : "")
+				f=json&edits=\(d.urlQueryEncoded)\(
+					self.gis
+						.currentToken != nil ? "&token=\(self.gis.currentToken!)" : ""
+				)\(
+					gdbVersion != nil ?
+						"&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : ""
+				)
 				"""
 			)
 		)

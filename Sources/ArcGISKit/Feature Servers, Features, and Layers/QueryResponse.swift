@@ -104,7 +104,12 @@ public struct AGKAttachment: Codable, Equatable {
 }
 
 public struct AGKGeometry: Codable, Equatable {
-	public init(x: Double? = nil, y: Double? = nil, rings: [[[Double]]]? = nil, spatialReference: SpatialReference? = nil) {
+	public init(
+		x: Double? = nil,
+		y: Double? = nil,
+		rings: [[[Double]]]? = nil,
+		spatialReference: SpatialReference? = nil
+	) {
 		self.x = x
 		self.y = y
 		self.rings = rings

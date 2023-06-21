@@ -76,8 +76,10 @@ public final actor GIS {
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
 	/// - Throws: ``AGKError``
 	///
-	/// If `authType` is ``AuthenticationType.webBrowser``, You must first call ``GIS.generateURL(clientID:baseURL:site:)`` (without changing `redirectURI`) to generate a `URL`.
-	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then copy and paste the returned code back into your app.
+	/// If `authType` is ``AuthenticationType.webBrowser``, You must first call ``GIS.generateURL(clientID:baseURL:site:)``
+	/// (without changing `redirectURI`) to generate a `URL`.
+	/// Direct the user of your app to go to that `URL`, login to ArcGIS Online, then copy and paste the returned code back
+	/// into your app.
 	/// Once you receive the code, you can then pass it to this initializer.
 	public init(
 		authentication authType: AuthenticationType,
@@ -154,7 +156,11 @@ public final actor GIS {
 
 			let serverInfoReq = try! GHCHTTPRequest(url: infoURL)
 
-			let serverInfoResult = await sendAndHandle(request: serverInfoReq, client: self.httpClient, decodeType: ServerInfo.self)
+			let serverInfoResult = await sendAndHandle(
+				request: serverInfoReq,
+				client: self.httpClient,
+				decodeType: ServerInfo.self
+			)
 
 			switch serverInfoResult {
 				case let .success(serverInfo):
@@ -189,12 +195,15 @@ public final actor GIS {
 		}
 	}
 
-	/// Generates a `URL` that users of your app should go to to authenticate. Once they authenticate, they should copy and paste the authentication code back into your app; that code can then be passed to `GIS.init`.
+	/// Generates a `URL` that users of your app should go to to authenticate. Once they authenticate, they should copy and
+	/// paste the authentication code back into your app; that code can then be passed to `GIS.init`.
 	/// - Parameters:
 	///   - clientID:
 	///   - baseURL: Your ArcGIS Server hostname.
 	///   - site: Your ArcGIS Server site name. The default is "sharing".
-	///   - redirectURI: The `URL` that will receive a code once the user has logged in. Use the default ("urn:ietf:wg:oauth:2.0:oob") to have ArcGIS Online present the code to the user instead of redirecting to a different `URL`.
+	///   - redirectURI: The `URL` that will receive a code once the user has logged in. Use the default
+	/// ("urn:ietf:wg:oauth:2.0:oob") to have ArcGIS Online present the code to the user instead of redirecting to a
+	/// different `URL`.
 	/// - Returns: The generated `URL`.
 	public static func generateURL(
 		clientID: String,
@@ -219,8 +228,10 @@ public final actor GIS {
 /////   - client: The client used to make HTTP requests.
 /////   - token: The token used to authenticate.
 /////   - url: Where the content is located.
-/////   - start: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235) for more information.
-/////   - limit: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235) for more information.
+/////   - start: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235)
+/// for more information.
+/////   - limit: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235)
+/// for more information.
 /////   - The type that will be retrieved from `url`.
 // func getContent<T: Codable>(
 //	client: HTTPClient,
@@ -230,6 +241,7 @@ public final actor GIS {
 //	limit: Int = 100,
 //	decodeType: T.Type
 // ) async throws -> [T] {
-//	let req = try HTTPClient.Request(url: "\(url.absoluteString)?&f=json&start=\(start)&num=\(limit)\(token != nil ? "&token=\(token!)" : "")", method: .GET)
+//	let req = try HTTPClient.Request(url: "\(url.absoluteString)?&f=json&start=\(start)&num=\(limit)\(token != nil ?
+//	"&token=\(token!)" : "")", method: .GET)
 //	return try handle(response: try await client.execute(request: req).get(), decodeType: Paginated<T>.self).items
 // }

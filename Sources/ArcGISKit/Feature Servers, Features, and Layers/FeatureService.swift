@@ -6,9 +6,12 @@
 
 import CodableWrappers
 
-/// A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets with a spatial column are considered layers; those without a spatial column are considered tables. A feature service allows clients to query and edit feature geometry and attributes.
+/// A feature service can contain datasets (for example, tables and views) with or without a spatial column. Datasets
+/// with a spatial column are considered layers; those without a spatial column are considered tables. A feature service
+/// allows clients to query and edit feature geometry and attributes.
 ///
-/// This resource provides basic information about the feature service, including the feature layers and tables that it contains, the service description, and so on.
+/// This resource provides basic information about the feature service, including the feature layers and tables that it
+/// contains, the service description, and so on.
 public struct FeatureService: Codable, Equatable {
 	public let currentVersion: Double?
 	public let serviceDescription: String

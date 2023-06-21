@@ -11,7 +11,11 @@ import GenericHTTPClient
 
 // }
 
-func sendAndHandle<T: Decodable>(request: GHCHTTPRequest, client: any GHCHTTPClient, decodeType: T.Type) async -> Result<T, AGKError> {
+func sendAndHandle<T: Decodable>(
+	request: GHCHTTPRequest,
+	client: any GHCHTTPClient,
+	decodeType: T.Type
+) async -> Result<T, AGKError> {
 	let result = await client.send(request: request)
 
 	switch result {

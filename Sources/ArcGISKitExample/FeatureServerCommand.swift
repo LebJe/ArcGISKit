@@ -10,7 +10,10 @@ import struct Foundation.URL
 
 extension ExamplesCommand {
 	struct FeatureServerCommand: AsyncParsableCommand {
-		static var configuration = CommandConfiguration(commandName: "feature-server", abstract: "View Feature Server details.")
+		static var configuration = CommandConfiguration(
+			commandName: "feature-server",
+			abstract: "View Feature Server details."
+		)
 
 		@OptionGroup var sharedOptions: ExamplesCommand.Options
 
@@ -22,7 +25,11 @@ extension ExamplesCommand {
 		}
 
 		func run() async throws {
-			switch await authenticate(username: sharedOptions.username, password: sharedOptions.password, url: sharedOptions.organizationURL!) {
+			switch await authenticate(
+				username: sharedOptions.username,
+				password: sharedOptions.password,
+				url: sharedOptions.organizationURL!
+			) {
 				case let .success(gis):
 					let fs = FeatureServer(url: featureServerURL!, gis: gis)
 					switch await fs.featureService {

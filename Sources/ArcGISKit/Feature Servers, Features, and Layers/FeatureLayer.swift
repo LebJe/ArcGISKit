@@ -14,6 +14,7 @@ public struct FeatureLayer: Codable, Equatable {
 
 	public let id: Int
 	public var objectIdFieldName: String? = nil
+	public var objectIds: [Int]? = nil
 	public var globalIdFieldName: String? = nil
 	public var geometryType: String? = nil
 	public var spatialReference: SpatialReference? = nil
