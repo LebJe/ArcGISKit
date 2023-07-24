@@ -135,7 +135,7 @@ public final actor GIS {
 				"client_secret": cS,
 			]
 
-			let req = try! GHCHTTPRequest(url: url)
+			let req = try! GHCHTTPRequest(url: self.url)
 
 			let res = await sendAndHandle(request: req, client: self.httpClient, decodeType: RequestOAuthTokenResponse.self)
 

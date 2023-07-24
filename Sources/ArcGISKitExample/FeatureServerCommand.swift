@@ -21,14 +21,14 @@ extension ExamplesCommand {
 		var featureServerURL: URL?
 
 		func validate() throws {
-			guard featureServerURL != nil else { throw ValidationError("The Feature Server URL must be valid.") }
+			guard self.featureServerURL != nil else { throw ValidationError("The Feature Server URL must be valid.") }
 		}
 
 		func run() async throws {
 			switch await authenticate(
-				username: sharedOptions.username,
-				password: sharedOptions.password,
-				url: sharedOptions.organizationURL!
+				username: self.sharedOptions.username,
+				password: self.sharedOptions.password,
+				url: self.sharedOptions.organizationURL!
 			) {
 				case let .success(gis):
 					let fs = FeatureServer(url: featureServerURL!, gis: gis)

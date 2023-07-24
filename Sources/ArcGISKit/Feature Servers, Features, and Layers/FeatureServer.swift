@@ -4,6 +4,7 @@
 //
 //  The full text of the license can be found in the file named LICENSE.
 
+import CodableWrappers
 import ExtrasJSON
 import Foundation
 import GenericHTTPClient
@@ -327,12 +328,16 @@ struct AddUpdateDelete: Codable {
 
 public struct EditResponse: Codable {
 	public let id: Int
-	public let addResults: [EditResult]?
-	public let updateResults: [EditResult]?
+
+	@FallbackDecoding<EmptyArray>
+	public var addResults: [EditResult]
+
+	@FallbackDecoding<EmptyArray>
+	public var updateResults: [EditResult]
 }
 
 public struct EditResult: Codable {
-	public let objectId: Int
+	public let objectId: Int?
 	public let uniqueId: Int?
 	public let globalId: String?
 	public let success: Bool

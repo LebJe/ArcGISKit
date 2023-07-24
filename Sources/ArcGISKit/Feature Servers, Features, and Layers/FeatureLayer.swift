@@ -14,7 +14,10 @@ public struct FeatureLayer: Codable, Equatable {
 
 	public let id: Int
 	public var objectIdFieldName: String? = nil
-	public var objectIds: [Int]? = nil
+
+	@FallbackDecoding<EmptyArray>
+	public var objectIds: [Int]
+
 	public var count: Int? = nil
 	public var globalIdFieldName: String? = nil
 	public var geometryType: String? = nil
@@ -30,7 +33,10 @@ public struct FeatureLayer: Codable, Equatable {
 
 public struct FeatureLayerInfo: Codable, Equatable {
 	public let drawingInfo: DrawingInfo?
-	public let fields: [TableField]?
+
+	@FallbackDecoding<EmptyArray>
+	public var fields: [TableField]
+
 	public let geometryField: TableField?
 }
 
@@ -43,7 +49,10 @@ public struct DrawingInfo: Codable, Equatable {
 	public struct Renderer: Codable, Equatable {
 		public let type: String
 		public let field1: String?
-		public let uniqueValueInfos: [UniqueValueInfo]?
+
+		@FallbackDecoding<EmptyArray>
+		public var uniqueValueInfos: [UniqueValueInfo]
+
 		public let fieldDelimiter: String?
 		public let authoringInfo: AuthoringInfo?
 

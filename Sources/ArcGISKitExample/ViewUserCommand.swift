@@ -18,9 +18,9 @@ extension ExamplesCommand {
 
 		func run() async throws {
 			switch await authenticate(
-				username: sharedOptions.username,
-				password: sharedOptions.password,
-				url: sharedOptions.organizationURL!
+				username: self.sharedOptions.username,
+				password: self.sharedOptions.password,
+				url: self.sharedOptions.organizationURL!
 			) {
 				case let .success(gis):
 					switch await gis.user {

@@ -19,7 +19,7 @@ extension ExamplesCommand {
 		var organizationURL: URL? = URL(string: "https://arcgis.com")!
 
 		func validate() throws {
-			guard organizationURL != nil else {
+			guard self.organizationURL != nil else {
 				throw ValidationError("organization-url must be a valid URL.")
 			}
 		}
