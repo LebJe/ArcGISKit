@@ -17,7 +17,7 @@ public struct FeatureServer {
 	}
 
 	public let url: WebURL
-	var gis: GIS
+	public var gis: GIS
 
 	public struct LayerQuery {
 		public let whereClause: String
@@ -234,9 +234,10 @@ public struct FeatureServer {
 	public func add(
 		_ features: [AGKFeature],
 		to id: String,
-		gdbVersion: String? = nil
+		gdbVersion: String? = nil,
+		datumTransformation: DatumTransformation? = nil
 	) async -> Result<[EditResponse], AGKError> {
-		await self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion)
+		await self.edit([.init(id: id, adds: features)], gdbVersion: gdbVersion, datumTransformation: datumTransformation)
 	}
 
 	/// Updates `features` in the `FeatureLayer` with the id of `id`.
@@ -260,9 +261,10 @@ public struct FeatureServer {
 	public func update(
 		_ features: [AGKFeature],
 		in id: String,
-		gdbVersion: String? = nil
+		gdbVersion: String? = nil,
+		datumTransformation: DatumTransformation? = nil
 	) async -> Result<[EditResponse], AGKError> {
-		await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion)
+		await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion, datumTransformation: datumTransformation)
 	}
 
 	/// Edit the attributes in the `FeatureLayer`s that are contained within this `FeatureServer`.
@@ -281,11 +283,21 @@ public struct FeatureServer {
 	/// feature.attributes!["Greeting"] = "Hello!"
 	///	let res = try await myFeatureServer.edit([A(id: "0", updates: [feature])])
 	///	```
-	func edit(_ aud: [AddUpdateDelete], gdbVersion: String? = nil) async -> Result<[EditResponse], AGKError> {
+	func edit(
+		_ aud: [AddUpdateDelete],
+		gdbVersion: String? = nil,
+		datumTransformation: DatumTransformation? = nil
+	) async -> Result<[EditResponse], AGKError> {
 		var newURL = self.url
 		newURL.pathComponents += ["applyEdits"]
 
 		let d = try! String(bytes: XJSONEncoder().encode(aud), encoding: .utf8)!
+
+		let dt: String?
+
+		if let datumTransformation {
+			dt = try! String(bytes: XJSONEncoder().encode(datumTransformation), encoding: .utf8)!
+		} else { dt = nil }
 
 		let req = try! await GHCHTTPRequest(
 			url: newURL,
@@ -299,6 +311,10 @@ public struct FeatureServer {
 				)\(
 					gdbVersion != nil ?
 						"&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : ""
+				)
+				\(
+					dt != nil ?
+						"&datumTransformation=\(dt!.urlQueryEncoded)" : ""
 				)
 				"""
 			)

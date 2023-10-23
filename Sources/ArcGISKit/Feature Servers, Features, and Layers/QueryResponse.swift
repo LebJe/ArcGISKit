@@ -119,7 +119,7 @@ public struct AGKGeometry: Codable, Equatable {
 	public var x: Double?
 	public var y: Double?
 	public var rings: [[[Double]]]?
-	public var spatialReference: SpatialReference?
+	public var spatialReference: SpatialReference? = nil
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: Self.CodingKeys.self)

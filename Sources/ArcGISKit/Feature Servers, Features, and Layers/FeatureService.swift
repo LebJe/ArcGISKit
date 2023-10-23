@@ -161,12 +161,52 @@ public struct HeightModelInfo: Codable, Equatable {
 	public let heightUnit: String?
 }
 
-public struct DatumTransformation: Codable, Equatable {
-	public let geoTransforms: [GeoTransform]?
+public enum DatumTransformation: Codable, Equatable {
+	case wkid(Int)
+	case wkt(WKT)
+	case geoTransforms([GeoTransform])
+
+	public struct WKT: Codable, Equatable {
+		public let wkt: String
+	}
+
+	private struct G: Codable {
+		let geoTransforms: [GeoTransform]
+	}
+
+	public init(from decoder: Decoder) throws {
+		let json = try JSON(from: decoder)
+
+		if let wkid = json.int {
+			self = .wkid(wkid)
+		} else if let wkt = try? WKT(json: json) {
+			self = .wkt(wkt)
+		} else if let geoTransforms = try? G(json: json) {
+			self = .geoTransforms(geoTransforms.geoTransforms)
+		} else {
+			throw DecodingError.dataCorrupted(.init(
+				codingPath: [],
+				debugDescription: "Expected a Integer (wkid) or an object (WKT or array of GeoTransform).\nRaw JSON: \(json.description)"
+			))
+		}
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		switch self {
+			case let .wkid(wkid):
+				var c = encoder.singleValueContainer()
+				try c.encode(wkid)
+			case let .wkt(wkt):
+				try wkt.encode(to: encoder)
+			case let .geoTransforms(geoTransforms):
+				try G(geoTransforms: geoTransforms).encode(to: encoder)
+		}
+	}
 }
 
 public struct GeoTransform: Codable, Equatable {
 	public let wkid: Int?
+	public let wkt: String?
 	public let latestWkid: Int?
 	public let transformForward: Bool?
 	public let name: String?
