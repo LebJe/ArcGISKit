@@ -64,7 +64,8 @@ public struct GeometryServer {
 		inputSpatialReference: SpatialReference,
 		outputSpatialReference: SpatialReference,
 		transformForward: Bool = false,
-		vertical: Bool = false
+		vertical: Bool = false,
+		withToken: Bool = false
 	) async -> Result<GeometryResponse, AGKError> {
 		var newURL = self.url
 		newURL.pathComponents += ["project"]
@@ -81,7 +82,7 @@ public struct GeometryServer {
 				"""
 				f=json\(
 					self.gis
-						.currentToken != nil ? "&token=\(self.gis.currentToken!)" : ""
+						.currentToken != nil && withToken ? "&token=\(self.gis.currentToken!)" : ""
 				)&geometries=\(geosJSON.urlQueryEncoded)&inSR=\(inSRJSON.urlQueryEncoded)&outSR=\(
 					outSRJSON
 						.urlQueryEncoded
