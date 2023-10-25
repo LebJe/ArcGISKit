@@ -17,7 +17,7 @@ public struct FeatureServer {
 	}
 
 	public let url: WebURL
-	public var gis: GIS
+	private var gis: GIS
 
 	public struct LayerQuery {
 		public let whereClause: String

@@ -60,7 +60,7 @@ public struct GeometryServer {
 	///
 	/// - Reference: <https://developers.arcgis.com/rest/services-reference/enterprise/project.htm>
 	public func project(
-		geometry: Self.Geometry,
+		geometry: Geometry,
 		inputSpatialReference: SpatialReference,
 		outputSpatialReference: SpatialReference,
 		transformForward: Bool = false,
@@ -70,9 +70,11 @@ public struct GeometryServer {
 		var newURL = self.url
 		newURL.pathComponents += ["project"]
 
-		let geosJSON = try! String(bytes: XJSONEncoder().encode(geometry), encoding: .utf8)!
-		let inSRJSON = try! String(bytes: XJSONEncoder().encode(inputSpatialReference), encoding: .utf8)!
-		let outSRJSON = try! String(bytes: XJSONEncoder().encode(outputSpatialReference), encoding: .utf8)!
+		let encoder = XJSONEncoder()
+
+		let geosJSON = try! String(bytes: encoder.encode(geometry), encoding: .utf8)!
+		let inSRJSON = try! String(bytes: encoder.encode(inputSpatialReference), encoding: .utf8)!
+		let outSRJSON = try! String(bytes: encoder.encode(outputSpatialReference), encoding: .utf8)!
 
 		let req = try! await GHCHTTPRequest(
 			url: newURL,
