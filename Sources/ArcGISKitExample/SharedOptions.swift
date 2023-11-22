@@ -5,7 +5,7 @@
 //  The full text of the license can be found in the file named LICENSE.
 
 import ArgumentParser
-import struct Foundation.URL
+import Foundation
 
 extension ExamplesCommand {
 	struct Options: ParsableArguments {

@@ -85,6 +85,7 @@ public final actor GIS {
 		authentication authType: AuthenticationType,
 		url: URL = URL(string: "https://arcgis.com")!,
 		site: String = "sharing",
+		tokenExpiration: UInt = 21600,
 		client: any GHCHTTPClient
 	) async throws {
 		self.url = WebURL(url.absoluteString)!
@@ -96,7 +97,7 @@ public final actor GIS {
 				self.authType = authType
 				self.username = username
 				self.password = password
-				try await self.fetchToken().get()
+				try await self.fetchToken(expiration: tokenExpiration).get()
 			case .anonymous:
 				self.authType = authType
 				self.currentToken = nil
@@ -107,7 +108,7 @@ public final actor GIS {
 				self.currentToken = nil
 				self.username = u
 				self.password = nil
-				try await self.fetchToken().get()
+				try await self.fetchToken(expiration: tokenExpiration).get()
 			case .webBrowser:
 				fatalError("Web browser authentication is not implemented yet.")
 //				self.authType = authType
@@ -119,7 +120,7 @@ public final actor GIS {
 	deinit { self.httpClient.shutdown() }
 
 	/// Requests a token and saves it in `self.currentToken`.
-	public func fetchToken() async -> Result<Void, AGKError> {
+	public func fetchToken(expiration: UInt = 21600) async -> Result<Void, AGKError> {
 		guard !self.isAnonymous else {
 			return .failure(.authError(.isAnonymous))
 		}
@@ -178,7 +179,7 @@ public final actor GIS {
 				method: .POST,
 				headers: ["Content-Type": "application/x-www-form-urlencoded"],
 				body: .string(
-					"f=json&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
+					"f=json&expiration=\(expiration)&username=\(self.username!.urlQueryEncoded)&password=\(self.password!.urlQueryEncoded)&client=referer&referer=\("https://arcgis.com".urlQueryEncoded)"
 				)
 			)
 
