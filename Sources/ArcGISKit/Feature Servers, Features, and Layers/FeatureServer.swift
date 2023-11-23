@@ -350,6 +350,9 @@ public struct EditResponse: Codable {
 
 	@FallbackDecoding<EmptyArray>
 	public var updateResults: [EditResult]
+
+	@FallbackDecoding<EmptyArray>
+	public var deleteResults: [EditResult]
 }
 
 public struct EditResult: Codable {
