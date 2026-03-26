@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -106,7 +106,7 @@ public struct Group: Equatable, Codable {
 	public func fetchContent(from gis: GIS) async -> Result<[ContentType], AGKError> {
 		let groupURL = await gis.fullURL + ["content", "groups", self.id!]
 
-		var p = await Paginator<ContentItem>(client: gis.httpClient, url: groupURL, token: gis.currentToken!)
+		var p = await Paginator<ContentItem>(client: gis.httpClient, url: groupURL, token: try? gis.token)
 		var c: [ContentType] = []
 
 		do {

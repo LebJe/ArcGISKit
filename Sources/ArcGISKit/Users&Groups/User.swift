@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -136,7 +136,7 @@ public struct User: Codable, Equatable {
 	public func fetchContent(from gis: GIS) async -> Result<[ContentType], AGKError> {
 		let contentURL = await gis.fullURL + ["rest", "content", "users", self.username]
 
-		var p = await Paginator<ContentItem>(client: gis.httpClient, url: contentURL, token: gis.currentToken!)
+		var p = await Paginator<ContentItem>(client: gis.httpClient, url: contentURL, token: try? gis.token)
 		var c: [ContentType] = []
 
 		do {
@@ -215,7 +215,7 @@ public struct User: Codable, Equatable {
 			"f": "json",
 		]
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			createFolderURL.formParams.token = token
 		}
 
@@ -241,7 +241,7 @@ public struct User: Codable, Equatable {
 
 		addItemURL.formParams += [
 			"f": "json",
-			// 	"token": await gis.currentToken!,
+			// 	"token": try! await gis.token!,
 			// 	"title": name,
 			// 	"type": "GeoJson"
 		]
@@ -270,7 +270,7 @@ public struct User: Codable, Equatable {
 			parts.append(Subpart(contentDisposition: ContentDisposition(name: "folder"), body: Data(f.utf8)))
 		}
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			parts.append(Subpart(contentDisposition: ContentDisposition(name: "token"), body: Data(token.utf8)))
 		}
 

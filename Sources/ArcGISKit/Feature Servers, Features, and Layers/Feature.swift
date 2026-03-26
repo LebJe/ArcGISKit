@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -42,7 +42,7 @@ public struct AGKFeature: Codable, Equatable {
 		var attachmentsURL = self.fullURL + "attachments"
 		attachmentsURL.formParams.f = "json"
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			attachmentsURL.formParams.token = token
 		}
 
@@ -101,7 +101,7 @@ public struct AGKFeature: Codable, Equatable {
 			return .failure(.requestError(.invalidFilename(name: error.initialValue)))
 		} catch { fatalError() }
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			parts.append(Subpart(contentDisposition: ContentDisposition(name: "token"), body: Data(token.utf8)))
 		}
 
@@ -110,7 +110,7 @@ public struct AGKFeature: Codable, Equatable {
 		var newURL = self.fullURL + "addAttachment"
 		newURL.formParams.f = "json"
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			newURL.formParams.token = token
 		}
 
@@ -138,7 +138,7 @@ public struct AGKFeature: Codable, Equatable {
 		var newURL = self.fullURL + "deleteAttachments"
 		newURL.formParams += ["f": "json", "attachmentIds": stringIDs]
 
-		if let token = await gis.currentToken {
+		if let token = try? await gis.token {
 			newURL.formParams.token = token
 		}
 

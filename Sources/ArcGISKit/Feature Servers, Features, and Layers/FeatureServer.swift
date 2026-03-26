@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -50,7 +50,7 @@ public struct FeatureServer {
 		get async {
 			var newURL = self.url
 			newURL.formParams.f = "json"
-			if let token = await self.gis.currentToken {
+			if let token = try? await self.gis.token {
 				newURL.formParams.token = token
 			}
 
@@ -68,7 +68,7 @@ public struct FeatureServer {
 	public func info(layerID: String) async -> Result<FeatureLayerInfo, AGKError> {
 		var newURL = self.url + layerID
 		newURL.formParams.f = "json"
-		if let token = await self.gis.currentToken {
+		if let token = try? await self.gis.token {
 			newURL.formParams.token = token
 		}
 
@@ -161,7 +161,7 @@ public struct FeatureServer {
 			fatalError("Unexpected error: \(error)")
 		}
 
-		if let token = await self.gis.currentToken {
+		if let token = try? await self.gis.token {
 			newURL.formParams.token = token
 		}
 
@@ -267,10 +267,10 @@ public struct FeatureServer {
 		await self.edit([.init(id: id, updates: features)], gdbVersion: gdbVersion, datumTransformation: datumTransformation)
 	}
 
-	/// Edit the attributes in the `FeatureLayer`s that are contained within this `FeatureServer`.
-	///
-	/// To change `Greeting` to "Hello", you could write:
-	///
+	// Edit the attributes in the `FeatureLayer`s that are contained within this `FeatureServer`.
+	//
+	// To change `Greeting` to "Hello", you could write:
+	//
 
 	///
 	/// - Parameter aud: The values you wish to edit, delete, or add.
@@ -293,11 +293,9 @@ public struct FeatureServer {
 
 		let d = try! String(bytes: XJSONEncoder().encode(aud), encoding: .utf8)!
 
-		let dt: String?
-
-		if let datumTransformation {
-			dt = try! String(bytes: XJSONEncoder().encode(datumTransformation), encoding: .utf8)!
-		} else { dt = nil }
+		let dt: String? = if let datumTransformation {
+			try! String(bytes: XJSONEncoder().encode(datumTransformation), encoding: .utf8)!
+		} else { nil }
 
 		let req = try! await GHCHTTPRequest(
 			url: newURL,
@@ -306,8 +304,8 @@ public struct FeatureServer {
 			body: .string(
 				"""
 				f=json&edits=\(d.urlQueryEncoded)\(
-					self.gis
-						.currentToken != nil ? "&token=\(self.gis.currentToken!)" : ""
+					(try? self.gis
+						.token) != nil ? "&token=\(self.gis.currentToken!)" : ""
 				)\(
 					gdbVersion != nil ?
 						"&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : ""

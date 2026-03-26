@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -24,10 +24,10 @@ public struct Paginated<T: Codable>: Codable {
 public struct Paginator<T: Codable> {
 	private var nextStart: Int = 0
 	private var url: WebURL
-	private var token: String? = nil
+	private var token: String?
 	private var client: any GHCHTTPClient
 
-	public var current: Paginated<T>? = nil
+	public var current: Paginated<T>?
 
 	public init(client: any GHCHTTPClient, url: WebURL, token: String? = nil) {
 		self.client = client

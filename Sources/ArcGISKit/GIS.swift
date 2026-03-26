@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -23,7 +23,25 @@ public final actor GIS {
 
 	public let authType: AuthenticationType
 
-	public var isAnonymous: Bool { self.authType == .anonymous && (self.username == nil && self.password == nil) }
+	public var isAnonymous: Bool {
+		self.authType == .anonymous && (self.username == nil && self.password == nil)
+	}
+
+	public var token: String? {
+		get async throws {
+			guard !self.isAnonymous else { return nil }
+
+			if self.currentToken == nil || self.tokenExpired {
+				let res = await self.fetchToken(expiration: self.tokenExpiration)
+				switch res {
+					case .success: return self.currentToken
+					case let .failure(e): throw e
+				}
+			} else {
+				return self.currentToken
+			}
+		}
+	}
 
 	/// The token for the logged in `User`.
 	public var currentToken: String?
@@ -64,8 +82,14 @@ public final actor GIS {
 	// MARK: - Private properties.
 
 	let httpClient: any GHCHTTPClient
-	var fullURL: WebURL { self.url + self.site }
+	var fullURL: WebURL {
+		self.url + self.site
+	}
+
 	let site: String
+
+	/// Seconds in which the token will expire
+	public var tokenExpiration: UInt
 
 	/// Creates an instance using `authType` to authenticate to ArcGIS Online.
 	///
@@ -91,20 +115,18 @@ public final actor GIS {
 		self.url = WebURL(url.absoluteString)!
 		self.site = site
 		self.httpClient = client
-
+		self.authType = authType
+		self.tokenExpiration = tokenExpiration
 		switch authType {
 			case let .credentials(username: username, password: password):
-				self.authType = authType
 				self.username = username
 				self.password = password
 				try await self.fetchToken(expiration: tokenExpiration).get()
 			case .anonymous:
-				self.authType = authType
 				self.currentToken = nil
 				self.username = nil
 				self.password = nil
 			case let .idAndSecret(clientID: _, clientSecret: _, username: u):
-				self.authType = authType
 				self.currentToken = nil
 				self.username = u
 				self.password = nil
@@ -230,9 +252,9 @@ public final actor GIS {
 /////   - token: The token used to authenticate.
 /////   - url: Where the content is located.
 /////   - start: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235)
-/// for more information.
+// for more information.
 /////   - limit: See [Paging Parameters](https://developers.arcgis.com/rest/users-groups-and-items/common-parameters.htm#ESRI_SECTION1_42D43ABF38FC49F8B9DC6A9BFEA1E235)
-/// for more information.
+// for more information.
 /////   - The type that will be retrieved from `url`.
 // func getContent<T: Codable>(
 //	client: HTTPClient,

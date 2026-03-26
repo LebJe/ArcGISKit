@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -11,10 +11,10 @@ public enum Either<Left: Codable & Equatable, Right: Codable & Equatable>: Codab
 	public static func == (lhs: Self, rhs: Self) -> Bool {
 		switch (lhs, rhs) {
 			case let (.left(left), .left(left2)):
-				return left == left2
+				left == left2
 			case let (.right(right), .right(right2)):
-				return right == right2
-			default: return false
+				right == right2
+			default: false
 		}
 	}
 

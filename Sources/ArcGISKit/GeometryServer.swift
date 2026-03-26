@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -83,8 +83,8 @@ public struct GeometryServer {
 			body: .string(
 				"""
 				f=json\(
-					self.gis
-						.currentToken != nil && withToken ? "&token=\(self.gis.currentToken!)" : ""
+					(try? self.gis
+						.token) != nil && withToken ? "&token=\(self.gis.currentToken!)" : ""
 				)&geometries=\(geosJSON.urlQueryEncoded)&inSR=\(inSRJSON.urlQueryEncoded)&outSR=\(
 					outSRJSON
 						.urlQueryEncoded

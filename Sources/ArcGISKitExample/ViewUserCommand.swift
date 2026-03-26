@@ -1,13 +1,12 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
 //  The full text of the license can be found in the file named LICENSE.
 
-import Foundation
-
 import ArcGISKit
 import ArgumentParser
+import Foundation
 import struct Foundation.URL
 
 extension ExamplesCommand {

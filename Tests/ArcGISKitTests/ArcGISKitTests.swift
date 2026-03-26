@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Jeff Lebrun
+// Copyright (c) 2026 Jeff Lebrun
 //
 //  Licensed under the MIT License.
 //
@@ -16,7 +16,7 @@ final class ArcGISKitTests: XCTestCase {
 		let gis = try await GIS(
 			authentication: .credentials(
 				username: self.env["AGOL_USERNAME"] ?? "",
-				password: self.env["AGOL_PASSWORD"]!
+				password: XCTUnwrap(self.env["AGOL_PASSWORD"])
 			),
 			url: URL(string: self.env["AGOL_URL"] ?? "https://arcgis.com")!,
 			client: AHCHTTPClient()
@@ -26,15 +26,18 @@ final class ArcGISKitTests: XCTestCase {
 	}
 
 	func testGenerateURL() throws {
-		let generatedURL = GIS
-			.generateURL(clientID: self.env["AGOL_CLIENT_ID"]!, baseURL: URL(string: self.env["AGOL_URL"]!)!).absoluteString
+		let generatedURL = try GIS
+			.generateURL(
+				clientID: XCTUnwrap(self.env["AGOL_CLIENT_ID"]),
+				baseURL: XCTUnwrap(try URL(string: XCTUnwrap(self.env["AGOL_URL"])))
+			).absoluteString
 
-		let url = URL(string: env["AGOL_URL"]!)!
+		let url = try XCTUnwrap(try URL(string: XCTUnwrap(env["AGOL_URL"]))?
 			.appendingPathComponent("sharing")
 			.appendingPathComponent("rest")
 			.appendingPathComponent("oauth2")
 			.appendingPathComponent("authorize")
-			.absoluteString
+			.absoluteString)
 
 		let expectedURL =
 			"\(url)?response_type=code&client_id=\(self.env["AGOL_CLIENT_ID"]!)&redirect_uri=urn:ietf:wg:oauth:2.0:oob"
