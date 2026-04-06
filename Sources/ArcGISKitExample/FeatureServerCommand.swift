@@ -73,7 +73,8 @@ extension ExamplesCommand {
 
 func printField(_ field: TableField) {
 	print("Name: " + field.name)
-	print("Alias: " + (field.alias ?? ""))
+	print("Alias: " + (field.alias ?? "(None)"))
+	print("Model Name: " + (field.modelName ?? "(None)"))
 	print("Field Type: " + field.type.rawValue)
 	print("Is Editable: \(field.editable ?? false ? "true" : "false")")
 	print("Is Nullable: \(field.nullable ? "true" : "false")")

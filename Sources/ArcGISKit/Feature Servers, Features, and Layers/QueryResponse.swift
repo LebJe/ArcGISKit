@@ -43,6 +43,7 @@ public struct TableDomain: Codable, Equatable {
 
 public struct TableField: Codable, Equatable {
 	public let name: String
+	public let modelName: String?
 	public let type: ESRIFieldType
 	public let alias: String?
 	public let domain: TableDomain?
@@ -50,7 +51,8 @@ public struct TableField: Codable, Equatable {
 	public let nullable: Bool
 	public let exactMatch: Bool?
 	public let length: Int?
-	public let sqlType: String
+	public let sqlType: String?
+	/// public let precision: Int?
 	public let defaultValue: JSON?
 }
 

@@ -303,17 +303,16 @@ public struct FeatureServer {
 			headers: ["Content-Type": "application/x-www-form-urlencoded"],
 			body: .string(
 				"""
-				f=json&edits=\(d.urlQueryEncoded)\(
+				f=json\(
 					(try? self.gis
-						.token) != nil ? "&token=\(self.gis.currentToken!)" : ""
+						.token) != nil ? "&token=\(self.gis.currentToken!.urlQueryEncoded)" : ""
 				)\(
 					gdbVersion != nil ?
 						"&gdbVersion=\(gdbVersion!.urlQueryEncoded)" : ""
-				)
-				\(
+				)\(
 					dt != nil ?
 						"&datumTransformation=\(dt!.urlQueryEncoded)" : ""
-				)
+				)&edits=\(d.urlQueryEncoded)
 				"""
 			)
 		)
@@ -358,4 +357,10 @@ public struct EditResult: Codable {
 	public let uniqueId: Int?
 	public let globalId: String?
 	public let success: Bool
+	public let error: EditError?
+
+	public struct EditError: Codable {
+		public let code: Int
+		public let description: String
+	}
 }
